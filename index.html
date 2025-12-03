@@ -203,10 +203,10 @@
                                     <div className="bg-white rounded-xl shadow-sm border border-slate-200 p-6">
                                         <h2 className="text-lg font-bold text-mintrab mb-6">Desglose Técnico por Fases</h2>
                                         <div className="space-y-5">
-                                            {Object.entries(project.phaseDetails).map(([phase, progress]) => (
+                                            {Object.entries(project.phaseDetails).map(([phase, progress], index) => (
                                                 <div key={phase}>
                                                     <div className="flex justify-between text-sm mb-1.5">
-                                                        <span className="font-medium text-slate-700">{phase}</span>
+                                                        <span className="font-medium text-slate-700">{index + 1}. {phase}</span>
                                                         <span className="font-bold text-mintrab">{progress}%</span>
                                                     </div>
                                                     <div className="h-2.5 w-full bg-slate-100 rounded-full overflow-hidden">
@@ -245,7 +245,7 @@
                                                             
                                                             <div className="flex flex-col">
                                                                 <span className={`text-sm font-bold ${isFinished ? 'text-emerald-700' : 'text-slate-800'}`}>
-                                                                    {mod.name}
+                                                                    {i + 1}. {mod.name}
                                                                 </span>
                                                                 <span className={`text-xs font-medium mt-1 px-2 py-0.5 rounded w-fit ${
                                                                     isFinished 
