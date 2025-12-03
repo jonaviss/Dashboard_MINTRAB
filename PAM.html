@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard PAM - MINTRAB 2025</title>
+    
+    <!-- Librerías desde CDN (Funcionan en cualquier servidor web) -->
+    <script src="https://unpkg.com/react@18/umd/react.production.min.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js" crossorigin></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- CONFIGURACIÓN DE COLORES PERSONALIZADOS MINTRAB -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        mintrab: {
+                            DEFAULT: '#002F5D', // Azul Institucional Oscuro
+                            light: '#004a8f',   // Azul Institucional Claro
+                            50: '#e6eff8'       // Fondo muy claro
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body { font-family: 'Segoe UI', system-ui, sans-serif; background-color: #f8fafc; margin: 0; }
+        .animate-in { animation: fadeIn 0.4s ease-out; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        
+        /* Estilos personalizados */
+        .glass-panel { background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(10px); }
+    </style>
+</head>
+<body>
+    <div id="root"></div>
+
+    <script type="text/babel">
+        const { useState, useEffect } = React;
+
+        // --- ICONOS ---
+        const Icons = {
+            Layout: () => <svg width="20" height="20" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24"><rect width="18" height="18" x="3" y="3" rx="2"/><path d="M3 9h18"/><path d="M9 21V9"/></svg>,
+            Check: () => <svg width="20" height="20" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>,
+            Zap: () => <svg width="20" height="20" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>,
+            FileText: () => <svg width="20" height="20" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24"><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/><polyline points="14 2 14 8 20 8"/><line x1="16" x2="8" y1="13" y2="13"/><line x1="16" x2="8" y1="17" y2="17"/><line x1="10" x2="8" y1="9" y2="9"/></svg>,
+            Box: () => <svg width="20" height="20" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg>
+        };
+
+        // --- COMPONENTE VELOCÍMETRO (GAUGE) ---
+        const GaugeChart = ({ value }) => {
+            const radius = 40;
+            const circumference = Math.PI * radius; 
+            const arcLength = 126; 
+            const strokeDashoffset = arcLength - ((value / 100) * arcLength);
+
+            const getColor = (v) => {
+                if(v >= 80) return "#10b981"; // Emerald
+                if(v >= 50) return "#004a8f"; // Mintrab Light Blue
+                return "#f43f5e"; // Rose
+            };
+
+            return (
+                <div className="relative w-32 h-20 flex flex-col items-center justify-end">
+                    <svg viewBox="0 0 100 60" className="w-full h-full overflow-visible">
+                        <path d="M 10 50 A 40 40 0 0 1 90 50" fill="none" stroke="#e2e8f0" strokeWidth="12" strokeLinecap="round" />
+                        <path 
+                            d="M 10 50 A 40 40 0 0 1 90 50" 
+                            fill="none" 
+                            stroke={getColor(value)} 
+                            strokeWidth="12" 
+                            strokeLinecap="round" 
+                            strokeDasharray={arcLength}
+                            strokeDashoffset={strokeDashoffset}
+                            className="transition-all duration-1000 ease-out"
+                        />
+                    </svg>
+                    <div className="absolute bottom-2 text-center">
+                        <span className="text-3xl font-bold text-slate-900">{value}%</span>
+                    </div>
+                    <span className="text-xs text-slate-500 font-medium absolute -bottom-4">Completado</span>
+                </div>
+            );
+        };
+
+        const App = () => {
+            // DATOS: PROYECTO ÚNICO (PAM)
+            const project = {
+                id: 3,
+                name: "Plataforma Programa Adulto Mayor (Previsión Social)",
+                lead: "Dirección de Previsión Social", 
+                overallProgress: 53,
+                status: "En Progreso",
+                dueDate: "10 Nov 2023",
+                objective: "Implementar una solución tecnológica integral para la modernización del Programa del Aporte Económico del Adulto Mayor (PAM), orientada a elevar la calidad de atención al usuario y asegurar la integridad absoluta de los datos mediante la interoperabilidad institucional. Asimismo, busca maximizar la eficiencia del personal operativo, automatizando flujos de trabajo para eliminar procesos manuales engorrosos, reducir drásticamente los tiempos de gestión y erradicar la duplicidad de esfuerzos.",
+                modules: [
+                    { name: "Inscripción del Adulto Mayor", status: "Finalizado" },
+                    { name: "Estudio Socioeconómico y Notificaciones", status: "Proceso de Desarrollo" },
+                    { name: "Nómina", status: "Proceso de Desarrollo" },
+                    { name: "Generación de Carnets", status: "Proceso de Desarrollo" }
+                ],
+                improvements: [
+                    "Inscripción Acelerada (Semanas a Minutos): Reducción drástica del tiempo de atención y registro, pasando de procesos manuales diferidos a una gestión digital inmediata.",
+                    "Integridad de Datos (Verificación Interinstitucional con RENAP): El sistema asegura la calidad de la información mediante la verificación directa de los datos generales contra la base de datos de RENAP.",
+                    "Generación Automática de Certificaciones: El sistema obtiene y adjunta la Certificación de Nacimiento directamente desde RENAP al expediente digital, sin intervención manual.",
+                    "Verificación Interinstitucional Preventiva: Realización de cruces de información en tiempo real para verificar si existen impedimentos legales o administrativos antes de iniciar el trámite formal.",
+                    "Emisión de Constancias con Justificación (Positiva/Negativa): Generación automática de documentos de resolución detallando explícitamente la causa en caso de rechazo.",
+                    "Enriquecimiento de Datos de Ubicación: Captura precisa de geolocalización y estandarización de direcciones.",
+                    "Planificación y Creación de Rutas de Visita: Herramienta que permite diseñar y organizar manualmente las rutas de trabajo para el personal operativo.",
+                    "Asignación Dinámica de Expedientes: Distribución controlada de casos a los trabajadores sociales basada en la carga laboral actual y zonificación."
+                ],
+                phaseDetails: { "Recopilación de Requerimientos": 88, "Análisis y Diseño": 42, "Desarrollo": 46, "Pruebas de Aceptación": 0, "Capacitación": 0, "Implementación": 0 }
+            };
+
+            const getStatusColor = (s) => s === 'Completado' ? 'bg-emerald-100 text-emerald-700' : 'bg-mintrab-light text-white';
+            const getPhaseColor = (v) => v === 100 ? 'bg-emerald-500' : v > 0 ? 'bg-mintrab-light' : 'bg-slate-200';
+            
+            // Helper para color de estado de módulo
+            const getModuleStatusStyle = (status) => {
+                if (status === 'Finalizado') return 'bg-emerald-100 text-emerald-700 border-emerald-200';
+                if (status === 'Proceso de Desarrollo') return 'bg-mintrab-50 text-mintrab-light border-mintrab-light/30';
+                return 'bg-amber-50 text-amber-700 border-amber-200'; 
+            };
+
+            return (
+                <div className="min-h-screen">
+                    {/* NAVBAR CON COLOR MINTRAB */}
+                    <nav className="bg-mintrab border-b border-mintrab-light px-6 py-4 sticky top-0 z-50 shadow-md">
+                        <div className="max-w-7xl mx-auto flex items-center gap-3">
+                            <div className="bg-white/10 p-1.5 rounded-lg text-white backdrop-blur-sm"><Icons.Layout /></div>
+                            <span className="font-bold text-white text-lg tracking-wide">Programa del Aporte Económico del Adulto Mayor (PAM) - MINTRAB 2025</span>
+                        </div>
+                    </nav>
+
+                    <main className="py-6">
+                        <div className="animate-in max-w-7xl mx-auto p-6 space-y-8">
+                            
+                            {/* TITULO Y ESTADO */}
+                            <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 border-b border-slate-200 pb-6">
+                                <div>
+                                    <div className="flex items-center gap-3 mb-2">
+                                        <span className={`px-3 py-1 rounded-full text-xs font-bold ${getStatusColor(project.status)}`}>{project.status}</span>
+                                        <span className="text-sm text-slate-500 font-medium">{project.lead}</span>
+                                    </div>
+                                    <h1 className="text-3xl font-bold text-mintrab">{project.name}</h1>
+                                </div>
+                            </div>
+
+                            <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                                {/* COLUMNA IZQUIERDA: REPORTE Y MEJORAS */}
+                                <div className="lg:col-span-2 space-y-8">
+                                    
+                                    {/* 1. OBJETIVO DEL PROYECTO */}
+                                    <div className="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden relative group hover:shadow-md transition-shadow">
+                                        <div className="absolute top-0 left-0 w-1.5 h-full bg-mintrab"></div>
+                                        <div className="p-6">
+                                            <h2 className="text-lg font-bold text-mintrab flex items-center gap-2 mb-4">
+                                                <div className="p-1.5 bg-mintrab-50 text-mintrab rounded-md"><Icons.FileText /></div>
+                                                Objetivo del Proyecto
+                                            </h2>
+                                            
+                                            <div className="flex flex-col md:flex-row items-center gap-8 mb-6">
+                                                <div className="bg-slate-50 p-6 rounded-lg flex flex-col items-center justify-center min-w-[200px] border border-slate-100">
+                                                    <p className="text-xs text-slate-500 font-medium uppercase mb-4">Avance Global</p>
+                                                    <GaugeChart value={project.overallProgress} />
+                                                </div>
+                                                
+                                                <div className="bg-slate-50 p-6 rounded-lg flex-1 border border-slate-100">
+                                                    <p className="text-sm text-slate-700 leading-relaxed text-justify">
+                                                        {project.objective}
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    {/* 2. MEJORAS DEL SISTEMA */}
+                                    <div className="bg-white rounded-xl shadow-sm border border-slate-200 p-6">
+                                        <h2 className="text-lg font-bold text-mintrab flex items-center gap-2 mb-6">
+                                            <div className="p-1.5 bg-mintrab-50 text-mintrab rounded-md"><Icons.Zap /></div>
+                                            Mejoras e Impacto del Sistema
+                                        </h2>
+                                        <ul className="space-y-4">
+                                            {project.improvements.map((item, idx) => {
+                                                const parts = item.split(':');
+                                                const title = parts.length > 1 ? parts[0] + ":" : item;
+                                                const desc = parts.length > 1 ? parts.slice(1).join(':') : "";
+
+                                                return (
+                                                    <li key={idx} className="flex items-start gap-3 bg-white p-4 rounded-lg border border-slate-100 shadow-sm hover:border-mintrab-light/30 transition-all hover:shadow-md">
+                                                        <div className="mt-1 text-mintrab shrink-0"><Icons.Check /></div>
+                                                        <div className="text-slate-700 text-sm">
+                                                            <span className="font-bold text-mintrab block mb-1">{title}</span>
+                                                            <span className="text-slate-600 leading-snug">{desc}</span>
+                                                        </div>
+                                                    </li>
+                                                );
+                                            })}
+                                        </ul>
+                                    </div>
+
+                                    {/* Detalle de Fases */}
+                                    <div className="bg-white rounded-xl shadow-sm border border-slate-200 p-6">
+                                        <h2 className="text-lg font-bold text-mintrab mb-6">Desglose Técnico por Fases</h2>
+                                        <div className="space-y-5">
+                                            {Object.entries(project.phaseDetails).map(([phase, progress]) => (
+                                                <div key={phase}>
+                                                    <div className="flex justify-between text-sm mb-1.5">
+                                                        <span className="font-medium text-slate-700">{phase}</span>
+                                                        <span className="font-bold text-mintrab">{progress}%</span>
+                                                    </div>
+                                                    <div className="h-2.5 w-full bg-slate-100 rounded-full overflow-hidden">
+                                                        <div className={`h-full rounded-full transition-all duration-1000 ${getPhaseColor(progress)}`} style={{width: `${progress}%`}}></div>
+                                                    </div>
+                                                </div>
+                                            ))}
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                                {/* COLUMNA DERECHA: MÓDULOS E INFO ADICIONAL */}
+                                <div className="space-y-6">
+                                    <div className="bg-white rounded-xl shadow-sm border border-slate-200 p-6 sticky top-6">
+                                        <h3 className="text-sm font-bold text-mintrab uppercase tracking-wide mb-4 flex items-center gap-2">
+                                            <Icons.Box /> Módulos del Sistema
+                                        </h3>
+                                        <div className="flex flex-col gap-3">
+                                            {project.modules.map((mod, i) => (
+                                                <div key={i} className="flex flex-col p-3 bg-white rounded-lg border border-slate-200 hover:border-mintrab-light/50 transition-colors shadow-sm">
+                                                    <span className="text-sm font-semibold text-slate-800 mb-2">{mod.name}</span>
+                                                    <span className={`text-[10px] uppercase font-bold px-2 py-1 rounded w-fit ${getModuleStatusStyle(mod.status)}`}>
+                                                        {mod.status}
+                                                    </span>
+                                                </div>
+                                            ))}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </main>
+                </div>
+            );
+        };
+
+        const root = ReactDOM.createRoot(document.getElementById('root'));
+        root.render(<App />);
+    </script>
+</body>
+</html>
