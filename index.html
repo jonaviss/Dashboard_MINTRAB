@@ -59,17 +59,19 @@
         }
         .header h1 {
             margin: 0;
-            font-size: 36px;
+            font-size: 32px; /* Ajustado ligeramente para el título largo */
             color: var(--primary);
             text-transform: uppercase;
-            letter-spacing: -1px;
+            letter-spacing: -0.5px;
             font-weight: 800;
+            line-height: 1.2;
+            max-width: 800px; /* Limita el ancho para que no choque con la meta data */
         }
-        .header h1 span { color: var(--accent); font-weight: 400; }
         .header .meta {
             text-align: right;
             font-size: 14px;
             color: #64748b;
+            min-width: 200px;
         }
 
         /* --- BARRA LATERAL (SIDEBAR) --- */
@@ -121,14 +123,16 @@
 
         .section-title {
             color: var(--primary);
-            font-size: 20px;
+            font-size: 18px;
             margin-top: 0;
             margin-bottom: 20px;
             display: flex;
             align-items: center;
             font-weight: 700;
+            border-bottom: 1px solid #e2e8f0;
+            padding-bottom: 10px;
         }
-        .section-title i { margin-right: 10px; }
+        .section-title i { margin-right: 10px; color: var(--accent); }
 
         /* Diagrama de Ciclo (4 Pasos) */
         .cycle-wrapper {
@@ -189,6 +193,42 @@
         }
         .doc-tag i { color: var(--primary); }
 
+        /* --- NUEVO: GRID DE ACTIVIDADES PARALELAS --- */
+        .parallel-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+        .parallel-card {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            border: 1px solid #e2e8f0;
+            border-left: 4px solid var(--primary);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        .parallel-card h5 {
+            margin: 0 0 5px 0;
+            color: var(--primary);
+            font-size: 14px;
+            font-weight: 700;
+        }
+        .parallel-card p {
+            margin: 0;
+            font-size: 11px;
+            color: #64748b;
+            line-height: 1.3;
+        }
+        .parallel-card i {
+            font-size: 20px;
+            color: var(--accent);
+            margin-bottom: 8px;
+        }
+
         /* --- TABLA DE FECHAS --- */
         .dates-table {
             width: 100%;
@@ -238,18 +278,6 @@
             gap: 20px;
         }
         
-        .legal-box {
-            background: #eff6ff; 
-            border-left: 5px solid var(--primary);
-            padding: 15px 20px;
-            display: flex;
-            align-items: center;
-            gap: 15px;
-        }
-        .legal-box i { font-size: 30px; color: var(--primary); }
-        .legal-text h4 { margin: 0; color: var(--primary); font-weight: 700;}
-        .legal-text p { margin: 5px 0 0 0; font-size: 13px; color: #475569; }
-
         /* Título Inferior */
         .modules-title {
             font-size: 22px;
@@ -272,19 +300,20 @@
             border-radius: 8px;
             border: 1px solid #e2e8f0;
         }
+        /* Ajuste de ancho de los pasos para que quepan 5 módulos + Go-Live */
         .t-step { 
             text-align: center; 
             font-size: 12px; 
             color: #94a3b8; 
             font-weight: 600; 
-            width: 170px; 
+            width: 140px; /* Reducido ligeramente para acomodar más pasos */
             position: relative;
             flex-shrink: 0;
         }
         .t-step i { font-size: 16px; margin-bottom: 5px; }
         .t-step.active { color: var(--success); }
         .t-step.in-progress { color: var(--accent); }
-        .t-step span { display: block; font-size: 11px; font-weight: 400; color: #64748b; margin-top: 4px; line-height: 1.3;}
+        .t-step span { display: block; font-size: 10px; font-weight: 400; color: #64748b; margin-top: 4px; line-height: 1.3;}
         
         .t-line { flex-grow: 1; height: 2px; background: #e2e8f0; margin: 10px 0 0 0; position: relative; }
         .t-line.done::after { content: ''; position: absolute; left: 0; top: 0; height: 100%; width: 100%; background: var(--success); }
@@ -299,8 +328,8 @@
         <!-- HEADER -->
         <header class="header">
             <div>
-                <h1>Estrategia <span>Modular PAM</span></h1>
-                <p style="margin: 0; color: #64748b;">Plan de Implementación y Protocolo de Aceptación</p>
+                <!-- TÍTULO ÚNICO SOLICITADO -->
+                <h1>Plan de Implementación del sistema de programa de aporte economico del adulto mayor-PAM-</h1>
             </div>
             <div class="meta">
                 <strong>MINTRAB 2025</strong><br>
@@ -352,54 +381,79 @@
         <!-- MAIN CONTENT -->
         <main class="main-content">
             <h2 class="section-title"><i class="fa-solid fa-file-signature"></i> Ciclo de Aprobación por Módulo</h2>
-            <p style="font-size: 14px; color: #475569; margin-bottom: 25px;">
-                Para garantizar la transparencia, <strong>cada fase</strong> finalizará estrictamente con la generación y firma de un documento de aval.
-            </p>
-
+            
             <!-- Ciclo Visual -->
             <div class="cycle-wrapper">
-                <!-- Fase 1 -->
+                <!-- Fase 1: Desarrollo -->
                 <div class="cycle-step dev">
                     <div class="step-num">1</div>
                     <div style="text-align: center; color: var(--accent); margin-bottom: 5px;"><i class="fa-solid fa-code"></i></div>
                     <h4>Desarrollo</h4>
-                    <p>Entrega funcional.</p>
-                    <div class="doc-tag"><i class="fa-solid fa-file-contract"></i> Aval Desarrollo</div>
+                    <p>Entrega y presentación.</p>
+                    <div class="doc-tag"><i class="fa-solid fa-laptop-code"></i> Presentación Módulo</div>
                 </div>
-                <i class="fa-solid fa-chevron-right arrow-right"></i>
                 
-                <!-- Fase 2 -->
+                <i class="fa-solid fa-chevron-right arrow-right"></i>
+
+                <!-- Fase 2: Validación QA -->
                 <div class="cycle-step qa">
                     <div class="step-num">2</div>
                     <div style="text-align: center; color: var(--warning); margin-bottom: 5px;"><i class="fa-solid fa-magnifying-glass"></i></div>
                     <h4>Validación QA</h4>
-                    <p>PAM valida reglas.</p>
-                    <div class="doc-tag"><i class="fa-solid fa-file-circle-check"></i> Aval QA</div>
+                    <p>Ejecución y doc. de pruebas.</p>
+                    <div class="doc-tag"><i class="fa-solid fa-file-pen"></i> Formatos QA</div>
                 </div>
+
                 <i class="fa-solid fa-chevron-right arrow-right"></i>
 
-                <!-- Fase 3 -->
+                <!-- Fase 3: Capacitación -->
                 <div class="cycle-step train">
                     <div class="step-num">3</div>
                     <div style="text-align: center; color: #8b5cf6; margin-bottom: 5px;"><i class="fa-solid fa-chalkboard-user"></i></div>
                     <h4>Capacitación</h4>
-                    <p>Usuarios finales.</p>
-                    <div class="doc-tag"><i class="fa-solid fa-file-signature"></i> Aval Capacitación</div>
+                    <p>Transferencia a usuarios.</p>
+                    <div class="doc-tag"><i class="fa-solid fa-users-rectangle"></i> Listados Asistencia</div>
                 </div>
+
                 <i class="fa-solid fa-chevron-right arrow-right"></i>
 
-                <!-- Fase 4 -->
+                <!-- Fase 4: Cierre / Aceptación -->
                 <div class="cycle-step prod">
                     <div class="step-num">4</div>
                     <div style="text-align: center; color: var(--success); margin-bottom: 5px;"><i class="fa-solid fa-check-double"></i></div>
                     <h4>Cierre / Aceptación</h4>
-                    <p>Certificación de módulo.</p>
-                    <div class="doc-tag"><i class="fa-solid fa-certificate"></i> Acta Final</div>
+                    <p>Validación oficial PAM.</p>
+                    <div class="doc-tag"><i class="fa-solid fa-envelope-open-text"></i> Oficio Validación</div>
+                </div>
+            </div>
+
+            <!-- NUEVA SECCIÓN: ACTIVIDADES EN PARALELO -->
+            <h2 class="section-title"><i class="fa-solid fa-layer-group"></i> Actividades Estratégicas en Paralelo</h2>
+            <div class="parallel-grid">
+                <div class="parallel-card">
+                    <i class="fa-solid fa-scale-balanced"></i>
+                    <h5>Acuerdo Administrativo</h5>
+                    <p>Gestión legal para respaldo del sistema.</p>
+                </div>
+                <div class="parallel-card">
+                    <i class="fa-solid fa-book-open"></i>
+                    <h5>Creación Manual Usuario</h5>
+                    <p>Documentación técnica para uso.</p>
+                </div>
+                <div class="parallel-card">
+                    <i class="fa-solid fa-file-shield"></i>
+                    <h5>Actualización Manual Proc.</h5>
+                    <p>Alineación de normativa interna.</p>
+                </div>
+                <div class="parallel-card">
+                    <i class="fa-solid fa-bullhorn"></i>
+                    <h5>Plan Campaña Difusión</h5>
+                    <p>Socialización del cambio a nivel nacional.</p>
                 </div>
             </div>
 
             <!-- Tabla de Cronograma -->
-            <h2 class="section-title" style="margin-top: 20px; font-size: 16px;"><i class="fa-solid fa-calendar-days"></i> Cronograma de Aprobación (Fechas Sugeridas)</h2>
+            <h2 class="section-title" style="margin-top: 0px;"><i class="fa-solid fa-calendar-days"></i> Cronograma de Aprobación (Fechas Sugeridas)</h2>
             <table class="dates-table">
                 <thead>
                     <tr>
@@ -411,31 +465,42 @@
                     </tr>
                 </thead>
                 <tbody>
+                    <!-- Mod 1 -->
                     <tr>
                         <td class="mod-name">1. Inscripción del Adulto Mayor</td>
                         <td class="date-cell date-done">Finalizado</td>
                         <td class="date-cell">15 Ene 2025</td>
                         <td class="date-cell">25 Ene 2025</td>
-                        <td class="prod-cell-merged" rowspan="4">
+                        <td class="prod-cell-merged" rowspan="5"> <!-- Aumentado el rowspan a 5 -->
                             <i class="fa-solid fa-rocket"></i><br>
                             Lanzamiento Integral<br>
-                            20 Junio 2025
+                            Julio 2025
                         </td>
                     </tr>
+                    <!-- Mod 2 -->
                     <tr>
                         <td class="mod-name">2. Estudio Socioeconómico y Notificaciones</td>
                         <td class="date-cell">20 Feb 2025</td>
                         <td class="date-cell">28 Feb 2025</td>
                         <td class="date-cell">10 Mar 2025</td>
                     </tr>
+                    <!-- Mod 3 -->
                     <tr>
-                        <td class="mod-name">3. Nómina y Jurídico</td>
+                        <td class="mod-name">3. Nómina</td>
+                        <td class="date-cell">20 Mar 2025</td>
+                        <td class="date-cell">30 Mar 2025</td>
+                        <td class="date-cell">10 Abr 2025</td>
+                    </tr>
+                    <!-- Mod 4 -->
+                    <tr>
+                        <td class="mod-name">4. Jurídico</td>
                         <td class="date-cell">20 Abr 2025</td>
                         <td class="date-cell">30 Abr 2025</td>
-                        <td class="date-cell">10 May 2025</td>
+                        <td class="date-cell">15 May 2025</td>
                     </tr>
+                    <!-- Mod 5 -->
                     <tr>
-                        <td class="mod-name">4. Generación de Carnets</td>
+                        <td class="mod-name">5. Generación de Carnets</td>
                         <td class="date-cell">01 Jun 2025</td>
                         <td class="date-cell">10 Jun 2025</td>
                         <td class="date-cell">15 Jun 2025</td>
@@ -444,40 +509,40 @@
             </table>
         </main>
 
-        <!-- FOOTER -->
+        <!-- FOOTER: LEGAL & MODULES -->
         <footer class="footer-section">
-            <div class="legal-box">
-                <i class="fa-solid fa-scale-balanced"></i>
-                <div class="legal-text">
-                    <h4>Acuerdo Administrativo</h4>
-                    <p>Se requiere trabajar paralelamente en el acuerdo legal que dará vida y obligatoriedad al sistema para su lanzamiento.</p>
-                </div>
-            </div>
-
+            <!-- TÍTULO DE MÓDULOS -->
             <h3 class="modules-title">MÓDULOS DEL SISTEMA DE APORTE ECONOMICO DEL ADULTO MAYOR PAM</h3>
 
+            <!-- Línea de Tiempo General -->
             <div class="timeline-mini">
                 <!-- Mod 1 -->
                 <div class="t-step active">
-                    <i class="fa-solid fa-circle-check"></i><br>Módulo 1<br><span>Inscripción del Adulto Mayor</span>
+                    <i class="fa-solid fa-circle-check"></i><br>Módulo 1<br><span>Inscripción</span>
                 </div>
                 <div class="t-line done"></div>
                 
                 <!-- Mod 2 -->
                 <div class="t-step in-progress">
-                    <i class="fa-solid fa-spinner fa-spin"></i><br>Módulo 2<br><span>Estudio Socioeconómico y Notificaciones</span>
+                    <i class="fa-solid fa-spinner fa-spin"></i><br>Módulo 2<br><span>Estudio SE</span>
                 </div>
                 <div class="t-line half"></div>
                 
                 <!-- Mod 3 -->
                 <div class="t-step in-progress">
-                    <i class="fa-solid fa-laptop-code"></i><br>Módulo 3<br><span>Nómina y Jurídico</span>
+                    <i class="fa-solid fa-money-bill-wave"></i><br>Módulo 3<br><span>Nómina</span>
                 </div>
                 <div class="t-line"></div>
                 
                 <!-- Mod 4 -->
                 <div class="t-step">
-                    <i class="fa-regular fa-circle"></i><br>Módulo 4<br><span>Generación de Carnets</span>
+                    <i class="fa-solid fa-gavel"></i><br>Módulo 4<br><span>Jurídico</span>
+                </div>
+                <div class="t-line"></div>
+
+                 <!-- Mod 5 -->
+                 <div class="t-step">
+                    <i class="fa-regular fa-id-card"></i><br>Módulo 5<br><span>Carnets</span>
                 </div>
                 <div class="t-line"></div>
                 
