@@ -10,6 +10,11 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <style>
         /* --- ESTILOS VISUALES (CSS) --- */
+        /* Reset básico para asegurar que el ancho funcione bien */
+        * {
+            box-sizing: border-box;
+        }
+
         :root {
             /* COLOR INSTITUCIONAL (Azul Marino Profundo - Extraído de tu imagen) */
             --primary: #002855; 
@@ -28,22 +33,24 @@
             font-family: 'Urbanist', sans-serif;
             background-color: #cbd5e1; /* Fondo gris externo */
             margin: 0;
-            padding: 20px;
+            padding: 20px; /* Margen externo mínimo */
+            min-height: 100vh;
             display: flex;
-            justify-content: center; /* Centrar la hoja */
+            justify-content: center;
         }
 
-        /* Contenedor Principal (Hoja Digital) */
+        /* Contenedor Principal (Hoja Digital - Full Width) */
         .one-pager {
             background-color: white;
-            width: 1200px; 
-            min-height: 850px; 
+            width: 100%; /* Ocupa todo el ancho disponible */
+            max-width: 100%; /* Asegura que no se desborde */
+            min-height: 90vh; 
             padding: 40px;
             box-shadow: 0 10px 25px rgba(0,0,0,0.2);
             display: grid;
-            grid-template-columns: 280px 1fr; /* Columna Izq (280px) | Columna Der (Resto) */
+            grid-template-columns: 300px 1fr; /* Columna Izq fija (300px) | Columna Der flexible */
             grid-template-rows: auto 1fr auto; /* Header | Contenido | Footer */
-            gap: 20px;
+            gap: 30px; /* Espacio entre columnas aumentado un poco */
             border-top: 15px solid var(--primary); /* Borde superior institucional */
         }
 
@@ -319,6 +326,18 @@
         .t-line.done::after { content: ''; position: absolute; left: 0; top: 0; height: 100%; width: 100%; background: var(--success); }
         .t-line.half::after { content: ''; position: absolute; left: 0; top: 0; height: 100%; width: 50%; background: var(--accent); }
 
+        /* Media Query para pantallas pequeñas */
+        @media (max-width: 1024px) {
+            .one-pager {
+                grid-template-columns: 1fr; /* Colapsar a una sola columna */
+                width: 100%;
+                padding: 20px;
+            }
+            .header h1 { font-size: 24px; }
+            .cycle-wrapper { flex-wrap: wrap; }
+            .parallel-grid { grid-template-columns: repeat(2, 1fr); }
+            .timeline-mini { overflow-x: auto; }
+        }
     </style>
 </head>
 <body>
