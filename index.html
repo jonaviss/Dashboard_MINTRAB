@@ -3,373 +3,491 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard PAM - MINTRAB 2025</title>
-    
-    <!-- Librerías desde CDN (React, ReactDOM, Babel, Tailwind) -->
-    <script src="https://unpkg.com/react@18/umd/react.production.min.js" crossorigin></script>
-    <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js" crossorigin></script>
-    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
-    <script src="https://cdn.tailwindcss.com"></script>
-
-    <!-- CONFIGURACIÓN DE COLORES PERSONALIZADOS MINTRAB -->
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        mintrab: {
-                            DEFAULT: '#002F5D', // Azul Institucional Oscuro
-                            light: '#004a8f',   // Azul Institucional Claro
-                            50: '#e6eff8'       // Fondo muy claro
-                        }
-                    },
-                    animation: {
-                        'bounce-slow': 'bounce 3s infinite',
-                    }
-                }
-            }
-        }
-    </script>
-
+    <title>Resumen Ejecutivo - PAM 2025</title>
+    <!-- Fuente moderna para apariencia profesional -->
+    <link href="https://fonts.googleapis.com/css2?family=Urbanist:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <!-- Iconos para ilustrar visualmente -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <style>
-        body { font-family: 'Segoe UI', system-ui, sans-serif; background-color: #f8fafc; margin: 0; scroll-behavior: smooth; }
-        .animate-in { animation: fadeIn 0.8s ease-out; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
-        
-        /* Fondo con patrón sutil para la portada */
-        .hero-pattern {
-            background-color: #002F5D;
-            background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23004a8f' fill-opacity='0.1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+        /* --- ESTILOS VISUALES (CSS) --- */
+        :root {
+            /* COLOR INSTITUCIONAL (Azul Marino Profundo - Extraído de tu imagen) */
+            --primary: #002855; 
+            
+            /* Azul acento para detalles */
+            --accent: #005eb8; 
+            
+            /* Colores de estado */
+            --warning: #f59e0b; /* Ambar para QA/Validación */
+            --success: #16a34a; /* Verde para Finalizado/Producción */
+            --text: #334155;    /* Gris oscuro para texto */
+            --bg-gray: #f8fafc; /* Gris muy claro para fondos de secciones */
         }
+
+        body {
+            font-family: 'Urbanist', sans-serif;
+            background-color: #cbd5e1; /* Fondo gris externo */
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center; /* Centrar la hoja */
+        }
+
+        /* Contenedor Principal (Hoja Digital) */
+        .one-pager {
+            background-color: white;
+            width: 1200px; 
+            min-height: 850px; 
+            padding: 40px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+            display: grid;
+            grid-template-columns: 280px 1fr; /* Columna Izq (280px) | Columna Der (Resto) */
+            grid-template-rows: auto 1fr auto; /* Header | Contenido | Footer */
+            gap: 20px;
+            border-top: 15px solid var(--primary); /* Borde superior institucional */
+        }
+
+        /* --- HEADER --- */
+        .header {
+            grid-column: 1 / -1; /* Ocupa todo el ancho */
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 2px solid #e2e8f0;
+            padding-bottom: 20px;
+            margin-bottom: 10px;
+        }
+        .header h1 {
+            margin: 0;
+            font-size: 36px;
+            color: var(--primary);
+            text-transform: uppercase;
+            letter-spacing: -1px;
+            font-weight: 800;
+        }
+        .header h1 span { color: var(--accent); font-weight: 400; }
+        .header .meta {
+            text-align: right;
+            font-size: 14px;
+            color: #64748b;
+        }
+
+        /* --- BARRA LATERAL (SIDEBAR) --- */
+        .sidebar {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        /* Tarjeta de Estado */
+        .status-card {
+            background: #f0fdf4;
+            border: 2px solid var(--success);
+            padding: 20px;
+            border-radius: 12px;
+            text-align: center;
+        }
+        .status-card h3 { color: #166534; margin: 0 0 10px 0; font-size: 18px; }
+        .status-card .big-icon { font-size: 60px; color: var(--success); margin: 10px 0; }
+        .status-card p { font-size: 14px; font-weight: bold; color: #14532d; margin: 0; line-height: 1.4; }
+
+        /* Tarjeta de Recursos Humanos */
+        .req-card {
+            background: #fffbeb;
+            border: 1px solid #fcd34d;
+            border-radius: 12px;
+            padding: 20px;
+        }
+        .req-card h3 { color: #b45309; margin: 0 0 15px 0; font-size: 16px; border-bottom: 1px solid #fcd34d; padding-bottom: 5px; }
+        .req-list { list-style: none; padding: 0; margin: 0; }
+        .req-list li {
+            margin-bottom: 15px;
+            display: flex;
+            align-items: flex-start;
+            font-size: 14px;
+            color: #78350f;
+        }
+        .req-list i { margin-right: 10px; margin-top: 3px; color: #d97706; }
+
+        /* --- CONTENIDO PRINCIPAL --- */
+        .main-content {
+            background: var(--bg-gray);
+            border-radius: 12px;
+            padding: 30px;
+            border: 1px solid #e2e8f0;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .section-title {
+            color: var(--primary);
+            font-size: 20px;
+            margin-top: 0;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            font-weight: 700;
+        }
+        .section-title i { margin-right: 10px; }
+
+        /* Diagrama de Ciclo (4 Pasos) */
+        .cycle-wrapper {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+        .cycle-step {
+            flex: 1;
+            background: white;
+            padding: 15px 15px 35px 15px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            position: relative;
+            border: 1px solid #e2e8f0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        /* Bordes de color por fase */
+        .cycle-step.dev { border-top: 4px solid var(--accent); }
+        .cycle-step.qa { border-top: 4px solid var(--warning); }
+        .cycle-step.train { border-top: 4px solid #8b5cf6; } /* Violeta */
+        .cycle-step.prod { border-top: 4px solid var(--success); }
+        
+        /* Burbujas numéricas */
+        .step-num { 
+            position: absolute; top: -10px; right: 10px; 
+            background: var(--text); color: white; 
+            width: 24px; height: 24px; border-radius: 50%; 
+            display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: bold;
+        }
+        .cycle-step.dev .step-num { background: var(--accent); }
+        .cycle-step.qa .step-num { background: var(--warning); }
+        .cycle-step.train .step-num { background: #8b5cf6; }
+        .cycle-step.prod .step-num { background: var(--success); }
+
+        .cycle-step h4 { margin: 10px 0 5px 0; font-size: 15px; color: var(--text); text-align: center; font-weight: 700; text-transform: uppercase;}
+        .cycle-step p { font-size: 12px; color: #64748b; line-height: 1.3; margin: 0; text-align: center; }
+        
+        .arrow-right { align-self: center; color: #cbd5e1; font-size: 20px; }
+
+        /* Etiquetas de documentos */
+        .doc-tag {
+            position: absolute;
+            bottom: 10px;
+            background: #f1f5f9;
+            color: #475569;
+            font-size: 10px;
+            padding: 3px 8px;
+            border-radius: 10px;
+            border: 1px solid #cbd5e1;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            font-weight: 600;
+        }
+        .doc-tag i { color: var(--primary); }
+
+        /* --- TABLA DE FECHAS --- */
+        .dates-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 13px;
+            margin-top: 10px;
+        }
+        .dates-table th {
+            text-align: left;
+            padding: 10px;
+            background-color: var(--primary);
+            color: white;
+            font-weight: 600;
+            text-transform: uppercase;
+            font-size: 11px;
+            border: 1px solid var(--primary);
+        }
+        
+        .dates-table td {
+            padding: 10px;
+            border: 1px solid #e2e8f0;
+            color: var(--text);
+            vertical-align: middle;
+        }
+        .dates-table tr:nth-child(even) { background-color: #f8fafc; }
+        
+        .date-cell { font-family: monospace; font-weight: 600; color: var(--primary); }
+        .date-done { color: #94a3b8; text-decoration: line-through; }
+        .mod-name { font-weight: 700; width: 30%; } 
+        
+        /* Celda Merged para Go-Live */
+        .prod-cell-merged {
+            background-color: #f0fdf4;
+            color: #166534;
+            font-weight: 800;
+            text-align: center;
+            border: 2px solid var(--success) !important;
+            font-size: 14px;
+            text-transform: uppercase;
+        }
+
+        /* --- FOOTER --- */
+        .footer-section {
+            grid-column: 1 / -1;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        
+        .legal-box {
+            background: #eff6ff; 
+            border-left: 5px solid var(--primary);
+            padding: 15px 20px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        .legal-box i { font-size: 30px; color: var(--primary); }
+        .legal-text h4 { margin: 0; color: var(--primary); font-weight: 700;}
+        .legal-text p { margin: 5px 0 0 0; font-size: 13px; color: #475569; }
+
+        /* Título Inferior */
+        .modules-title {
+            font-size: 22px;
+            color: var(--primary);
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: -0.5px;
+            border-bottom: 2px solid #e2e8f0;
+            padding-bottom: 10px;
+            margin-top: 10px;
+        }
+
+        /* Línea de Tiempo (Mini) */
+        .timeline-mini {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            background: white;
+            padding: 25px 15px;
+            border-radius: 8px;
+            border: 1px solid #e2e8f0;
+        }
+        .t-step { 
+            text-align: center; 
+            font-size: 12px; 
+            color: #94a3b8; 
+            font-weight: 600; 
+            width: 170px; 
+            position: relative;
+            flex-shrink: 0;
+        }
+        .t-step i { font-size: 16px; margin-bottom: 5px; }
+        .t-step.active { color: var(--success); }
+        .t-step.in-progress { color: var(--accent); }
+        .t-step span { display: block; font-size: 11px; font-weight: 400; color: #64748b; margin-top: 4px; line-height: 1.3;}
+        
+        .t-line { flex-grow: 1; height: 2px; background: #e2e8f0; margin: 10px 0 0 0; position: relative; }
+        .t-line.done::after { content: ''; position: absolute; left: 0; top: 0; height: 100%; width: 100%; background: var(--success); }
+        .t-line.half::after { content: ''; position: absolute; left: 0; top: 0; height: 100%; width: 50%; background: var(--accent); }
+
     </style>
 </head>
 <body>
-    <div id="root"></div>
 
-    <script type="text/babel">
-        const { useState, useEffect } = React;
+    <div class="one-pager">
+        
+        <!-- HEADER -->
+        <header class="header">
+            <div>
+                <h1>Estrategia <span>Modular PAM</span></h1>
+                <p style="margin: 0; color: #64748b;">Plan de Implementación y Protocolo de Aceptación</p>
+            </div>
+            <div class="meta">
+                <strong>MINTRAB 2025</strong><br>
+                Departamento de Informática
+            </div>
+        </header>
 
-        // --- ICONOS ---
-        const Icons = {
-            Layout: () => <svg width="20" height="20" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24"><rect width="18" height="18" x="3" y="3" rx="2"/><path d="M3 9h18"/><path d="M9 21V9"/></svg>,
-            ArrowLeft: () => <svg width="20" height="20" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24"><path d="m12 19-7-7 7-7"/><path d="M19 12H5"/></svg>,
-            Check: () => <svg width="20" height="20" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>,
-            Zap: () => <svg width="20" height="20" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>,
-            FileText: () => <svg width="20" height="20" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24"><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/><polyline points="14 2 14 8 20 8"/><line x1="16" x2="8" y1="13" y2="13"/><line x1="16" x2="8" y1="17" y2="17"/><line x1="10" x2="8" y1="9" y2="9"/></svg>,
-            Sparkles: () => <svg width="20" height="20" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24"><path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275Z"/></svg>,
-            TrendingUp: () => <svg width="20" height="20" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/></svg>,
-            Box: () => <svg width="20" height="20" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg>,
-            X: () => <svg width="20" height="20" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24"><path d="M18 6 6 18"/><path d="m6 6 18 12"/></svg>,
-            Loader: ({className}) => <svg className={className} width="20" height="20" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24"><path d="M21 12a9 9 0 1 1-6.219-8.56"/></svg>,
-            Server: () => <svg width="20" height="20" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24"><rect width="20" height="8" x="2" y="2" rx="2" ry="2"/><rect width="20" height="8" x="2" y="14" rx="2" ry="2"/><line x1="6" x2="6.01" y1="6" y2="6"/><line x1="6" x2="6.01" y1="18" y2="18"/></svg>,
-            Tablet: () => <svg width="20" height="20" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24"><rect width="16" height="20" x="4" y="2" rx="2" ry="2"/><line x1="12" x2="12.01" y1="18" y2="18"/></svg>,
-            Clock: () => <svg width="12" height="12" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>,
-            CheckSmall: () => <svg width="12" height="12" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>,
-            ChevronDown: () => <svg width="32" height="32" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></svg>,
-            Users: () => <svg width="48" height="48" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
-        };
-
-        // --- COMPONENTE VELOCÍMETRO (GAUGE) ---
-        const GaugeChart = ({ value }) => {
-            const radius = 40;
-            const circumference = Math.PI * radius; 
-            const arcLength = 126; 
-            const strokeDashoffset = arcLength - ((value / 100) * arcLength);
-
-            const getColor = (v) => {
-                if(v >= 80) return "#10b981"; 
-                if(v >= 50) return "#004a8f"; 
-                return "#f43f5e"; 
-            };
-
-            return (
-                <div className="relative w-32 h-20 flex flex-col items-center justify-end">
-                    <svg viewBox="0 0 100 60" className="w-full h-full overflow-visible">
-                        <path d="M 10 50 A 40 40 0 0 1 90 50" fill="none" stroke="#e2e8f0" strokeWidth="12" strokeLinecap="round" />
-                        <path 
-                            d="M 10 50 A 40 40 0 0 1 90 50" 
-                            fill="none" 
-                            stroke={getColor(value)} 
-                            strokeWidth="12" 
-                            strokeLinecap="round" 
-                            strokeDasharray={arcLength}
-                            strokeDashoffset={strokeDashoffset}
-                            className="transition-all duration-1000 ease-out"
-                        />
-                    </svg>
-                    <div className="absolute bottom-2 text-center">
-                        <span className="text-3xl font-bold text-slate-900">{value}%</span>
-                    </div>
-                    <span className="text-xs text-slate-500 font-medium absolute -bottom-4">Completado</span>
+        <!-- SIDEBAR -->
+        <aside class="sidebar">
+            <div class="status-card">
+                <h3>ESTADO ACTUAL</h3>
+                <div class="big-icon"><i class="fa-solid fa-clipboard-check"></i></div>
+                <p>MÓDULO 1:<br>INSCRIPCIÓN DEL ADULTO MAYOR</p>
+                <div style="font-size: 12px; margin-top: 5px; color: #166534; font-weight: bold;">(FINALIZADO)</div>
+                <div style="font-size: 12px; margin-top: 10px; border-top: 1px solid #bbf7d0; padding-top: 5px; color: #15803d;">
+                    Pendiente: Aval QA
                 </div>
-            );
-        };
+            </div>
 
-        const App = () => {
-            // Función para scrollear hacia abajo
-            const scrollToContent = () => {
-                const element = document.getElementById('dashboard-content');
-                if (element) {
-                    element.scrollIntoView({ behavior: 'smooth' });
-                }
-            };
-
-            // DATOS: PROYECTO ÚNICO (PAM)
-            const project = {
-                id: 3,
-                name: "Plataforma Programa Adulto Mayor (Previsión Social)",
-                lead: "Dirección de Previsión Social", 
-                overallProgress: 53,
-                status: "En Progreso",
-                dueDate: "10 Nov 2023",
-                objective: "Implementar una solución tecnológica integral para la modernización del Programa del Aporte Económico del Adulto Mayor (PAM), orientada a elevar la calidad de atención al usuario y asegurar la integridad absoluta de los datos mediante la interoperabilidad institucional. Asimismo, busca maximizar la eficiencia del personal operativo, automatizando flujos de trabajo para eliminar procesos manuales engorrosos, reducir drásticamente los tiempos de gestión y erradicar la duplicidad de esfuerzos.",
-                modules: [
-                    { name: "Inscripción del Adulto Mayor", status: "Finalizado" },
-                    { name: "Estudio Socioeconómico y Notificaciones", status: "Proceso de Desarrollo" },
-                    { name: "Nómina", status: "Proceso de Desarrollo" },
-                    { name: "Jurídico", status: "Proceso de Desarrollo" },
-                    { name: "Generación de Carnets", status: "Proceso de Desarrollo" }
-                ],
-                improvements: [
-                    "Inscripción Acelerada (Semanas a Minutos): Reducción drástica del tiempo de atención y registro, pasando de procesos manuales diferidos a una gestión digital inmediata.",
-                    "Integridad de Datos (Verificación Interinstitucional con RENAP): El sistema asegura la calidad de la información mediante la verificación directa de los datos generales contra la base de datos de RENAP.",
-                    "Generación Automática de Certificaciones: El sistema obtiene y adjunta la Certificación de Nacimiento directamente desde RENAP al expediente digital, sin intervención manual.",
-                    "Verificación Interinstitucional Preventiva: Realización de cruces de información en tiempo real para verificar si existen impedimentos legales o administrativos antes de iniciar el trámite formal.",
-                    "Emisión de Constancias con Justificación (Positiva/Negativa): Generación automática de documentos de resolución detallando explícitamente la causa en caso de rechazo.",
-                    "Enriquecimiento de Datos de Ubicación: Captura precisa de geolocalización y estandarización de direcciones.",
-                    "Planificación y Creación de Rutas de Visita: Herramienta que permite diseñar y organizar manualmente las rutas de trabajo para el personal operativo.",
-                    "Asignación Dinámica de Expedientes: Distribución controlada de casos a los trabajadores sociales basada en la carga laboral actual y zonificación."
-                ],
-                phaseDetails: [
-                    { name: "Recopilación de Requerimientos", progress: 88, status: "En Proceso", responsible: "Dirección de Sistemas de Información (DISI)" },
-                    { name: "Análisis y Diseño", progress: 42, status: "En Proceso", responsible: "Dirección de Sistemas de Información (DISI)" },
-                    { name: "Desarrollo", progress: 46, status: "En Proceso", responsible: "Dirección de Sistemas de Información (DISI)" },
-                    { name: "Pruebas de Aceptación", progress: 0, status: "No Iniciado", responsible: "Programa de Aporte Económico del Adulto Mayor (PAM)" },
-                    { name: "Capacitación", progress: 0, status: "No Iniciado", responsible: "Programa de Aporte Económico del Adulto Mayor (PAM)" },
-                    { name: "Implementación", progress: 0, status: "No Iniciado", responsible: "Programa de Aporte Económico del Adulto Mayor (PAM)" }
-                ]
-            };
-
-            const getStatusColor = (s) => s === 'Completado' ? 'bg-emerald-100 text-emerald-700' : 'bg-mintrab-light text-white';
-            const getPhaseColor = (v) => v === 100 ? 'bg-emerald-500' : v > 0 ? 'bg-mintrab-light' : 'bg-slate-200';
-            
-            // Helper para color de estado de módulo
-            const getModuleStatusStyle = (status) => {
-                if (status === 'Finalizado') return 'bg-emerald-100 text-emerald-700 border-emerald-200';
-                if (status === 'Proceso de Desarrollo') return 'bg-mintrab-50 text-mintrab-light border-mintrab-light/30';
-                return 'bg-amber-50 text-amber-700 border-amber-200'; 
-            };
-
-            return (
-                <div className="min-h-screen">
-                    {/* NAVBAR CON COLOR MINTRAB */}
-                    <nav className="bg-mintrab border-b border-mintrab-light px-6 py-3 sticky top-0 z-50 shadow-md">
-                        <div className="max-w-7xl mx-auto flex items-center gap-4">
-                            {/* LOGO MINTRAB - URL ONLINE */}
-                            <div className="bg-white p-1.5 rounded-lg shadow-sm shrink-0">
-                                <img 
-                                    src="https://upload.wikimedia.org/wikipedia/commons/f/f9/Logotipo-MINTRAB-2024-2028_AZUL_H.png" 
-                                    alt="Ministerio de Trabajo" 
-                                    className="h-10 w-auto object-contain"
-                                    onError={(e) => {
-                                        // Fallback si no encuentra la imagen
-                                        e.target.style.display = 'none';
-                                        e.target.parentElement.innerHTML = '<span class="text-xs font-bold text-mintrab px-2">MINTRAB</span>';
-                                    }}
-                                />
-                            </div>
-                            
-                            {/* Separador */}
-                            <div className="h-8 w-px bg-white/20 hidden md:block"></div>
-
-                            <div className="flex flex-col md:flex-row md:items-baseline md:gap-2">
-                                <span className="font-bold text-white text-lg tracking-wide leading-tight">Programa de Aporte Económico del Adulto Mayor (PAM)</span>
-                                <span className="text-blue-200 text-xs md:text-sm font-light">MINTRAB 2025</span>
-                            </div>
+            <!-- RECURSOS HUMANOS -->
+            <div class="req-card">
+                <h3>RECURSOS HUMANOS REQUERIDOS (PAM)</h3>
+                <ul class="req-list">
+                    <li>
+                        <i class="fa-solid fa-users-viewfinder"></i>
+                        <div>
+                            <strong>Pruebas QA (1)</strong><br>
+                            Validación funcional.
                         </div>
-                    </nav>
-
-                    {/* --- PORTADA / HERO SECTION --- */}
-                    <div className="relative h-screen flex flex-col justify-center items-center text-white hero-pattern overflow-hidden" style={{marginTop: '-73px'}}>
-                        <div className="absolute top-0 left-0 w-64 h-64 bg-mintrab-light opacity-20 rounded-full blur-3xl -translate-x-1/2 -translate-y-1/2"></div>
-                        <div className="absolute bottom-0 right-0 w-96 h-96 bg-blue-400 opacity-10 rounded-full blur-3xl translate-x-1/3 translate-y-1/3"></div>
-
-                        <div className="z-10 text-center px-6 max-w-4xl animate-in mt-20">
-                            <div className="flex justify-center mb-6">
-                                <div className="p-4 bg-white/10 rounded-full backdrop-blur-sm border border-white/20">
-                                    <Icons.Users />
-                                </div>
-                            </div>
-                            <h1 className="text-4xl md:text-6xl font-bold mb-4 tracking-tight leading-tight">
-                                Programa de Aporte Económico del Adulto Mayor (PAM)
-                            </h1>
-                            <div className="h-1 w-24 bg-blue-400 mx-auto mb-6 rounded-full"></div>
-                            <p className="text-lg md:text-xl text-blue-100 font-light tracking-wide">
-                                Ministerio de Trabajo y Previsión Social
-                            </p>
-                            <p className="text-sm md:text-base text-blue-200 mt-2 font-semibold">
-                                Informe de Proyectos 2025
-                            </p>
+                    </li>
+                    <li>
+                        <i class="fa-solid fa-book-open"></i>
+                        <div>
+                            <strong>Manuales (1)</strong><br>
+                            Usuario y Procedimientos.
                         </div>
-
-                        {/* BOTÓN CON ACCIÓN SCROLL */}
-                        <div 
-                            onClick={scrollToContent} 
-                            className="absolute bottom-10 animate-bounce-slow text-blue-200 flex flex-col items-center gap-2 cursor-pointer opacity-80 hover:opacity-100 transition-opacity"
-                        >
-                            <span className="text-xs uppercase tracking-widest font-semibold">Ver Reporte Detallado</span>
-                            <Icons.ChevronDown />
+                    </li>
+                    <li>
+                        <i class="fa-solid fa-chalkboard-user"></i>
+                        <div>
+                            <strong>Capacitador (1)</strong><br>
+                            Ejecutar plan de capacitación.
                         </div>
-                    </div>
+                    </li>
+                </ul>
+            </div>
+        </aside>
 
-                    {/* --- CONTENIDO PRINCIPAL (DASHBOARD) --- */}
-                    <main id="dashboard-content" className="bg-slate-50 min-h-screen border-t-4 border-mintrab-light">
-                        <div className="max-w-7xl mx-auto p-6 space-y-8 py-12">
-                            
-                            {/* TITULO Y ESTADO */}
-                            <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 border-b border-slate-200 pb-6">
-                                <div>
-                                    <div className="flex items-center gap-3 mb-2">
-                                        <span className={`px-3 py-1 rounded-full text-xs font-bold ${getStatusColor(project.status)}`}>{project.status}</span>
-                                        <span className="text-sm text-slate-500 font-medium">{project.lead}</span>
-                                    </div>
-                                    <h1 className="text-3xl font-bold text-mintrab">{project.name}</h1>
-                                </div>
-                            </div>
+        <!-- MAIN CONTENT -->
+        <main class="main-content">
+            <h2 class="section-title"><i class="fa-solid fa-file-signature"></i> Ciclo de Aprobación por Módulo</h2>
+            <p style="font-size: 14px; color: #475569; margin-bottom: 25px;">
+                Para garantizar la transparencia, <strong>cada fase</strong> finalizará estrictamente con la generación y firma de un documento de aval.
+            </p>
 
-                            <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-                                {/* COLUMNA IZQUIERDA: REPORTE Y MEJORAS */}
-                                <div className="lg:col-span-2 space-y-8">
-                                    
-                                    {/* 1. OBJETIVO DEL PROYECTO */}
-                                    <div className="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden relative group hover:shadow-md transition-shadow">
-                                        <div className="absolute top-0 left-0 w-1.5 h-full bg-mintrab"></div>
-                                        <div className="p-6">
-                                            <h2 className="text-lg font-bold text-mintrab flex items-center gap-2 mb-4">
-                                                <div className="p-1.5 bg-mintrab-50 text-mintrab rounded-md"><Icons.FileText /></div>
-                                                Objetivo del Proyecto
-                                            </h2>
-                                            
-                                            <div className="flex flex-col md:flex-row items-center gap-8 mb-6">
-                                                <div className="bg-slate-50 p-6 rounded-lg flex flex-col items-center justify-center min-w-[200px] border border-slate-100">
-                                                    <p className="text-xs text-slate-500 font-medium uppercase mb-4">Avance Global</p>
-                                                    <GaugeChart value={project.overallProgress} />
-                                                </div>
-                                                
-                                                <div className="bg-slate-50 p-6 rounded-lg flex-1 border border-slate-100">
-                                                    <p className="text-sm text-slate-700 leading-relaxed text-justify">
-                                                        {project.objective}
-                                                    </p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    {/* 2. MEJORAS DEL SISTEMA */}
-                                    <div className="bg-white rounded-xl shadow-sm border border-slate-200 p-6">
-                                        <h2 className="text-lg font-bold text-mintrab flex items-center gap-2 mb-6">
-                                            <div className="p-1.5 bg-mintrab-50 text-mintrab rounded-md"><Icons.Zap /></div>
-                                            Mejoras e Impacto del Sistema
-                                        </h2>
-                                        <ul className="space-y-4">
-                                            {project.improvements.map((item, idx) => {
-                                                const parts = item.split(':');
-                                                const title = parts.length > 1 ? parts[0] + ":" : item;
-                                                const desc = parts.length > 1 ? parts.slice(1).join(':') : "";
-
-                                                return (
-                                                    <li key={idx} className="flex items-start gap-3 bg-white p-4 rounded-lg border border-slate-100 shadow-sm hover:border-mintrab-light/30 transition-all hover:shadow-md">
-                                                        <div className="mt-1 text-mintrab shrink-0"><Icons.Check /></div>
-                                                        <div className="text-slate-700 text-sm">
-                                                            <span className="font-bold text-mintrab block mb-1">{title}</span>
-                                                            <span className="text-slate-600 leading-snug">{desc}</span>
-                                                        </div>
-                                                    </li>
-                                                );
-                                            })}
-                                        </ul>
-                                    </div>
-
-                                    {/* Detalle de Fases */}
-                                    <div className="bg-white rounded-xl shadow-sm border border-slate-200 p-6">
-                                        <h2 className="text-lg font-bold text-mintrab mb-6">Desglose Técnico por Fases</h2>
-                                        <div className="space-y-5">
-                                            {project.phaseDetails.map((phase, index) => (
-                                                <div key={index} className="flex flex-col gap-2 p-3 bg-slate-50 rounded-lg border border-slate-100 hover:bg-slate-100 transition-colors">
-                                                    <div className="flex justify-between items-start gap-2">
-                                                        <span className="font-bold text-slate-800 text-sm">{index + 1}. {phase.name}</span>
-                                                        <span className={`text-[10px] uppercase font-bold px-2 py-0.5 rounded whitespace-nowrap ${phase.status === 'En Proceso' ? 'bg-blue-100 text-blue-700' : 'bg-slate-200 text-slate-600'}`}>
-                                                            {phase.status}
-                                                        </span>
-                                                    </div>
-                                                    
-                                                    <div className="flex items-center gap-3">
-                                                        <div className="flex-1 h-2 bg-slate-200 rounded-full overflow-hidden">
-                                                            <div className={`h-full rounded-full transition-all duration-1000 ${getPhaseColor(phase.progress)}`} style={{width: `${phase.progress}%`}}></div>
-                                                        </div>
-                                                        <span className="text-xs font-bold text-slate-600 w-8 text-right">{phase.progress}%</span>
-                                                    </div>
-
-                                                    <div className="text-xs text-slate-500 pt-1">
-                                                        <span className="font-semibold text-mintrab">Responsable:</span> {phase.responsible}
-                                                    </div>
-                                                </div>
-                                            ))}
-                                        </div>
-                                    </div>
-
-                                </div>
-
-                                {/* COLUMNA DERECHA: MÓDULOS E INFO ADICIONAL (TIMELINE) */}
-                                <div className="space-y-6">
-                                    <div className="bg-white rounded-xl shadow-sm border border-slate-200 p-6 sticky top-24">
-                                        <h3 className="text-sm font-bold text-mintrab uppercase tracking-wide mb-6 flex items-center gap-2">
-                                            <Icons.Box /> Módulos del Sistema
-                                        </h3>
-                                        
-                                        <div className="relative pl-2">
-                                            <div className="absolute left-[11px] top-2 h-[calc(100%-24px)] w-0.5 bg-slate-200"></div>
-
-                                            <div className="flex flex-col gap-6">
-                                                {project.modules.map((mod, i) => {
-                                                    const isFinished = mod.status === 'Finalizado';
-                                                    return (
-                                                        <div key={i} className="relative pl-8 group">
-                                                            <div className={`absolute left-0 top-1 w-6 h-6 rounded-full border-4 border-white shadow-sm flex items-center justify-center z-10 ${isFinished ? 'bg-emerald-500' : 'bg-mintrab'}`}>
-                                                                {isFinished ? 
-                                                                    <div className="text-white"><Icons.CheckSmall /></div> : 
-                                                                    <div className="text-white transform scale-75"><Icons.Clock /></div>
-                                                                }
-                                                            </div>
-                                                            
-                                                            <div className="flex flex-col">
-                                                                <span className={`text-sm font-bold ${isFinished ? 'text-emerald-700' : 'text-slate-800'}`}>
-                                                                    {i + 1}. {mod.name}
-                                                                </span>
-                                                                <span className={`text-xs font-medium mt-1 px-2 py-0.5 rounded w-fit ${
-                                                                    isFinished 
-                                                                        ? 'bg-emerald-50 text-emerald-700' 
-                                                                        : 'bg-blue-50 text-blue-700'
-                                                                }`}>
-                                                                    {mod.status}
-                                                                </span>
-                                                            </div>
-                                                        </div>
-                                                    );
-                                                })}
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </main>
+            <!-- Ciclo Visual -->
+            <div class="cycle-wrapper">
+                <!-- Fase 1 -->
+                <div class="cycle-step dev">
+                    <div class="step-num">1</div>
+                    <div style="text-align: center; color: var(--accent); margin-bottom: 5px;"><i class="fa-solid fa-code"></i></div>
+                    <h4>Desarrollo</h4>
+                    <p>Entrega funcional.</p>
+                    <div class="doc-tag"><i class="fa-solid fa-file-contract"></i> Aval Desarrollo</div>
                 </div>
-            );
-        };
+                <i class="fa-solid fa-chevron-right arrow-right"></i>
+                
+                <!-- Fase 2 -->
+                <div class="cycle-step qa">
+                    <div class="step-num">2</div>
+                    <div style="text-align: center; color: var(--warning); margin-bottom: 5px;"><i class="fa-solid fa-magnifying-glass"></i></div>
+                    <h4>Validación QA</h4>
+                    <p>PAM valida reglas.</p>
+                    <div class="doc-tag"><i class="fa-solid fa-file-circle-check"></i> Aval QA</div>
+                </div>
+                <i class="fa-solid fa-chevron-right arrow-right"></i>
 
-        const root = ReactDOM.createRoot(document.getElementById('root'));
-        root.render(<App />);
-    </script>
+                <!-- Fase 3 -->
+                <div class="cycle-step train">
+                    <div class="step-num">3</div>
+                    <div style="text-align: center; color: #8b5cf6; margin-bottom: 5px;"><i class="fa-solid fa-chalkboard-user"></i></div>
+                    <h4>Capacitación</h4>
+                    <p>Usuarios finales.</p>
+                    <div class="doc-tag"><i class="fa-solid fa-file-signature"></i> Aval Capacitación</div>
+                </div>
+                <i class="fa-solid fa-chevron-right arrow-right"></i>
+
+                <!-- Fase 4 -->
+                <div class="cycle-step prod">
+                    <div class="step-num">4</div>
+                    <div style="text-align: center; color: var(--success); margin-bottom: 5px;"><i class="fa-solid fa-check-double"></i></div>
+                    <h4>Cierre / Aceptación</h4>
+                    <p>Certificación de módulo.</p>
+                    <div class="doc-tag"><i class="fa-solid fa-certificate"></i> Acta Final</div>
+                </div>
+            </div>
+
+            <!-- Tabla de Cronograma -->
+            <h2 class="section-title" style="margin-top: 20px; font-size: 16px;"><i class="fa-solid fa-calendar-days"></i> Cronograma de Aprobación (Fechas Sugeridas)</h2>
+            <table class="dates-table">
+                <thead>
+                    <tr>
+                        <th>Módulo</th>
+                        <th>Desarrollo</th>
+                        <th>Validación QA</th>
+                        <th>Capacitación</th>
+                        <th>Puesta en Producción</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="mod-name">1. Inscripción del Adulto Mayor</td>
+                        <td class="date-cell date-done">Finalizado</td>
+                        <td class="date-cell">15 Ene 2025</td>
+                        <td class="date-cell">25 Ene 2025</td>
+                        <td class="prod-cell-merged" rowspan="4">
+                            <i class="fa-solid fa-rocket"></i><br>
+                            Lanzamiento Integral<br>
+                            20 Junio 2025
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="mod-name">2. Estudio Socioeconómico y Notificaciones</td>
+                        <td class="date-cell">20 Feb 2025</td>
+                        <td class="date-cell">28 Feb 2025</td>
+                        <td class="date-cell">10 Mar 2025</td>
+                    </tr>
+                    <tr>
+                        <td class="mod-name">3. Nómina y Jurídico</td>
+                        <td class="date-cell">20 Abr 2025</td>
+                        <td class="date-cell">30 Abr 2025</td>
+                        <td class="date-cell">10 May 2025</td>
+                    </tr>
+                    <tr>
+                        <td class="mod-name">4. Generación de Carnets</td>
+                        <td class="date-cell">01 Jun 2025</td>
+                        <td class="date-cell">10 Jun 2025</td>
+                        <td class="date-cell">15 Jun 2025</td>
+                    </tr>
+                </tbody>
+            </table>
+        </main>
+
+        <!-- FOOTER -->
+        <footer class="footer-section">
+            <div class="legal-box">
+                <i class="fa-solid fa-scale-balanced"></i>
+                <div class="legal-text">
+                    <h4>Acuerdo Administrativo</h4>
+                    <p>Se requiere trabajar paralelamente en el acuerdo legal que dará vida y obligatoriedad al sistema para su lanzamiento.</p>
+                </div>
+            </div>
+
+            <h3 class="modules-title">MÓDULOS DEL SISTEMA DE APORTE ECONOMICO DEL ADULTO MAYOR PAM</h3>
+
+            <div class="timeline-mini">
+                <!-- Mod 1 -->
+                <div class="t-step active">
+                    <i class="fa-solid fa-circle-check"></i><br>Módulo 1<br><span>Inscripción del Adulto Mayor</span>
+                </div>
+                <div class="t-line done"></div>
+                
+                <!-- Mod 2 -->
+                <div class="t-step in-progress">
+                    <i class="fa-solid fa-spinner fa-spin"></i><br>Módulo 2<br><span>Estudio Socioeconómico y Notificaciones</span>
+                </div>
+                <div class="t-line half"></div>
+                
+                <!-- Mod 3 -->
+                <div class="t-step in-progress">
+                    <i class="fa-solid fa-laptop-code"></i><br>Módulo 3<br><span>Nómina y Jurídico</span>
+                </div>
+                <div class="t-line"></div>
+                
+                <!-- Mod 4 -->
+                <div class="t-step">
+                    <i class="fa-regular fa-circle"></i><br>Módulo 4<br><span>Generación de Carnets</span>
+                </div>
+                <div class="t-line"></div>
+                
+                <!-- Go Live -->
+                <div class="t-step">
+                    <i class="fa-solid fa-rocket"></i><br>Go-Live<br><span>Producción</span>
+                </div>
+            </div>
+        </footer>
+
+    </div>
 </body>
 </html>
