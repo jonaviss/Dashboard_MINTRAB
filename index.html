@@ -4,34 +4,25 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Resumen Ejecutivo - PAM 2025</title>
-    <!-- Fuente moderna para apariencia profesional -->
     <link href="https://fonts.googleapis.com/css2?family=Urbanist:wght@300;400;600;700;800&display=swap" rel="stylesheet">
-    <!-- Iconos para ilustrar visualmente -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <style>
         /* --- ESTILOS VISUALES (CSS) --- */
-        /* Reset básico */
-        * {
-            box-sizing: border-box;
-        }
+        * { box-sizing: border-box; }
 
         :root {
-            /* COLOR INSTITUCIONAL (Azul Marino Profundo - Extraído de tu imagen) */
             --primary: #002855; 
-            
-            /* Azul acento para detalles */
             --accent: #005eb8; 
-            
-            /* Colores de estado */
-            --warning: #f59e0b; /* Ambar para QA/Validación */
-            --success: #16a34a; /* Verde para Finalizado/Producción */
-            --text: #334155;    /* Gris oscuro para texto */
-            --bg-gray: #f8fafc; /* Gris muy claro para fondos de secciones */
+            --warning: #f59e0b; 
+            --success: #16a34a; 
+            --text: #334155;    
+            --bg-gray: #f8fafc;
+            --hover-row: #e0f2fe;
         }
 
         body {
             font-family: 'Urbanist', sans-serif;
-            background-color: #cbd5e1; /* Fondo gris externo */
+            background-color: #cbd5e1;
             margin: 0;
             padding: 20px;
             min-height: 100vh;
@@ -39,24 +30,23 @@
             justify-content: center;
         }
 
-        /* Contenedor Principal (Hoja Digital - Full Width) */
         .one-pager {
             background-color: white;
-            width: 100%; /* Ocupa todo el ancho disponible */
+            width: 100%;
             max-width: 100%; 
             min-height: 90vh; 
             padding: 40px;
             box-shadow: 0 10px 25px rgba(0,0,0,0.2);
             display: grid;
-            grid-template-columns: 300px 1fr; /* Columna Izq fija (300px) | Columna Der flexible */
-            grid-template-rows: auto 1fr auto; /* Header | Contenido | Footer */
+            grid-template-columns: 300px 1fr;
+            grid-template-rows: auto 1fr auto;
             gap: 30px; 
-            border-top: 15px solid var(--primary); /* Borde superior institucional */
+            border-top: 15px solid var(--primary);
         }
 
-        /* --- HEADER --- */
+        /* HEADER */
         .header {
-            grid-column: 1 / -1; /* Ocupa todo el ancho */
+            grid-column: 1 / -1;
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -66,7 +56,7 @@
         }
         .header h1 {
             margin: 0;
-            font-size: 32px; /* Ajustado ligeramente para el título largo */
+            font-size: 32px;
             color: var(--primary);
             text-transform: uppercase;
             letter-spacing: -0.5px;
@@ -81,14 +71,12 @@
             min-width: 250px;
         }
 
-        /* --- BARRA LATERAL (SIDEBAR) --- */
+        /* SIDEBAR */
         .sidebar {
             display: flex;
             flex-direction: column;
             gap: 20px;
         }
-
-        /* Tarjeta de Estado */
         .status-card {
             background: #f0fdf4;
             border: 2px solid var(--success);
@@ -100,7 +88,6 @@
         .status-card .big-icon { font-size: 60px; color: var(--success); margin: 10px 0; }
         .status-card p { font-size: 14px; font-weight: bold; color: #14532d; margin: 0; line-height: 1.4; }
 
-        /* Tarjeta de Recursos Humanos */
         .req-card {
             background: #fffbeb;
             border: 1px solid #fcd34d;
@@ -118,7 +105,7 @@
         }
         .req-list i { margin-right: 10px; margin-top: 3px; color: #d97706; }
 
-        /* --- CONTENIDO PRINCIPAL --- */
+        /* MAIN CONTENT */
         .main-content {
             background: var(--bg-gray);
             border-radius: 12px;
@@ -141,7 +128,7 @@
         }
         .section-title i { margin-right: 10px; color: var(--accent); }
 
-        /* Diagrama de Ciclo (4 Pasos) */
+        /* Cycle Diagram */
         .cycle-wrapper {
             display: flex;
             gap: 15px;
@@ -159,18 +146,14 @@
             flex-direction: column;
             align-items: center;
         }
-        
-        /* Bordes de color por fase */
         .cycle-step.dev { border-top: 4px solid var(--accent); }
         .cycle-step.qa { border-top: 4px solid var(--warning); }
-        .cycle-step.train { border-top: 4px solid #8b5cf6; } /* Violeta */
+        .cycle-step.train { border-top: 4px solid #8b5cf6; }
         .cycle-step.prod { border-top: 4px solid var(--success); }
         
-        /* Burbujas numéricas */
         .step-num { 
             position: absolute; top: -10px; right: 10px; 
-            background: var(--text); color: white; 
-            width: 24px; height: 24px; border-radius: 50%; 
+            background: var(--text); color: white; width: 24px; height: 24px; border-radius: 50%; 
             display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: bold;
         }
         .cycle-step.dev .step-num { background: var(--accent); }
@@ -180,160 +163,97 @@
 
         .cycle-step h4 { margin: 10px 0 5px 0; font-size: 15px; color: var(--text); text-align: center; font-weight: 700; text-transform: uppercase;}
         .cycle-step p { font-size: 12px; color: #64748b; line-height: 1.3; margin: 0; text-align: center; }
-        
         .arrow-right { align-self: center; color: #cbd5e1; font-size: 20px; }
-
-        /* Etiquetas de documentos */
         .doc-tag {
-            position: absolute;
-            bottom: 10px;
-            background: #f1f5f9;
-            color: #475569;
-            font-size: 10px;
-            padding: 3px 8px;
-            border-radius: 10px;
-            border: 1px solid #cbd5e1;
-            display: flex;
-            align-items: center;
-            gap: 4px;
-            font-weight: 600;
+            position: absolute; bottom: 10px; background: #f1f5f9; color: #475569; font-size: 10px; padding: 3px 8px; border-radius: 10px; border: 1px solid #cbd5e1; display: flex; align-items: center; gap: 4px; font-weight: 600;
         }
         .doc-tag i { color: var(--primary); }
 
-        /* --- NUEVO: GRID DE ACTIVIDADES PARALELAS (5 Columnas) --- */
+        /* Actividades Paralelas */
         .parallel-grid {
             display: grid;
-            grid-template-columns: repeat(5, 1fr); /* Ajustado a 5 columnas */
+            grid-template-columns: repeat(5, 1fr);
             gap: 15px;
             margin-bottom: 30px;
         }
         .parallel-card {
-            background: white;
-            padding: 15px;
-            border-radius: 8px;
-            border: 1px solid #e2e8f0;
-            border-left: 4px solid var(--primary);
-            box-shadow: 0 2px 4px rgba(0,0,0,0.02);
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
+            background: white; padding: 15px; border-radius: 8px; border: 1px solid #e2e8f0; border-left: 4px solid var(--primary);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.02); display: flex; flex-direction: column; justify-content: center;
         }
-        .parallel-card h5 {
-            margin: 0 0 5px 0;
-            color: var(--primary);
-            font-size: 13px; /* Un poco más pequeño para que quepa */
-            font-weight: 700;
-        }
-        .parallel-card p {
-            margin: 0;
-            font-size: 11px;
-            color: #64748b;
-            line-height: 1.3;
-        }
-        .parallel-card i {
-            font-size: 20px;
-            color: var(--accent);
-            margin-bottom: 8px;
-        }
+        .parallel-card h5 { margin: 0 0 5px 0; color: var(--primary); font-size: 13px; font-weight: 700; }
+        .parallel-card p { margin: 0; font-size: 11px; color: #64748b; line-height: 1.3; }
+        .parallel-card i { font-size: 20px; color: var(--accent); margin-bottom: 8px; }
 
-        /* --- TABLA DE FECHAS --- */
-        .dates-table {
-            width: 100%;
-            border-collapse: collapse;
-            font-size: 13px;
-            margin-top: 10px;
-        }
-        .dates-table th {
-            text-align: left;
-            padding: 10px;
-            background-color: var(--primary);
-            color: white;
-            font-weight: 600;
-            text-transform: uppercase;
-            font-size: 11px;
-            border: 1px solid var(--primary);
-        }
-        
-        .dates-table td {
-            padding: 10px;
-            border: 1px solid #e2e8f0;
-            color: var(--text);
-            vertical-align: middle;
-        }
+        /* Cronograma Table (AHORA INTERACTIVO) */
+        .dates-table { width: 100%; border-collapse: collapse; font-size: 13px; margin-top: 10px; cursor: pointer; }
+        .dates-table th { text-align: left; padding: 10px; background-color: var(--primary); color: white; font-weight: 600; text-transform: uppercase; font-size: 11px; border: 1px solid var(--primary); }
+        .dates-table td { padding: 10px; border: 1px solid #e2e8f0; color: var(--text); vertical-align: middle; }
         .dates-table tr:nth-child(even) { background-color: #f8fafc; }
-        
         .date-cell { font-family: monospace; font-weight: 600; color: var(--primary); }
         .date-done { color: #94a3b8; text-decoration: line-through; }
         .mod-name { font-weight: 700; width: 30%; } 
-        
-        /* Celda Merged para Go-Live */
-        .prod-cell-merged {
-            background-color: #f0fdf4;
-            color: #166534;
-            font-weight: 800;
-            text-align: center;
-            border: 2px solid var(--success) !important;
-            font-size: 14px;
-            text-transform: uppercase;
-        }
+        .prod-cell-merged { background-color: #f0fdf4; color: #166534; font-weight: 800; text-align: center; border: 2px solid var(--success) !important; font-size: 14px; text-transform: uppercase; }
 
-        /* --- FOOTER --- */
-        .footer-section {
-            grid-column: 1 / -1;
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-        }
-        
-        /* Título Inferior */
-        .modules-title {
-            font-size: 22px;
-            color: var(--primary);
-            font-weight: 800;
-            text-transform: uppercase;
-            letter-spacing: -0.5px;
-            border-bottom: 2px solid #e2e8f0;
-            padding-bottom: 10px;
-            margin-top: 10px;
-        }
-
-        /* Línea de Tiempo (Mini) */
-        .timeline-mini {
-            display: flex;
-            align-items: flex-start;
-            justify-content: space-between;
-            background: white;
-            padding: 25px 15px;
-            border-radius: 8px;
-            border: 1px solid #e2e8f0;
-        }
-        /* Ajuste de ancho de los pasos para que quepan 5 módulos + Go-Live */
-        .t-step { 
-            text-align: center; 
-            font-size: 12px; 
-            color: #94a3b8; 
-            font-weight: 600; 
-            width: 140px; /* Reducido ligeramente para acomodar más pasos */
+        /* Efecto Hover para Cronograma */
+        .dates-table tbody tr:hover {
+            background-color: var(--hover-row) !important;
+            transform: translateX(5px);
+            transition: all 0.2s ease;
+            box-shadow: -4px 4px 6px rgba(0,0,0,0.05);
             position: relative;
-            flex-shrink: 0;
+            z-index: 10;
+            border-left: 4px solid var(--accent);
         }
+
+        /* SECCION DE DETALLES (OCULTA POR DEFECTO) */
+        #detail-container {
+            background: white;
+            border: 2px solid var(--accent);
+            border-radius: 12px;
+            padding: 25px;
+            margin-top: 20px; /* Separacion del cronograma */
+            display: none; /* Oculto inicialmente */
+            animation: fadeIn 0.5s;
+        }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
+
+        .detail-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; padding-bottom: 10px; border-bottom: 1px solid #e2e8f0; }
+        .detail-title { font-size: 20px; font-weight: 800; color: var(--primary); }
+        .detail-close { cursor: pointer; color: #64748b; font-size: 20px; }
+        .detail-close:hover { color: #ef4444; }
+
+        .detail-row { display: flex; flex-direction: column; margin-bottom: 15px; }
+        .detail-info { display: flex; justify-content: space-between; margin-bottom: 5px; font-size: 13px; font-weight: 600; color: var(--text); }
+        .detail-resp { font-size: 11px; color: #64748b; font-weight: 400; margin-top: 2px; }
+        
+        .phase-track { background: #e2e8f0; height: 12px; border-radius: 6px; overflow: hidden; width: 100%; position: relative; }
+        .phase-fill { height: 100%; background: var(--primary); width: 0%; transition: width 1s ease-in-out; border-radius: 6px; }
+        .phase-fill.green { background: var(--success); }
+        
+        .status-badge { font-size: 10px; padding: 2px 8px; border-radius: 10px; text-transform: uppercase; font-weight: bold; margin-left: 10px; }
+        .st-done { background: #dcfce7; color: #166534; }
+        .st-process { background: #dbeafe; color: #1e40af; }
+        .st-pending { background: #f1f5f9; color: #64748b; }
+
+        /* Footer */
+        .footer-section { grid-column: 1 / -1; display: flex; flex-direction: column; gap: 20px; }
+        .legal-box { background: #eff6ff; border-left: 5px solid var(--primary); padding: 15px 20px; display: flex; align-items: center; gap: 15px; }
+        .legal-box i { font-size: 30px; color: var(--primary); }
+        .legal-text h4 { margin: 0; color: var(--primary); font-weight: 700;}
+        .legal-text p { margin: 5px 0 0 0; font-size: 13px; color: #475569; }
+        .modules-title { font-size: 22px; color: var(--primary); font-weight: 800; text-transform: uppercase; letter-spacing: -0.5px; border-bottom: 2px solid #e2e8f0; padding-bottom: 10px; margin-top: 10px; }
+        .timeline-mini { display: flex; align-items: flex-start; justify-content: space-between; background: white; padding: 25px 15px; border-radius: 8px; border: 1px solid #e2e8f0; }
+        .t-step { text-align: center; font-size: 12px; color: #94a3b8; font-weight: 600; width: 140px; position: relative; flex-shrink: 0; }
         .t-step i { font-size: 16px; margin-bottom: 5px; }
         .t-step.active { color: var(--success); }
         .t-step.in-progress { color: var(--accent); }
         .t-step span { display: block; font-size: 10px; font-weight: 400; color: #64748b; margin-top: 4px; line-height: 1.3;}
-        
         .t-line { flex-grow: 1; height: 2px; background: #e2e8f0; margin: 10px 0 0 0; position: relative; }
         .t-line.done::after { content: ''; position: absolute; left: 0; top: 0; height: 100%; width: 100%; background: var(--success); }
         .t-line.half::after { content: ''; position: absolute; left: 0; top: 0; height: 100%; width: 50%; background: var(--accent); }
 
-        /* Media Query para pantallas pequeñas */
         @media (max-width: 1024px) {
-            .one-pager {
-                grid-template-columns: 1fr; /* Colapsar a una sola columna */
-                width: 100%;
-                padding: 20px;
-            }
-            .header h1 { font-size: 24px; }
+            .one-pager { grid-template-columns: 1fr; width: 100%; padding: 20px; }
             .cycle-wrapper { flex-wrap: wrap; }
             .parallel-grid { grid-template-columns: repeat(2, 1fr); }
             .timeline-mini { overflow-x: auto; }
@@ -343,187 +263,92 @@
 <body>
 
     <div class="one-pager">
-        
-        <!-- HEADER -->
         <header class="header">
-            <div>
-                <!-- TÍTULO ÚNICO SOLICITADO -->
-                <h1>Plan de Implementación del sistema de programa de aporte economico del adulto mayor-PAM-</h1>
-            </div>
-            <div class="meta">
-                <strong>MINTRAB 2025</strong><br>
-                Dirección de Sistemas de Información DISI
-            </div>
+            <div><h1>Plan de Implementación del sistema de programa de aporte economico del adulto mayor-PAM-</h1></div>
+            <div class="meta"><strong>MINTRAB 2025</strong><br>Dirección de Sistemas de Información DISI</div>
         </header>
 
-        <!-- SIDEBAR -->
         <aside class="sidebar">
             <div class="status-card">
                 <h3>ESTADO ACTUAL</h3>
                 <div class="big-icon"><i class="fa-solid fa-clipboard-check"></i></div>
                 <p>MÓDULO 1:<br>INSCRIPCIÓN DEL ADULTO MAYOR</p>
                 <div style="font-size: 12px; margin-top: 5px; color: #166534; font-weight: bold;">(FINALIZADO)</div>
-                <div style="font-size: 12px; margin-top: 10px; border-top: 1px solid #bbf7d0; padding-top: 5px; color: #15803d;">
-                    Pendiente: Aval QA
-                </div>
+                <div style="font-size: 12px; margin-top: 10px; border-top: 1px solid #bbf7d0; padding-top: 5px; color: #15803d;">Pendiente: Aval QA</div>
             </div>
-
-            <!-- RECURSOS HUMANOS -->
             <div class="req-card">
                 <h3>RECURSOS HUMANOS REQUERIDOS (PAM)</h3>
                 <ul class="req-list">
-                    <li>
-                        <i class="fa-solid fa-users-viewfinder"></i>
-                        <div>
-                            <strong>Pruebas QA (1)</strong><br>
-                            Validación funcional.
-                        </div>
-                    </li>
-                    <li>
-                        <i class="fa-solid fa-book-open"></i>
-                        <div>
-                            <strong>Manuales (1)</strong><br>
-                            Usuario y Procedimientos.
-                        </div>
-                    </li>
-                    <li>
-                        <i class="fa-solid fa-chalkboard-user"></i>
-                        <div>
-                            <strong>Capacitador (1)</strong><br>
-                            Ejecutar plan de capacitación.
-                        </div>
-                    </li>
+                    <li><i class="fa-solid fa-users-viewfinder"></i><div><strong>Pruebas QA (1)</strong><br>Validación funcional.</div></li>
+                    <li><i class="fa-solid fa-book-open"></i><div><strong>Manuales (1)</strong><br>Usuario y Procedimientos.</div></li>
+                    <li><i class="fa-solid fa-chalkboard-user"></i><div><strong>Capacitador (1)</strong><br>Ejecutar plan de capacitación.</div></li>
                 </ul>
             </div>
         </aside>
 
-        <!-- MAIN CONTENT -->
         <main class="main-content">
             <h2 class="section-title"><i class="fa-solid fa-file-signature"></i> Ciclo de Aprobación por Módulo</h2>
-            
-            <!-- Ciclo Visual -->
             <div class="cycle-wrapper">
-                <!-- Fase 1: Desarrollo -->
                 <div class="cycle-step dev">
-                    <div class="step-num">1</div>
-                    <div style="text-align: center; color: var(--accent); margin-bottom: 5px;"><i class="fa-solid fa-code"></i></div>
-                    <h4>Desarrollo</h4>
-                    <p>Entrega y presentación.</p>
-                    <div class="doc-tag"><i class="fa-solid fa-laptop-code"></i> Presentación Módulo</div>
-                </div>
-                
-                <i class="fa-solid fa-chevron-right arrow-right"></i>
-
-                <!-- Fase 2: Validación QA -->
+                    <div class="step-num">1</div><h4>Desarrollo</h4><p>Entrega y presentación.</p><div class="doc-tag"><i class="fa-solid fa-laptop-code"></i> Presentación Módulo</div>
+                </div><i class="fa-solid fa-chevron-right arrow-right"></i>
                 <div class="cycle-step qa">
-                    <div class="step-num">2</div>
-                    <div style="text-align: center; color: var(--warning); margin-bottom: 5px;"><i class="fa-solid fa-magnifying-glass"></i></div>
-                    <h4>Validación QA</h4>
-                    <p>Ejecución y doc. de pruebas.</p>
-                    <div class="doc-tag"><i class="fa-solid fa-file-pen"></i> Formatos QA</div>
-                </div>
-
-                <i class="fa-solid fa-chevron-right arrow-right"></i>
-
-                <!-- Fase 3: Capacitación -->
+                    <div class="step-num">2</div><h4>Validación QA</h4><p>Ejecución y doc. de pruebas.</p><div class="doc-tag"><i class="fa-solid fa-file-pen"></i> Formatos QA</div>
+                </div><i class="fa-solid fa-chevron-right arrow-right"></i>
                 <div class="cycle-step train">
-                    <div class="step-num">3</div>
-                    <div style="text-align: center; color: #8b5cf6; margin-bottom: 5px;"><i class="fa-solid fa-chalkboard-user"></i></div>
-                    <h4>Capacitación</h4>
-                    <p>Transferencia a usuarios.</p>
-                    <div class="doc-tag"><i class="fa-solid fa-users-rectangle"></i> Listados Asistencia</div>
-                </div>
-
-                <i class="fa-solid fa-chevron-right arrow-right"></i>
-
-                <!-- Fase 4: Cierre / Aceptación -->
+                    <div class="step-num">3</div><h4>Capacitación</h4><p>Transferencia a usuarios.</p><div class="doc-tag"><i class="fa-solid fa-users-rectangle"></i> Listados Asistencia</div>
+                </div><i class="fa-solid fa-chevron-right arrow-right"></i>
                 <div class="cycle-step prod">
-                    <div class="step-num">4</div>
-                    <div style="text-align: center; color: var(--success); margin-bottom: 5px;"><i class="fa-solid fa-check-double"></i></div>
-                    <h4>Cierre / Aceptación</h4>
-                    <p>Validación oficial PAM.</p>
-                    <div class="doc-tag"><i class="fa-solid fa-envelope-open-text"></i> Oficio Validación</div>
+                    <div class="step-num">4</div><h4>Cierre / Aceptación</h4><p>Validación oficial PAM.</p><div class="doc-tag"><i class="fa-solid fa-envelope-open-text"></i> Oficio Validación</div>
                 </div>
             </div>
 
-            <!-- NUEVA SECCIÓN: ACTIVIDADES EN PARALELO (5 ITEMS) -->
             <h2 class="section-title"><i class="fa-solid fa-layer-group"></i> Actividades Estratégicas en Paralelo</h2>
             <div class="parallel-grid">
-                <div class="parallel-card">
-                    <i class="fa-solid fa-database"></i>
-                    <h5>Migración de datos del SIAM</h5>
-                    <p>Traspaso de registros históricos.</p>
-                </div>
-                <div class="parallel-card">
-                    <i class="fa-solid fa-scale-balanced"></i>
-                    <h5>Acuerdo Administrativo</h5>
-                    <p>Gestión legal para respaldo.</p>
-                </div>
-                <div class="parallel-card">
-                    <i class="fa-solid fa-book-open"></i>
-                    <h5>Creación del Manual de Usuario</h5>
-                    <p>Documentación técnica.</p>
-                </div>
-                <div class="parallel-card">
-                    <i class="fa-solid fa-file-shield"></i>
-                    <h5>Actualización del Manual de Procedimientos</h5>
-                    <p>Normativa interna.</p>
-                </div>
-                <div class="parallel-card">
-                    <i class="fa-solid fa-bullhorn"></i>
-                    <h5>Planificación para Campaña de Difusión</h5>
-                    <p>Socialización del cambio.</p>
-                </div>
+                <div class="parallel-card"><i class="fa-solid fa-database"></i><h5>Migración de datos del SIAM</h5><p>Traspaso de registros históricos.</p></div>
+                <div class="parallel-card"><i class="fa-solid fa-scale-balanced"></i><h5>Acuerdo Administrativo</h5><p>Gestión legal para respaldo.</p></div>
+                <div class="parallel-card"><i class="fa-solid fa-book-open"></i><h5>Creación del Manual de Usuario</h5><p>Documentación técnica.</p></div>
+                <div class="parallel-card"><i class="fa-solid fa-file-shield"></i><h5>Actualización del Manual de Procedimientos</h5><p>Normativa interna.</p></div>
+                <div class="parallel-card"><i class="fa-solid fa-bullhorn"></i><h5>Planificación para Campaña de Difusión</h5><p>Socialización del cambio.</p></div>
             </div>
 
-            <!-- Tabla de Cronograma -->
-            <h2 class="section-title" style="margin-top: 0px;"><i class="fa-solid fa-calendar-days"></i> Cronograma de Aprobación (Fechas Sugeridas)</h2>
+            <h2 class="section-title" style="margin-top: 0px;"><i class="fa-solid fa-calendar-days"></i> Cronograma de Aprobación (Clic en fila para ver detalle)</h2>
             <table class="dates-table">
                 <thead>
                     <tr>
-                        <th>Módulo</th>
-                        <th>Desarrollo</th>
-                        <th>Validación QA</th>
-                        <th>Capacitación</th>
-                        <th>Puesta en Producción</th>
+                        <th>Módulo</th><th>Desarrollo</th><th>Validación QA</th><th>Capacitación</th><th>Puesta en Producción</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <!-- Mod 1 -->
-                    <tr>
+                    <tr onclick="showModuleDetails(1)">
                         <td class="mod-name">1. Inscripción del Adulto Mayor</td>
                         <td class="date-cell date-done">Finalizado</td>
                         <td class="date-cell" style="color: #94a3b8;">A definir</td>
                         <td class="date-cell" style="color: #94a3b8;">A definir</td>
-                        <td class="prod-cell-merged" rowspan="5"> <!-- Aumentado el rowspan a 5 -->
-                            <i class="fa-solid fa-rocket"></i><br>
-                            Lanzamiento Integral<br>
+                        <td class="prod-cell-merged" rowspan="5">
+                            <i class="fa-solid fa-rocket"></i><br>Lanzamiento Integral<br>
                             <span style="font-size: 11px; font-weight: 400; color: #166534;">Fecha a definir en reunión</span>
                         </td>
                     </tr>
-                    <!-- Mod 2 -->
-                    <tr>
+                    <tr onclick="showModuleDetails(2)">
                         <td class="mod-name">2. Estudio Socioeconómico y Notificaciones</td>
                         <td class="date-cell" style="color: #94a3b8;">A definir</td>
                         <td class="date-cell" style="color: #94a3b8;">A definir</td>
                         <td class="date-cell" style="color: #94a3b8;">A definir</td>
                     </tr>
-                    <!-- Mod 3 -->
-                    <tr>
-                        <td class="mod-name">3. Nómina</td>
+                    <tr onclick="showModuleDetails(3)">
+                        <td class="mod-name">3. Jurídico</td>
                         <td class="date-cell" style="color: #94a3b8;">A definir</td>
                         <td class="date-cell" style="color: #94a3b8;">A definir</td>
                         <td class="date-cell" style="color: #94a3b8;">A definir</td>
                     </tr>
-                    <!-- Mod 4 -->
-                    <tr>
-                        <td class="mod-name">4. Jurídico</td>
+                    <tr onclick="showModuleDetails(4)">
+                        <td class="mod-name">4. Nómina</td>
                         <td class="date-cell" style="color: #94a3b8;">A definir</td>
                         <td class="date-cell" style="color: #94a3b8;">A definir</td>
                         <td class="date-cell" style="color: #94a3b8;">A definir</td>
                     </tr>
-                    <!-- Mod 5 -->
-                    <tr>
+                    <tr onclick="showModuleDetails(5)">
                         <td class="mod-name">5. Generación de Carnets</td>
                         <td class="date-cell" style="color: #94a3b8;">A definir</td>
                         <td class="date-cell" style="color: #94a3b8;">A definir</td>
@@ -531,52 +356,139 @@
                     </tr>
                 </tbody>
             </table>
-        </main>
 
-        <!-- FOOTER: LEGAL & MODULES -->
-        <footer class="footer-section">
-            <!-- TÍTULO DE MÓDULOS -->
-            <h3 class="modules-title">MÓDULOS DEL SISTEMA DE APORTE ECONOMICO DEL ADULTO MAYOR PAM</h3>
-
-            <!-- Línea de Tiempo General -->
-            <div class="timeline-mini">
-                <!-- Mod 1 -->
-                <div class="t-step active">
-                    <i class="fa-solid fa-circle-check"></i><br>Módulo 1<br><span>Inscripción</span>
+            <!-- CONTENEDOR DE DETALLE (DINÁMICO) -->
+            <div id="detail-container">
+                <div class="detail-header">
+                    <div class="detail-title" id="detail-title">Desglose Técnico: Módulo</div>
+                    <div class="detail-close" onclick="hideDetails()"><i class="fa-solid fa-times"></i></div>
                 </div>
-                <div class="t-line done"></div>
-                
-                <!-- Mod 2 -->
-                <div class="t-step in-progress">
-                    <i class="fa-solid fa-spinner fa-spin"></i><br>Módulo 2<br><span>Estudio SE</span>
-                </div>
-                <div class="t-line half"></div>
-                
-                <!-- Mod 3 -->
-                <div class="t-step in-progress">
-                    <i class="fa-solid fa-money-bill-wave"></i><br>Módulo 3<br><span>Nómina</span>
-                </div>
-                <div class="t-line"></div>
-                
-                <!-- Mod 4 -->
-                <div class="t-step">
-                    <i class="fa-solid fa-gavel"></i><br>Módulo 4<br><span>Jurídico</span>
-                </div>
-                <div class="t-line"></div>
-
-                 <!-- Mod 5 -->
-                 <div class="t-step">
-                    <i class="fa-regular fa-id-card"></i><br>Módulo 5<br><span>Carnets</span>
-                </div>
-                <div class="t-line"></div>
-                
-                <!-- Go Live -->
-                <div class="t-step">
-                    <i class="fa-solid fa-rocket"></i><br>Go-Live<br><span>Producción</span>
+                <div id="detail-rows">
+                    <!-- Las barras se generarán aquí con JS -->
                 </div>
             </div>
-        </footer>
+        </main>
 
+        <footer class="footer-section">
+            <h3 class="modules-title">MÓDULOS DEL SISTEMA DE APORTE ECONOMICO DEL ADULTO MAYOR PAM</h3>
+            <div class="timeline-mini">
+                <div class="t-step active"><i class="fa-solid fa-circle-check"></i><br>Módulo 1<br><span>Inscripción</span></div><div class="t-line done"></div>
+                <div class="t-step in-progress"><i class="fa-solid fa-spinner fa-spin"></i><br>Módulo 2<br><span>Estudio SE</span></div><div class="t-line half"></div>
+                <div class="t-step"><i class="fa-solid fa-gavel"></i><br>Módulo 3<br><span>Jurídico</span></div><div class="t-line"></div>
+                <div class="t-step in-progress"><i class="fa-solid fa-money-bill-wave"></i><br>Módulo 4<br><span>Nómina</span></div><div class="t-line"></div>
+                <div class="t-step"><i class="fa-regular fa-id-card"></i><br>Módulo 5<br><span>Carnets</span></div><div class="t-line"></div>
+                <div class="t-step"><i class="fa-solid fa-rocket"></i><br>Go-Live<br><span>Producción</span></div>
+            </div>
+        </footer>
     </div>
+
+    <script>
+        const modulesData = {
+            1: {
+                name: "1. Inscripción del Adulto Mayor",
+                phases: [
+                    { name: "1. Recopilación de Requerimientos", pct: 100, resp: "Dirección de Sistemas de Información (DISI)" },
+                    { name: "2. Análisis y Diseño", pct: 100, resp: "Dirección de Sistemas de Información (DISI)" },
+                    { name: "3. Desarrollo", pct: 100, resp: "Dirección de Sistemas de Información (DISI)" },
+                    { name: "4. Pruebas de Aceptación (QA)", pct: 0, resp: "Programa de Aporte Económico del Adulto Mayor (PAM)" },
+                    { name: "5. Capacitación", pct: 0, resp: "Programa de Aporte Económico del Adulto Mayor (PAM)" },
+                    { name: "6. Implementación", pct: 0, resp: "Programa de Aporte Económico del Adulto Mayor (PAM)" }
+                ]
+            },
+            2: {
+                name: "2. Estudio Socioeconómico y Notificaciones",
+                phases: [
+                    { name: "1. Recopilación de Requerimientos", pct: 80, resp: "Dirección de Sistemas de Información (DISI)" },
+                    { name: "2. Análisis y Diseño", pct: 10, resp: "Dirección de Sistemas de Información (DISI)" },
+                    { name: "3. Desarrollo", pct: 5, resp: "Dirección de Sistemas de Información (DISI)" },
+                    { name: "4. Pruebas de Aceptación (QA)", pct: 0, resp: "Programa de Aporte Económico del Adulto Mayor (PAM)" },
+                    { name: "5. Capacitación", pct: 0, resp: "Programa de Aporte Económico del Adulto Mayor (PAM)" },
+                    { name: "6. Implementación", pct: 0, resp: "Programa de Aporte Económico del Adulto Mayor (PAM)" }
+                ]
+            },
+            3: {
+                name: "3. Jurídico",
+                phases: [
+                    { name: "1. Recopilación de Requerimientos", pct: 80, resp: "Dirección de Sistemas de Información (DISI)" },
+                    { name: "2. Análisis y Diseño", pct: 5, resp: "Dirección de Sistemas de Información (DISI)" },
+                    { name: "3. Desarrollo", pct: 3, resp: "Dirección de Sistemas de Información (DISI)" },
+                    { name: "4. Pruebas de Aceptación (QA)", pct: 0, resp: "Programa de Aporte Económico del Adulto Mayor (PAM)" },
+                    { name: "5. Capacitación", pct: 0, resp: "Programa de Aporte Económico del Adulto Mayor (PAM)" },
+                    { name: "6. Implementación", pct: 0, resp: "Programa de Aporte Económico del Adulto Mayor (PAM)" }
+                ]
+            },
+            4: {
+                name: "4. Nómina",
+                phases: [
+                    { name: "1. Recopilación de Requerimientos", pct: 80, resp: "Dirección de Sistemas de Información (DISI)" },
+                    { name: "2. Análisis y Diseño", pct: 0, resp: "Dirección de Sistemas de Información (DISI)" },
+                    { name: "3. Desarrollo", pct: 3, resp: "Dirección de Sistemas de Información (DISI)" },
+                    { name: "4. Pruebas de Aceptación (QA)", pct: 0, resp: "Programa de Aporte Económico del Adulto Mayor (PAM)" },
+                    { name: "5. Capacitación", pct: 0, resp: "Programa de Aporte Económico del Adulto Mayor (PAM)" },
+                    { name: "6. Implementación", pct: 0, resp: "Programa de Aporte Económico del Adulto Mayor (PAM)" }
+                ]
+            },
+            5: {
+                name: "5. Generación de Carnets",
+                phases: [
+                    { name: "1. Recopilación de Requerimientos", pct: 80, resp: "Dirección de Sistemas de Información (DISI)" },
+                    { name: "2. Análisis y Diseño", pct: 80, resp: "Dirección de Sistemas de Información (DISI)" },
+                    { name: "3. Desarrollo", pct: 80, resp: "Dirección de Sistemas de Información (DISI)" },
+                    { name: "4. Pruebas de Aceptación (QA)", pct: 0, resp: "Programa de Aporte Económico del Adulto Mayor (PAM)" },
+                    { name: "5. Capacitación", pct: 0, resp: "Programa de Aporte Económico del Adulto Mayor (PAM)" },
+                    { name: "6. Implementación", pct: 0, resp: "Programa de Aporte Económico del Adulto Mayor (PAM)" }
+                ]
+            }
+        };
+
+        function showModuleDetails(moduleId) {
+            const container = document.getElementById('detail-container');
+            const titleEl = document.getElementById('detail-title');
+            const rowsEl = document.getElementById('detail-rows');
+            const module = modulesData[moduleId];
+
+            titleEl.textContent = "Desglose Técnico: " + module.name;
+
+            let html = '';
+            module.phases.forEach(phase => {
+                let badgeClass = 'st-pending';
+                let badgeText = 'NO INICIADO';
+                let fillClass = '';
+                
+                if(phase.pct === 100) {
+                    badgeClass = 'st-done';
+                    badgeText = 'FINALIZADO';
+                    fillClass = 'green';
+                } else if(phase.pct > 0) {
+                    badgeClass = 'st-process';
+                    badgeText = 'EN PROCESO';
+                }
+
+                html += `
+                <div class="detail-row">
+                    <div class="detail-info">
+                        <span>${phase.name}</span>
+                        <span class="status-badge ${badgeClass}">${badgeText}</span>
+                    </div>
+                    <div class="phase-track">
+                        <div class="phase-fill ${fillClass}" style="width: ${phase.pct}%"></div>
+                    </div>
+                    <div style="display:flex; justify-content:space-between; align-items:center;">
+                        <span class="detail-resp">Responsable: ${phase.resp}</span>
+                        <span style="font-size:12px; font-weight:700; color:#002855;">${phase.pct}%</span>
+                    </div>
+                </div>
+                `;
+            });
+
+            rowsEl.innerHTML = html;
+            container.style.display = 'block';
+            container.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+
+        function hideDetails() {
+            document.getElementById('detail-container').style.display = 'none';
+        }
+    </script>
 </body>
 </html>
