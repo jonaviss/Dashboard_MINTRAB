@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <style>
         /* --- ESTILOS VISUALES (CSS) --- */
-        /* Reset básico para asegurar que el ancho funcione bien */
+        /* Reset básico */
         * {
             box-sizing: border-box;
         }
@@ -33,7 +33,7 @@
             font-family: 'Urbanist', sans-serif;
             background-color: #cbd5e1; /* Fondo gris externo */
             margin: 0;
-            padding: 20px; /* Margen externo mínimo */
+            padding: 20px;
             min-height: 100vh;
             display: flex;
             justify-content: center;
@@ -43,14 +43,14 @@
         .one-pager {
             background-color: white;
             width: 100%; /* Ocupa todo el ancho disponible */
-            max-width: 100%; /* Asegura que no se desborde */
+            max-width: 100%; 
             min-height: 90vh; 
             padding: 40px;
             box-shadow: 0 10px 25px rgba(0,0,0,0.2);
             display: grid;
             grid-template-columns: 300px 1fr; /* Columna Izq fija (300px) | Columna Der flexible */
             grid-template-rows: auto 1fr auto; /* Header | Contenido | Footer */
-            gap: 30px; /* Espacio entre columnas aumentado un poco */
+            gap: 30px; 
             border-top: 15px solid var(--primary); /* Borde superior institucional */
         }
 
@@ -72,13 +72,13 @@
             letter-spacing: -0.5px;
             font-weight: 800;
             line-height: 1.2;
-            max-width: 800px; /* Limita el ancho para que no choque con la meta data */
+            max-width: 800px;
         }
         .header .meta {
             text-align: right;
             font-size: 14px;
             color: #64748b;
-            min-width: 200px;
+            min-width: 250px;
         }
 
         /* --- BARRA LATERAL (SIDEBAR) --- */
@@ -200,10 +200,10 @@
         }
         .doc-tag i { color: var(--primary); }
 
-        /* --- NUEVO: GRID DE ACTIVIDADES PARALELAS --- */
+        /* --- NUEVO: GRID DE ACTIVIDADES PARALELAS (5 Columnas) --- */
         .parallel-grid {
             display: grid;
-            grid-template-columns: repeat(4, 1fr);
+            grid-template-columns: repeat(5, 1fr); /* Ajustado a 5 columnas */
             gap: 15px;
             margin-bottom: 30px;
         }
@@ -221,7 +221,7 @@
         .parallel-card h5 {
             margin: 0 0 5px 0;
             color: var(--primary);
-            font-size: 14px;
+            font-size: 13px; /* Un poco más pequeño para que quepa */
             font-weight: 700;
         }
         .parallel-card p {
@@ -446,28 +446,33 @@
                 </div>
             </div>
 
-            <!-- NUEVA SECCIÓN: ACTIVIDADES EN PARALELO -->
+            <!-- NUEVA SECCIÓN: ACTIVIDADES EN PARALELO (5 ITEMS) -->
             <h2 class="section-title"><i class="fa-solid fa-layer-group"></i> Actividades Estratégicas en Paralelo</h2>
             <div class="parallel-grid">
                 <div class="parallel-card">
+                    <i class="fa-solid fa-database"></i>
+                    <h5>Migración de datos del SIAM</h5>
+                    <p>Traspaso de registros históricos.</p>
+                </div>
+                <div class="parallel-card">
                     <i class="fa-solid fa-scale-balanced"></i>
                     <h5>Acuerdo Administrativo</h5>
-                    <p>Gestión legal para respaldo del sistema.</p>
+                    <p>Gestión legal para respaldo.</p>
                 </div>
                 <div class="parallel-card">
                     <i class="fa-solid fa-book-open"></i>
                     <h5>Creación del Manual de Usuario</h5>
-                    <p>Documentación técnica para uso.</p>
+                    <p>Documentación técnica.</p>
                 </div>
                 <div class="parallel-card">
                     <i class="fa-solid fa-file-shield"></i>
                     <h5>Actualización del Manual de Procedimientos</h5>
-                    <p>Alineación de normativa interna.</p>
+                    <p>Normativa interna.</p>
                 </div>
                 <div class="parallel-card">
                     <i class="fa-solid fa-bullhorn"></i>
                     <h5>Planificación para Campaña de Difusión</h5>
-                    <p>Socialización del cambio a nivel nacional.</p>
+                    <p>Socialización del cambio.</p>
                 </div>
             </div>
 
@@ -499,28 +504,28 @@
                     <!-- Mod 2 -->
                     <tr>
                         <td class="mod-name">2. Estudio Socioeconómico y Notificaciones</td>
-                        <td class="date-cell">20 Feb 2025</td>
+                        <td class="date-cell" style="color: #94a3b8;">A definir</td>
                         <td class="date-cell" style="color: #94a3b8;">A definir</td>
                         <td class="date-cell" style="color: #94a3b8;">A definir</td>
                     </tr>
                     <!-- Mod 3 -->
                     <tr>
                         <td class="mod-name">3. Nómina</td>
-                        <td class="date-cell">20 Mar 2025</td>
+                        <td class="date-cell" style="color: #94a3b8;">A definir</td>
                         <td class="date-cell" style="color: #94a3b8;">A definir</td>
                         <td class="date-cell" style="color: #94a3b8;">A definir</td>
                     </tr>
                     <!-- Mod 4 -->
                     <tr>
                         <td class="mod-name">4. Jurídico</td>
-                        <td class="date-cell">20 Abr 2025</td>
+                        <td class="date-cell" style="color: #94a3b8;">A definir</td>
                         <td class="date-cell" style="color: #94a3b8;">A definir</td>
                         <td class="date-cell" style="color: #94a3b8;">A definir</td>
                     </tr>
                     <!-- Mod 5 -->
                     <tr>
                         <td class="mod-name">5. Generación de Carnets</td>
-                        <td class="date-cell">01 Jun 2025</td>
+                        <td class="date-cell" style="color: #94a3b8;">A definir</td>
                         <td class="date-cell" style="color: #94a3b8;">A definir</td>
                         <td class="date-cell" style="color: #94a3b8;">A definir</td>
                     </tr>
