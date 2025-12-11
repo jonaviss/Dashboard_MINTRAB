@@ -193,6 +193,7 @@
         .date-done { color: #94a3b8; text-decoration: line-through; }
         .mod-name { font-weight: 700; width: 30%; } 
         .prod-cell-merged { background-color: #f0fdf4; color: #166534; font-weight: 800; text-align: center; border: 2px solid var(--success) !important; font-size: 14px; text-transform: uppercase; }
+        .perc-cell { font-weight: 800; text-align: center; color: var(--accent); background-color: #f0f9ff; width: 80px; }
 
         /* Efecto Hover para Cronograma */
         .dates-table tbody tr:hover {
@@ -316,43 +317,24 @@
             <table class="dates-table">
                 <thead>
                     <tr>
-                        <th>Módulo</th><th>Desarrollo</th><th>Validación QA</th><th>Capacitación</th><th>Puesta en Producción</th>
+                        <th>Módulo</th><th style="width: 80px; text-align: center;">Avance</th><th>Desarrollo</th><th>Validación QA</th><th>Capacitación</th><th>Puesta en Producción</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr onclick="showModuleDetails(1)">
-                        <td class="mod-name">1. Inscripción del Adulto Mayor</td>
-                        <td class="date-cell date-done">Finalizado</td>
-                        <td class="date-cell" style="color: #94a3b8;">A definir</td>
-                        <td class="date-cell" style="color: #94a3b8;">A definir</td>
-                        <td class="prod-cell-merged" rowspan="5">
-                            <i class="fa-solid fa-rocket"></i><br>Lanzamiento Integral<br>
-                            <span style="font-size: 11px; font-weight: 400; color: #166534;">Fecha a definir en reunión</span>
-                        </td>
+                        <td class="mod-name">1. Inscripción del Adulto Mayor</td><td class="perc-cell" style="color:#16a34a;">90%</td><td class="date-cell date-done">Finalizado</td><td class="date-cell" style="color: #94a3b8;">A definir</td><td class="date-cell" style="color: #94a3b8;">A definir</td><td class="prod-cell-merged" rowspan="5"><i class="fa-solid fa-rocket"></i><br>Lanzamiento Integral<br><span style="font-size: 11px; font-weight: 400; color: #166534;">Fecha a definir en reunión</span></td>
                     </tr>
                     <tr onclick="showModuleDetails(2)">
-                        <td class="mod-name">2. Estudio Socioeconómico y Notificaciones</td>
-                        <td class="date-cell" style="color: #94a3b8;">A definir</td>
-                        <td class="date-cell" style="color: #94a3b8;">A definir</td>
-                        <td class="date-cell" style="color: #94a3b8;">A definir</td>
+                        <td class="mod-name">2. Estudio Socioeconómico y Notificaciones</td><td class="perc-cell">29%</td><td class="date-cell" style="color: #94a3b8;">A definir</td><td class="date-cell" style="color: #94a3b8;">A definir</td><td class="date-cell" style="color: #94a3b8;">A definir</td>
                     </tr>
                     <tr onclick="showModuleDetails(3)">
-                        <td class="mod-name">3. Jurídico</td>
-                        <td class="date-cell" style="color: #94a3b8;">A definir</td>
-                        <td class="date-cell" style="color: #94a3b8;">A definir</td>
-                        <td class="date-cell" style="color: #94a3b8;">A definir</td>
+                        <td class="mod-name">3. Jurídico</td><td class="perc-cell">26%</td><td class="date-cell" style="color: #94a3b8;">A definir</td><td class="date-cell" style="color: #94a3b8;">A definir</td><td class="date-cell" style="color: #94a3b8;">A definir</td>
                     </tr>
                     <tr onclick="showModuleDetails(4)">
-                        <td class="mod-name">4. Nómina</td>
-                        <td class="date-cell" style="color: #94a3b8;">A definir</td>
-                        <td class="date-cell" style="color: #94a3b8;">A definir</td>
-                        <td class="date-cell" style="color: #94a3b8;">A definir</td>
+                        <td class="mod-name">4. Nómina</td><td class="perc-cell">25%</td><td class="date-cell" style="color: #94a3b8;">A definir</td><td class="date-cell" style="color: #94a3b8;">A definir</td><td class="date-cell" style="color: #94a3b8;">A definir</td>
                     </tr>
                     <tr onclick="showModuleDetails(5)">
-                        <td class="mod-name">5. Generación de Carnets</td>
-                        <td class="date-cell" style="color: #94a3b8;">A definir</td>
-                        <td class="date-cell" style="color: #94a3b8;">A definir</td>
-                        <td class="date-cell" style="color: #94a3b8;">A definir</td>
+                        <td class="mod-name">5. Generación de Carnets</td><td class="perc-cell">72%</td><td class="date-cell" style="color: #94a3b8;">A definir</td><td class="date-cell" style="color: #94a3b8;">A definir</td><td class="date-cell" style="color: #94a3b8;">A definir</td>
                     </tr>
                 </tbody>
             </table>
