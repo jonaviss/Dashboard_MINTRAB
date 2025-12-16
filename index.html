@@ -37,7 +37,6 @@
             min-height: 100vh;
         }
 
-        /* Clase para bloquear scroll cuando el modal abre */
         body.modal-open { overflow: hidden; }
 
         /* --- CONTENEDOR FLUIDO --- */
@@ -75,7 +74,7 @@
             color: #64748b;
         }
 
-        /* --- RESUMEN GLOBAL --- */
+        /* --- RESUMEN --- */
         .summary-section {
             display: flex;
             justify-content: space-between;
@@ -131,7 +130,7 @@
         .dates-table { 
             width: 100%; 
             border-collapse: separate; 
-            border-spacing: 0 8px; /* LÍNEA BLANCA ENTRE FILAS */
+            border-spacing: 0 8px; 
             font-size: 15px; 
             min-width: 800px;
         }
@@ -153,7 +152,6 @@
         .dates-table td:first-child { border-top-left-radius: 6px; border-bottom-left-radius: 6px; }
         .dates-table td:last-child { border-top-right-radius: 6px; border-bottom-right-radius: 6px; }
 
-        /* Filas Coloreadas */
         .row-green { background-color: var(--bg-green-soft); }
         .row-green td:first-child { border-left: 6px solid var(--sem-green); }
         
@@ -163,7 +161,6 @@
         .row-red { background-color: var(--bg-red-soft); }
         .row-red td:first-child { border-left: 6px solid var(--sem-red); }
 
-        /* HOVER SIN MOVIMIENTO (Solo brillo) */
         .dates-table tbody tr { transition: filter 0.2s; cursor: pointer; }
         .dates-table tbody tr:hover { filter: brightness(0.95); } 
 
@@ -188,7 +185,13 @@
         .fill-yellow { background: var(--sem-yellow); }
         .fill-red { background: var(--sem-red); }
 
-        .obs-box { background: #f8fafc; padding: 20px; border-radius: 8px; margin-top: 25px; border-left: 4px solid #ccc; }
+        .obs-box { 
+            background: #f8fafc; padding: 20px; border-radius: 8px; margin-top: 25px; border-left: 4px solid #ccc; 
+        }
+        .obs-content {
+            font-size: 14px; line-height: 1.6; color: #334155; 
+            white-space: pre-wrap; 
+        }
 
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 
@@ -216,7 +219,7 @@
             <div class="header-meta">
                 <strong style="color: var(--mintrab-blue);">MINTRAB 2025</strong><br>
                 Dirección de Sistemas de Información DISI<br>
-                <span>Actualizado: 12/12/2025</span>
+                <span>Actualizado: 19/12/2025</span>
             </div>
         </header>
 
@@ -237,9 +240,9 @@
             </div>
 
             <div class="legend">
-                <div class="legend-item"><div class="dot" style="background:var(--sem-green)"></div> Finalizado</div>
-                <div class="legend-item"><div class="dot" style="background:var(--sem-yellow)"></div> En Cierre</div>
-                <div class="legend-item"><div class="dot" style="background:var(--sem-red)"></div> En Proceso</div>
+                <div class="legend-item"><div class="dot" style="background:var(--sem-green)"></div> ≥ 90% Óptimo</div>
+                <div class="legend-item"><div class="dot" style="background:var(--sem-yellow)"></div> > 75% En Cierre</div>
+                <div class="legend-item"><div class="dot" style="background:var(--sem-red)"></div> ≤ 75% En Proceso</div>
             </div>
         </div>
 
@@ -281,38 +284,54 @@
                 <div class="progress-track"><div class="progress-fill" id="m-bar"></div></div>
             </div>
             <div class="obs-box" id="m-obs-box">
-                <div style="font-weight:700; color:var(--mintrab-blue); margin-bottom:5px;"><i class="fa-solid fa-circle-info"></i> Observación:</div>
-                <div style="font-size:14px; line-height:1.5;" id="m-obs-text">--</div>
+                <div style="font-weight:700; color:var(--mintrab-blue); margin-bottom:5px;"><i class="fa-solid fa-circle-info"></i> Observación / Estado:</div>
+                <div class="obs-content" id="m-obs-text">--</div>
             </div>
         </div>
     </div>
 
     <script>
-        // DATOS
         const data = [
-            { name: "Carnet", date: "18/12/2025", pct: 53.33, resp: "Herber", obs: "" },
-            { name: "Administración", date: "Sin fecha", pct: 54.35, resp: "Mynor, Herber, Elvin", obs: "No se tiene fecha, por la parte de Elvin" },
-            { name: "Crud de inventario de centro", date: "Sin fecha", pct: 78.95, resp: "Herber, Elvin", obs: "No se tiene fecha, por la parte de Elvin" },
-            { name: "Gestión de centros vacacionales", date: "18/12/2025", pct: 80.85, resp: "Mynor", obs: "" },
-            { name: "Configuraciones", date: "10/12/2025", pct: 66.67, resp: "Mynor", obs: "" },
-            { name: "Crud de inventario a búngalo", date: "Sin fecha", pct: 91.43, resp: "Elvin", obs: "No se tiene fecha, por la parte de Elvin" },
+            { 
+                name: "Carnet", 
+                date: "19/12/2025", 
+                pct: 28.00, 
+                resp: "Herber", 
+                obs: "Validar las apis que retornen la información correctas, a la vistas antes construidas y comenzar proceso de integración para actualización creación y aceptación de solicitud de carnet.\n\nBackend: Realizar la gestión de solicitud presencial.\nFrontEnd: Realizar las vista para la gestión de solicitud presencial." 
+            },
+            { 
+                name: "Administración", 
+                date: "18/12/2025 (Parcial)", 
+                pct: 54.35, 
+                resp: "Mynor, Herber, Elvin", 
+                obs: "Mynor: 17.39% FrontEnd vistas e integración (En proceso) - 18/12/2025\nHerber: 17.39% FrontEnd vistas e integración (En proceso) - 16/12/2025\nElvin: 10.86% FrontEnd vistas e integración (No iniciado) - Sin fecha" 
+            },
+            { 
+                name: "Crud de inventario de centro", 
+                date: "Sin fecha", 
+                pct: 78.95, 
+                resp: "Herber, Elvin", 
+                obs: "Herber: FrontEnd vistas e integración (No iniciado) - Sin fecha\nElvin: FrontEnd vistas e integración (No iniciado) - Sin fecha" 
+            },
+            { name: "Gestión de centros vacacionales", date: "18/12/2025", pct: 91.49, resp: "Mynor", obs: "Mynor: FrontEnd vistas e integración (No iniciado) No se tiene fecha porque esta esperando la parte de backend" },
+            { name: "Configuraciones", date: "10/12/2025", pct: 100.00, resp: "Mynor", obs: "Finalizado" },
+            { name: "Crud de inventario a búngalo", date: "Sin fecha", pct: 91.43, resp: "Elvin", obs: "No iniciado, No se tiene fecha, FrontEnd-integración" },
             { name: "Reservas", date: "Finalizado", pct: 100.00, resp: "Mynor, Herber, Elvin", obs: "Finalizado" },
-            { name: "Check In", date: "16/12/2025", pct: 50.00, resp: "Elvin", obs: "Realizar modificación de la lógica del inventario" },
-            { name: "Check Out", date: "16/12/2025", pct: 50.00, resp: "Elvin", obs: "Realizar modificación de la lógica del inventario" },
+            { name: "Check In", date: "16/12/2025", pct: 50.00, resp: "Elvin", obs: "Falta realizar la integración con la vista y verificar la funcionalidad" },
+            { name: "Check Out", date: "16/12/2025", pct: 50.00, resp: "Elvin", obs: "Finalizara la parte de backend 16/12/2025. Faltaría realizar la integración con las vistas" },
             { name: "Reserva directa institucional", date: "Finalizado", pct: 100.00, resp: "Herber, Mynor", obs: "Finalizado" },
-            { name: "Crud de centros vacacionales", date: "18/12/2025", pct: 97.78, resp: "Mynor", obs: "" },
+            { name: "Crud de centros vacacionales y recreativos", date: "18/12/2025", pct: 97.78, resp: "Mynor", obs: "80% de avance, en la integración le dio un error y solicito cambios para finalizar este proceso" },
             { name: "Crud de plazas y avenidas", date: "Finalizado", pct: 100.00, resp: "Mynor, Yeris", obs: "Finalizado" },
             { name: "Habilitación/Inhabilitación", date: "Finalizado", pct: 100.00, resp: "Yeris", obs: "Finalizado" },
-            { name: "Institución Gubernamental", date: "En revisión", pct: 90.00, resp: "Elvin", obs: "Prueba fallida: Servidor no soporta carga masiva (250K datos)." },
-            { name: "Trabajadores del Estado", date: "18/12/2025", pct: 90.00, resp: "Herber", obs: "Falta implementar solicitud de carnet" }
+            { name: "Institución Gubernamental", date: "Finalizado", pct: 100.00, resp: "Elvin, Herber", obs: "Finalizado" },
+            { name: "Trabajadores del Estado", date: "18/12/2025", pct: 90.00, resp: "Herber", obs: "Falta implementar la parte de la solicitiud de carnet" }
         ];
 
-        // --- ORDENAR DE MAYOR A MENOR ---
-        // Esto coloca los 100% arriba y los porcentajes bajos abajo
+        // ORDENAR: Mayor a Menor
         data.sort((a, b) => b.pct - a.pct);
 
         function getStyle(pct) {
-            if (pct === 100) return { row: 'row-green', fill: 'fill-green', color: '#10b981' };
+            if (pct >= 90) return { row: 'row-green', fill: 'fill-green', color: '#10b981' };
             if (pct > 75) return { row: 'row-yellow', fill: 'fill-yellow', color: '#f59e0b' };
             return { row: 'row-red', fill: 'fill-red', color: '#ef4444' };
         }
@@ -327,24 +346,24 @@
             document.getElementById('global-pct-text').innerText = avg + "%";
             
             const circle = document.getElementById('global-circle');
-            const radius = 40; 
-            const circumference = 2 * Math.PI * radius; // Aprox 251
-            // svg dasharray es 190, ajustamos la prop.
             const dashArray = 190;
             const offset = dashArray - (avg / 100) * dashArray;
             
-            // Ajustamos el SVG dasharray dinamicamente
             setTimeout(() => circle.style.strokeDashoffset = offset, 100);
 
             // Generar Tabla
             const tbody = document.getElementById('table-body');
             data.forEach((item, i) => {
                 const s = getStyle(item.pct);
+                
+                // LÓGICA: Si es 100%, mostramos "Finalizado". Si no, la fecha normal.
+                const displayDate = item.pct === 100 ? "Finalizado" : item.date;
+
                 const row = `
                     <tr class="${s.row}" onclick="openModal(${i})">
                         <td style="font-weight:700;">${item.name}</td>
                         <td>${item.resp}</td>
-                        <td>${item.date}</td>
+                        <td style="font-weight:600;">${displayDate}</td>
                         <td style="text-align: right; font-weight:800;">${item.pct}%</td>
                     </tr>
                 `;
@@ -353,16 +372,17 @@
         }
 
         function openModal(idx) {
-            // BLOQUEAR SCROLL DE FONDO
             document.body.classList.add('modal-open');
-
             const item = data[idx];
             const s = getStyle(item.pct);
             
             document.getElementById('detail-overlay').style.display = 'flex';
             document.getElementById('m-title').innerText = item.name;
             document.getElementById('m-resp').innerText = item.resp;
-            document.getElementById('m-date').innerText = item.date;
+            
+            // Lógica fecha modal
+            const displayDate = item.pct === 100 ? "Finalizado" : item.date;
+            document.getElementById('m-date').innerText = displayDate;
             
             const pctTxt = document.getElementById('m-pct-text');
             pctTxt.innerText = item.pct + "%";
@@ -383,13 +403,12 @@
                 obsBox.style.borderLeftColor = s.color;
                 obsBox.style.background = "#fff"; 
             } else {
-                obsTxt.innerText = item.pct === 100 ? "Finalizado correctamente." : "En proceso.";
+                obsTxt.innerText = item.pct >= 90 ? "Finalizado / Óptimo." : "En proceso.";
                 obsBox.style.borderLeftColor = s.color;
             }
         }
 
         function closeModal() {
-            // DESBLOQUEAR SCROLL
             document.body.classList.remove('modal-open');
             document.getElementById('detail-overlay').style.display = 'none';
         }
