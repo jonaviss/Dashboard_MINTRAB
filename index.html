@@ -140,8 +140,8 @@
             },
             {
                 id: 2,
-                name: "Plataforma Gestión de Denuncias (IGT)",
-                shortName: "Gestión Denuncias",
+                name: "Plataforma para Gestión de Denuncias",
+                shortName: "Plataforma Gestión Denuncias",
                 icon: Icons.Scale,
                 lead: "Inspección General de Trabajo", 
                 status: "En Progreso",
@@ -171,8 +171,8 @@
             },
             {
                 id: 3,
-                name: "Plataforma de Gestión de Reservas",
-                shortName: "Reservas Recreación",
+                name: "Plataforma para Gestión de Reservas",
+                shortName: "Plataforma Gestión Reservas",
                 icon: Icons.Sun,
                 lead: "Dirección de Recreación del Trabajador del Estado", 
                 status: "Fase Final",
@@ -206,7 +206,7 @@
                 overallProgress: calculateWeightedProgress(p.phaseDetails)
             }));
 
-            const [selectedId, setSelectedId] = useState(1); // Seleccionar PAM por defecto
+            const [selectedId, setSelectedId] = useState(2); // Seleccionar IGT por defecto
             const currentProject = projectsData.find(p => p.id === selectedId);
 
             const scrollToContent = () => {
@@ -361,9 +361,6 @@
                                                         <div className="text-xs text-slate-400">Resp: {phase.responsible}</div>
                                                     </div>
                                                 ))}
-                                            </div>
-                                            <div className="mt-4 p-3 bg-blue-50 text-xs text-blue-700 rounded border border-blue-100">
-                                                <strong>Nota de cálculo:</strong> El progreso general se pondera asignando un 30% a cada una de las primeras 3 fases (Req, Análisis, Dev) y un 3.33% a las 3 fases finales (QA, Cap, Imp).
                                             </div>
                                         </div>
                                     </div>
