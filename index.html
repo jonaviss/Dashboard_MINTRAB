@@ -127,7 +127,7 @@
                     "Validación Biométrica: Uso de huella dactilar para notificaciones y entregas.",
                     "Ponderación Automática: Cálculo sistémico de elegibilidad para eliminar discrecionalidad.",
                     "Firma Electrónica Masiva: Agilización de resoluciones y dictámenes.",
-                    "Interoperabilidad Total: Cruce con RENAP y MINFIN para depuración automática."
+                    "Interoperabilidad Total: Cruce con RENAP, IGSS e IPPM para depuración automática."
                 ],
                 phaseDetails: [
                     { name: "Recopilación de Requerimientos", progress: 88, status: "En Proceso", responsible: "Dirección de Sistemas de Información (DISI)" },
@@ -206,7 +206,7 @@
                 overallProgress: calculateWeightedProgress(p.phaseDetails)
             }));
 
-            const [selectedId, setSelectedId] = useState(3); // Seleccionar Reservas por defecto para ver cambio nombre
+            const [selectedId, setSelectedId] = useState(1); // Seleccionar PAM por defecto
             const currentProject = projectsData.find(p => p.id === selectedId);
 
             const scrollToContent = () => {
