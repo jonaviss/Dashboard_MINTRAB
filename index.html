@@ -175,7 +175,7 @@
                 shortName: "Plataforma Gestión Reservas",
                 icon: Icons.Sun,
                 lead: "Dirección de Recreación del Trabajador del Estado", 
-                status: "Fase Final",
+                status: "Finalizado",
                 objective: "Modernizar la gestión de la recreación del trabajador del Estado mediante una plataforma unificada que integra el registro masivo de instituciones y empleados gubernamentales con la administración operativa de centros vacacionales. El sistema permite gestionar inventarios detallados (búngalos, habitaciones), realizar reservas en tiempo real y validar el acceso mediante carné digital.",
                 modules: [
                     { name: "Gestión de Instituciones Gubernamentales, Trabajadores del Estado y Jubilados", status: "Finalizado" },
@@ -192,9 +192,9 @@
                     { name: "Recopilación de Requerimientos", progress: 100, status: "Completado", responsible: "Dirección de Sistemas de Información (DISI)" },
                     { name: "Análisis y Diseño", progress: 100, status: "Completado", responsible: "Dirección de Sistemas de Información (DISI)" },
                     { name: "Desarrollo", progress: 100, status: "Completado", responsible: "Dirección de Sistemas de Información (DISI)" },
-                    { name: "Pruebas de Calidad QA", progress: 0, status: "Pendiente", responsible: "Dirección de Recreación del Trabajador del Estado" },
-                    { name: "Capacitación", progress: 0, status: "Pendiente", responsible: "Dirección de Recreación del Trabajador del Estado" },
-                    { name: "Implementación", progress: 0, status: "Pendiente", responsible: "Dirección de Sistemas de Información (DISI)" }
+                    { name: "Pruebas de Calidad QA", progress: 100, status: "Completado", responsible: "Dirección de Recreación del Trabajador del Estado" },
+                    { name: "Capacitación", progress: 100, status: "Completado", responsible: "Dirección de Recreación del Trabajador del Estado" },
+                    { name: "Implementación", progress: 100, status: "Completado", responsible: "Dirección de Sistemas de Información (DISI)" }
                 ]
             }
         ];
@@ -206,7 +206,7 @@
                 overallProgress: calculateWeightedProgress(p.phaseDetails)
             }));
 
-            const [selectedId, setSelectedId] = useState(2); // Seleccionar IGT por defecto
+            const [selectedId, setSelectedId] = useState(3); // Seleccionar Reservas por defecto
             const currentProject = projectsData.find(p => p.id === selectedId);
 
             const scrollToContent = () => {
