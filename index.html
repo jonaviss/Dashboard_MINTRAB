@@ -3,406 +3,700 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard Proyectos - MINTRAB 2025</title>
-    
-    <script src="https://unpkg.com/react@18/umd/react.production.min.js" crossorigin></script>
-    <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js" crossorigin></script>
-    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
-    <script src="https://cdn.tailwindcss.com"></script>
-
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        mintrab: {
-                            DEFAULT: '#002F5D', // Azul Oscuro
-                            light: '#004a8f',   // Azul Claro
-                            50: '#e6eff8'       // Azul Muy Claro
-                        }
-                    },
-                    animation: {
-                        'bounce-slow': 'bounce 3s infinite',
-                    }
-                }
-            }
-        }
-    </script>
-
+    <title>Tablero de Control - MINTRAB 2025</title>
+    <link href="https://fonts.googleapis.com/css2?family=Urbanist:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <style>
-        body { font-family: 'Segoe UI', system-ui, sans-serif; background-color: #f8fafc; margin: 0; scroll-behavior: smooth; }
-        .animate-in { animation: fadeIn 0.8s ease-out; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
-        
-        /* Fondo Hero Limpio (Degradado) */
-        .hero-gradient {
-            background: linear-gradient(135deg, #002F5D 0%, #004a8f 100%);
+        /* --- ESTILOS GENERALES --- */
+        * { box-sizing: border-box; transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1); }
+
+        :root {
+            --primary: #002F5D; /* Azul Institucional */
+            --primary-light: #004a8f;
+            --accent: #005eb8; 
+            --warning: #f59e0b; 
+            --success: #16a34a; 
+            --danger: #dc2626;
+            --text: #334155;    
+            --bg-gray: #f8fafc;
+            --card-shadow: 0 10px 30px -5px rgba(0, 47, 93, 0.15);
+        }
+
+        body {
+            font-family: 'Urbanist', sans-serif;
+            background-color: #f1f5f9;
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden;
+        }
+
+        /* --- SECCIÓN HERO --- */
+        .hero-section {
+            min-height: 100vh;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 40px 20px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-blob {
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.05);
+            filter: blur(60px);
+        }
+        .blob-1 { width: 300px; height: 300px; top: -50px; left: -50px; }
+        .blob-2 { width: 400px; height: 400px; bottom: -100px; right: -50px; }
+
+        .hero-content {
+            z-index: 10;
+            text-align: center;
+            max-width: 1200px;
+            width: 100%;
+            animation: fadeInDown 0.8s ease-out;
+        }
+
+        .hero-icon {
+            background: rgba(255, 255, 255, 0.1);
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px auto;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+        }
+        .hero-icon i { font-size: 32px; color: white; }
+
+        .hero-title {
+            font-size: 48px;
+            font-weight: 800;
+            color: white;
+            margin: 0 0 10px 0;
+            letter-spacing: -1px;
+            text-shadow: 0 4px 10px rgba(0,0,0,0.3);
+        }
+
+        .hero-subtitle {
+            font-size: 18px;
+            color: #e2e8f0;
+            font-weight: 300;
+            margin-bottom: 50px;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* GRID DE PROYECTOS */
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 25px;
+            width: 100%;
+            margin-bottom: 40px;
+        }
+
+        .project-card {
+            background: white;
+            border-radius: 20px;
+            padding: 25px;
+            cursor: pointer;
+            position: relative;
+            border: 2px solid transparent;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+            text-align: left;
+            transform: translateY(0);
+        }
+
+        .project-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 15px;
+        }
+
+        .card-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 12px;
+            background: #f1f5f9;
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
         }
         
-        .fade-content { animation: fadeEffect 0.5s; }
-        @keyframes fadeEffect { from { opacity: 0; } to { opacity: 1; } }
+        .project-card:hover .card-icon {
+            background: var(--primary);
+            color: white;
+        }
+
+        .card-status {
+            font-size: 10px;
+            font-weight: 800;
+            text-transform: uppercase;
+            padding: 4px 8px;
+            border-radius: 6px;
+        }
+        .status-progress { background: #dbeafe; color: #1e40af; }
+        .status-final { background: #dcfce7; color: #166534; }
+
+        .card-title {
+            font-size: 18px;
+            font-weight: 800;
+            color: var(--text);
+            margin: 0 0 5px 0;
+        }
+
+        .card-desc {
+            font-size: 12px;
+            color: #64748b;
+            margin-bottom: 20px;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .progress-container {
+            width: 100%;
+            height: 8px;
+            background: #f1f5f9;
+            border-radius: 10px;
+            overflow: hidden;
+            margin-bottom: 8px;
+        }
+
+        .progress-bar {
+            height: 100%;
+            background: var(--primary);
+            border-radius: 10px;
+            width: 0%; 
+        }
+
+        .card-footer {
+            display: flex;
+            justify-content: space-between;
+            font-size: 12px;
+            font-weight: 600;
+            color: #64748b;
+        }
+
+        /* --- DASHBOARD DETALLADO --- */
+        #dashboard-view {
+            display: none; 
+            padding: 40px;
+            max-width: 1400px;
+            margin: 0 auto;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        .one-pager {
+            background-color: white;
+            width: 100%;
+            padding: 40px;
+            border-radius: 24px;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.05);
+            display: flex;
+            flex-direction: column;
+            gap: 30px; 
+            border-top: 10px solid var(--primary);
+        }
+
+        .header { 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center; 
+            border-bottom: 2px solid #e2e8f0; 
+            padding-bottom: 20px; 
+        }
+        .header h1 { margin: 0; font-size: 32px; color: var(--primary); font-weight: 800; }
+        .header .meta { text-align: right; font-size: 14px; color: #64748b; }
+
+        .top-info-container {
+            display: grid;
+            grid-template-columns: 300px 1fr;
+            gap: 30px;
+        }
+
+        .status-card-detail { 
+            background: #f0fdf4; 
+            border: 2px solid var(--success); 
+            padding: 25px; 
+            border-radius: 20px; 
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .lifecycle-container {
+            background: #f8fafc;
+            padding: 25px;
+            border-radius: 20px;
+            border: 1px solid #e2e8f0;
+        }
+
+        .cycle-wrapper { 
+            display: flex; 
+            gap: 15px; 
+            flex-wrap: nowrap; 
+            align-items: center;
+            margin-top: 15px;
+        }
+        
+        .cycle-step { 
+            flex: 1; 
+            background: white; 
+            padding: 15px; 
+            border-radius: 12px; 
+            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05); 
+            position: relative; 
+            border: 1px solid #e2e8f0; 
+            display: flex; 
+            flex-direction: column; 
+            align-items: center; 
+            min-width: 140px; 
+        }
+        .cycle-step.dev { border-top: 4px solid var(--accent); }
+        .cycle-step.qa { border-top: 4px solid var(--warning); }
+        .cycle-step.train { border-top: 4px solid #0891b2; }
+        .cycle-step.prod { border-top: 4px solid var(--success); }
+        
+        .step-num { position: absolute; top: -10px; right: 10px; background: var(--text); color: white; width: 24px; height: 24px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: bold; }
+        .cycle-step h4 { margin: 10px 0 5px 0; font-size: 12px; text-align: center; font-weight: 800; text-transform: uppercase; }
+        .cycle-step p { font-size: 10px; color: #475569; margin: 0; text-align: center; font-weight: 700; }
+        .doc-tag { margin-top: 10px; background: #f1f5f9; color: #475569; font-size: 10px; padding: 3px 8px; border-radius: 10px; display: flex; align-items: center; gap: 4px; font-weight: 700; }
+
+        .bottom-table-container {
+            width: 100%;
+        }
+
+        .section-title { 
+            color: var(--primary); 
+            font-size: 18px; 
+            margin-top: 0; 
+            margin-bottom: 20px; 
+            display: flex; 
+            align-items: center; 
+            font-weight: 700; 
+            border-bottom: 1px solid #e2e8f0; 
+            padding-bottom: 10px; 
+        }
+        .section-title i { margin-right: 10px; color: var(--accent); }
+
+        .dates-table { width: 100%; border-collapse: collapse; font-size: 14px; cursor: pointer; }
+        .dates-table th { text-align: left; padding: 15px; background-color: var(--primary); color: white; font-weight: 600; text-transform: uppercase; font-size: 10px; }
+        .dates-table th:first-child { border-radius: 12px 0 0 0; }
+        .dates-table th:last-child { border-radius: 0 12px 0 0; }
+        .dates-table td { padding: 15px; border-bottom: 1px solid #f1f5f9; color: var(--text); vertical-align: middle; }
+        .dates-table tbody tr:hover { background-color: #f0f9ff !important; transform: scale(1.005); }
+
+        .btn-back {
+            background: #f1f5f9;
+            color: var(--text);
+            border: none;
+            padding: 8px 16px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 700;
+            font-size: 13px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .btn-back:hover { background: #e2e8f0; color: var(--primary); }
+
+        #detail-container { background: white; border: 2px solid var(--accent); border-radius: 12px; padding: 25px; margin-top: 20px; display: none; animation: fadeIn 0.5s; }
+        .detail-row { display: flex; flex-direction: column; margin-bottom: 15px; }
+        .detail-info { display: flex; justify-content: space-between; margin-bottom: 5px; font-size: 13px; font-weight: 600; }
+        .phase-track { background: #e2e8f0; height: 12px; border-radius: 6px; overflow: hidden; width: 100%; }
+        .phase-fill { height: 100%; background: var(--primary); width: 0%; transition: width 1s ease-in-out; }
+        .phase-fill.green { background: var(--success); }
+        .status-badge { font-size: 10px; padding: 2px 8px; border-radius: 10px; text-transform: uppercase; font-weight: bold; }
+        .st-done { background: #dcfce7; color: #166534; }
+        .st-process { background: #dbeafe; color: #1e40af; }
+        .st-pending { background: #fee2e2; color: #dc2626; }
+
+        @keyframes fadeInDown { from { opacity: 0; transform: translateY(-20px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+        @media (max-width: 1024px) {
+            .top-info-container { grid-template-columns: 1fr; }
+            .cycle-wrapper { flex-wrap: wrap; justify-content: center; }
+            .cycle-step { width: 100%; }
+        }
     </style>
 </head>
 <body>
-    <div id="root"></div>
 
-    <script type="text/babel">
-        const { useState, useEffect } = React;
+    <div class="hero-section">
+        <div class="hero-blob blob-1"></div>
+        <div class="hero-blob blob-2"></div>
 
-        // --- ICONOS ---
-        const Icons = {
-            Users: () => <svg width="24" height="24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>,
-            Check: () => <svg width="20" height="20" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>,
-            Zap: () => <svg width="20" height="20" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>,
-            FileText: () => <svg width="20" height="20" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24"><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/><polyline points="14 2 14 8 20 8"/><line x1="16" x2="8" y1="13" y2="13"/><line x1="16" x2="8" y1="17" y2="17"/><line x1="10" x2="8" y1="9" y2="9"/></svg>,
-            Box: () => <svg width="20" height="20" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg>,
-            Clock: () => <svg width="12" height="12" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>,
-            CheckSmall: () => <svg width="12" height="12" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>,
-            ChevronDown: () => <svg width="32" height="32" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></svg>,
-            Briefcase: () => <svg width="24" height="24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24"><rect width="20" height="14" x="2" y="7" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>,
-            Scale: () => <svg width="24" height="24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24"><path d="m16 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z"/><path d="m2 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z"/><path d="M7 21h10"/><path d="M12 3v18"/><path d="M3 7h2c2 0 5-1 7-2 2 1 5 2 7 2h2"/></svg>,
-            Chart: () => <svg width="24" height="24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24"><line x1="12" x2="12" y1="20" y2="10"/><line x1="18" x2="18" y1="20" y2="4"/><line x1="6" x2="6" y1="20" y2="16"/></svg>,
-            Sun: () => <svg width="24" height="24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"/><path d="M12 1v2"/><path d="M12 21v2"/><path d="M4.22 4.22l1.42 1.42"/><path d="M18.36 18.36l1.42 1.42"/><path d="M1 12h2"/><path d="M21 12h2"/><path d="M4.22 19.78l1.42-1.42"/><path d="M18.36 5.64l1.42-1.42"/></svg>
-        };
+        <div class="hero-content">
+            <div class="hero-icon">
+                <i class="fa-solid fa-chart-line"></i>
+            </div>
+            <h1 class="hero-title">Tablero de Control de Proyectos</h1>
+            <p class="hero-subtitle">Visualización estratégica del avance, hitos y métricas de los proyectos tecnológicos clave del Ministerio de Trabajo y Previsión Social.</p>
 
-        // --- LÓGICA DE CÁLCULO PONDERADO ---
-        const calculateWeightedProgress = (phases) => {
-            if (!phases || phases.length < 6) return 0;
-            // Fases 1-3: 30% c/u | Fases 4-6: 3.33% c/u
-            const highImpact = (phases[0].progress * 0.30) + 
-                               (phases[1].progress * 0.30) + 
-                               (phases[2].progress * 0.30);
-                               
-            const lowImpact =  (phases[3].progress * 0.033333) + 
-                               (phases[4].progress * 0.033333) + 
-                               (phases[5].progress * 0.033333);
-                               
-            return Math.round(highImpact + lowImpact);
-        };
-
-        // --- COMPONENTE VELOCÍMETRO ---
-        const GaugeChart = ({ value }) => {
-            const radius = 40;
-            const circumference = Math.PI * radius; 
-            const arcLength = 126; 
-            const strokeDashoffset = arcLength - ((value / 100) * arcLength);
-
-            const getColor = (v) => {
-                if(v >= 80) return "#10b981"; 
-                if(v >= 50) return "#004a8f"; 
-                return "#f43f5e"; 
-            };
-
-            return (
-                <div className="relative w-32 h-20 flex flex-col items-center justify-end">
-                    <svg viewBox="0 0 100 60" className="w-full h-full overflow-visible">
-                        <path d="M 10 50 A 40 40 0 0 1 90 50" fill="none" stroke="#e2e8f0" strokeWidth="12" strokeLinecap="round" />
-                        <path d="M 10 50 A 40 40 0 0 1 90 50" fill="none" stroke={getColor(value)} strokeWidth="12" strokeLinecap="round" strokeDasharray={arcLength} strokeDashoffset={strokeDashoffset} className="transition-all duration-1000 ease-out" />
-                    </svg>
-                    <div className="absolute bottom-2 text-center">
-                        <span className="text-3xl font-bold text-slate-900">{value}%</span>
+            <div class="projects-grid">
+                
+                <div class="project-card" onclick="selectProject('IGT')">
+                    <div class="card-header">
+                        <div class="card-icon"><i class="fa-solid fa-scale-balanced"></i></div>
+                        <span class="card-status status-progress">En Progreso</span>
+                    </div>
+                    <h3 class="card-title">Inspección General (IGT)</h3>
+                    <p class="card-desc">Modernización de denuncias, actas y operativos de inspección.</p>
+                    <div class="progress-container">
+                        <div class="progress-bar" id="bar-IGT" style="width: 0%"></div>
+                    </div>
+                    <div class="card-footer">
+                        <span>Progreso Global</span>
+                        <span id="pct-IGT">0%</span>
                     </div>
                 </div>
-            );
-        };
 
-        // --- DATOS PROYECTOS ---
-        const projectsRawData = [
-            {
-                id: 1,
-                name: "Plataforma Programa de Aporte Económico del Adulto Mayor",
-                shortName: "Plataforma PAM",
-                icon: Icons.Users,
-                lead: "Dirección de Previsión Social",
-                status: "En Progreso",
-                objective: "Implementar un sistema digital integral que modernice la gestión del PAM, automatizando el ciclo completo: desde la inscripción con interoperabilidad (RENAP, IGSS), estudios socioeconómicos en campo con aplicación móvil offline y validación biométrica, hasta la gestión jurídica con firma electrónica y el control automático de nómina para evitar cobros indebidos.",
-                modules: [
-                    { name: "Inscripción y Asignación de Visitas", status: "Finalizado" },
-                    { name: "Estudio Socioeconómico y Notificaciones", status: "Proceso de Desarrollo" },
-                    { name: "Nómina y Comunicación Bancaria", status: "Proceso de Desarrollo" },
-                    { name: "Gestión Jurídica de Casos", status: "Proceso de Desarrollo" }
-                ],
-                improvements: [
-                    "App Móvil Offline: Estudios socioeconómicos con georreferenciación y sincronización.",
-                    "Validación Biométrica: Uso de huella dactilar para notificaciones y entregas.",
-                    "Ponderación Automática: Cálculo sistémico de elegibilidad para eliminar discrecionalidad.",
-                    "Firma Electrónica Masiva: Agilización de resoluciones y dictámenes.",
-                    "Interoperabilidad Total: Cruce con RENAP, IGSS e IPPM para depuración automática."
-                ],
-                phaseDetails: [
-                    { name: "Recopilación de Requerimientos", progress: 88, status: "En Proceso", responsible: "Dirección de Sistemas de Información (DISI)" },
-                    { name: "Análisis y Diseño", progress: 42, status: "En Proceso", responsible: "Dirección de Sistemas de Información (DISI)" },
-                    { name: "Desarrollo", progress: 46, status: "En Proceso", responsible: "Dirección de Sistemas de Información (DISI)" },
-                    { name: "Pruebas de Calidad QA", progress: 0, status: "No Iniciado", responsible: "Programa de Aporte Económico del Adulto Mayor (PAM)" },
-                    { name: "Capacitación", progress: 0, status: "No Iniciado", responsible: "Programa de Aporte Económico del Adulto Mayor (PAM)" },
-                    { name: "Implementación", progress: 0, status: "No Iniciado", responsible: "Dirección de Sistemas de Información (DISI)" }
-                ]
-            },
-            {
-                id: 2,
-                name: "Plataforma para Gestión de Denuncias",
-                shortName: "Plataforma Gestión Denuncias",
-                icon: Icons.Scale,
-                lead: "Inspección General de Trabajo", 
-                status: "En Progreso",
-                objective: "Sistema integral para la modernización de la Inspección General de Trabajo que digitaliza todo el flujo: recepción de la denuncia (presencial y en línea), inspección en campo, operativos masivos y gestión de audiencias. El objetivo es eliminar la mora, garantizar la trazabilidad de los expedientes y permitir la consulta pública del estado de las denuncias.",
-                modules: [
-                    { name: "Recepción de la denuncia", status: "Finalizado" },
-                    { name: "Inspección", status: "Finalizado" },
-                    { name: "Verificación de la denuncia", status: "Proceso de Desarrollo" },
-                    { name: "Sanciones", status: "Proceso de Desarrollo" },
-                    { name: "Operativos", status: "Proceso de Desarrollo" }
-                ],
-                improvements: [
-                    "Cero Papel: Expediente 100% digital desde recepción hasta archivo.",
-                    "Asignación Equitativa: Algoritmo automático de carga para inspectores.",
-                    "Actas Dinámicas: Generación automática de documentos estandarizados.",
-                    "Portal Ciudadano: Consulta de estado de denuncia en tiempo real.",
-                    "Operativos Masivos: Control centralizado de visitas y hallazgos."
-                ],
-                phaseDetails: [
-                    { name: "Recopilación de Requerimientos", progress: 95, status: "Casi Finalizado", responsible: "Dirección de Sistemas de Información (DISI)" },
-                    { name: "Análisis y Diseño", progress: 70, status: "En Proceso", responsible: "Dirección de Sistemas de Información (DISI)" },
-                    { name: "Desarrollo", progress: 70, status: "En Proceso", responsible: "Dirección de Sistemas de Información (DISI)" },
-                    { name: "Pruebas de Calidad QA", progress: 0, status: "No Iniciado", responsible: "Inspección General de Trabajo (IGT)" },
-                    { name: "Capacitación", progress: 0, status: "No Iniciado", responsible: "Inspección General de Trabajo (IGT)" },
-                    { name: "Implementación", progress: 0, status: "No Iniciado", responsible: "Dirección de Sistemas de Información (DISI)" }
-                ]
-            },
-            {
-                id: 3,
-                name: "Plataforma para Gestión de Reservas",
-                shortName: "Plataforma Gestión Reservas",
-                icon: Icons.Sun,
-                lead: "Dirección de Recreación del Trabajador del Estado", 
-                status: "Finalizado",
-                objective: "Modernizar la gestión de la recreación del trabajador del Estado mediante una plataforma unificada que integra el registro masivo de instituciones y empleados gubernamentales con la administración operativa de centros vacacionales. El sistema permite gestionar inventarios detallados (búngalos, habitaciones), realizar reservas en tiempo real y validar el acceso mediante carné digital.",
-                modules: [
-                    { name: "Gestión de Instituciones Gubernamentales, Trabajadores del Estado y Jubilados", status: "Finalizado" },
-                    { name: "Gestión de Carnet", status: "Finalizado" },
-                    { name: "Centros Vacacionales, Recreativos y Reservas", status: "Finalizado" }
-                ],
-                improvements: [
-                    "Gestión Institucional Automatizada: Carga masiva y validación de empleados activos.",
-                    "Reservas en Tiempo Real: Consulta 24/7 de disponibilidad de búngalos y habitaciones.",
-                    "Control de Acceso y Aforo: Registro detallado de titulares y acompañantes con validación digital.",
-                    "Reportes Estadísticos: Métricas exactas de visitas, ocupación"
-                ],
-                phaseDetails: [
-                    { name: "Recopilación de Requerimientos", progress: 100, status: "Completado", responsible: "Dirección de Sistemas de Información (DISI)" },
-                    { name: "Análisis y Diseño", progress: 100, status: "Completado", responsible: "Dirección de Sistemas de Información (DISI)" },
-                    { name: "Desarrollo", progress: 100, status: "Completado", responsible: "Dirección de Sistemas de Información (DISI)" },
-                    { name: "Pruebas de Calidad QA", progress: 100, status: "Completado", responsible: "Dirección de Recreación del Trabajador del Estado" },
-                    { name: "Capacitación", progress: 100, status: "Completado", responsible: "Dirección de Recreación del Trabajador del Estado" },
-                    { name: "Implementación", progress: 100, status: "Completado", responsible: "Dirección de Sistemas de Información (DISI)" }
-                ]
-            }
-        ];
+                <div class="project-card" onclick="selectProject('PAM')">
+                    <div class="card-header">
+                        <div class="card-icon"><i class="fa-solid fa-hands-holding-circle"></i></div>
+                        <span class="card-status status-progress">En Progreso</span>
+                    </div>
+                    <h3 class="card-title">Adulto Mayor (PAM)</h3>
+                    <p class="card-desc">Plataforma de estudio socioeconómico y nómina.</p>
+                    <div class="progress-container">
+                        <div class="progress-bar" id="bar-PAM" style="width: 0%"></div>
+                    </div>
+                    <div class="card-footer">
+                        <span>Progreso Global</span>
+                        <span id="pct-PAM">0%</span>
+                    </div>
+                </div>
 
-        const App = () => {
-            // Calcular porcentajes dinámicos al cargar
-            const projectsData = projectsRawData.map(p => ({
-                ...p,
-                overallProgress: calculateWeightedProgress(p.phaseDetails)
-            }));
+                <div class="project-card" onclick="selectProject('DRTE')">
+                    <div class="card-header">
+                        <div class="card-icon"><i class="fa-solid fa-umbrella-beach"></i></div>
+                        <span class="card-status status-final">Finalizado</span>
+                    </div>
+                    <h3 class="card-title">Recreación (DRTE)</h3>
+                    <p class="card-desc">Gestión de centros vacacionales y reservas.</p>
+                    <div class="progress-container">
+                        <div class="progress-bar" id="bar-DRTE" style="width: 0%"></div>
+                    </div>
+                    <div class="card-footer">
+                        <span>Progreso Global</span>
+                        <span id="pct-DRTE">0%</span>
+                    </div>
+                </div>
 
-            const [selectedId, setSelectedId] = useState(3); // Seleccionar Reservas por defecto
-            const currentProject = projectsData.find(p => p.id === selectedId);
-
-            const scrollToContent = () => {
-                const element = document.getElementById('dashboard-content');
-                if (element) element.scrollIntoView({ behavior: 'smooth' });
-            };
-
-            const getStatusColor = (s) => {
-                if(s === 'Completado' || s === 'Finalizado') return 'bg-emerald-100 text-emerald-700';
-                if(s === 'No Iniciado' || s === 'Planificación' || s === 'Pendiente') return 'bg-slate-200 text-slate-600';
-                return 'bg-blue-100 text-blue-700';
-            };
+            </div>
             
-            const getPhaseColor = (v) => v >= 95 ? 'bg-emerald-500' : v > 0 ? 'bg-mintrab-light' : 'bg-slate-200';
+            <div style="color: rgba(255,255,255,0.7); font-size: 14px;">
+                <i class="fa-solid fa-arrow-pointer"></i> Seleccione un proyecto para ver el detalle completo
+            </div>
+        </div>
+    </div>
 
-            return (
-                <div className="min-h-screen">
-                    {/* HERO SECTION - FULL SCREEN */}
-                    <div className="relative h-screen flex flex-col justify-center items-center text-white hero-gradient overflow-hidden">
-                        <div className="absolute top-0 left-0 w-64 h-64 bg-white opacity-5 rounded-full blur-3xl -translate-x-1/2 -translate-y-1/2"></div>
-                        <div className="absolute bottom-0 right-0 w-96 h-96 bg-white opacity-5 rounded-full blur-3xl translate-x-1/3 translate-y-1/3"></div>
-                        
-                        <div className="z-10 text-center px-6 max-w-4xl animate-in">
-                            <div className="flex justify-center mb-8">
-                                <div className="p-5 bg-white/10 rounded-full backdrop-blur-sm border border-white/20 shadow-xl">
-                                    <Icons.Chart />
-                                </div>
-                            </div>
-                            <h1 className="text-5xl md:text-7xl font-bold mb-6 tracking-tight drop-shadow-lg">Tablero de Control de Proyectos</h1>
-                            <p className="text-xl md:text-2xl text-blue-100 font-light max-w-3xl mx-auto drop-shadow-md">
-                                Visualización del avance, hitos y métricas de los proyectos tecnológicos clave del Ministerio de Trabajo y Previsión Social.
-                            </p>
+    <div id="dashboard-view">
+        <div class="one-pager">
+            <header class="header">
+                <div style="display:flex; align-items:center; gap:20px;">
+                    <button class="btn-back" onclick="backToHome()">
+                        <i class="fa-solid fa-arrow-left"></i> Volver
+                    </button>
+                    <h1 id="project-title">Título del Proyecto</h1>
+                </div>
+                <div class="meta" id="project-meta"><strong>MINTRAB 2025</strong><br>Dirección de Sistemas de Información DISI</div>
+            </header>
+
+            <div class="top-info-container">
+                <div class="status-card-detail">
+                    <p style="margin:0; font-weight:700; color: #16a34a; font-size:12px; text-transform:uppercase; letter-spacing:1px;">Avance General</p>
+                    <span id="global-pct-display" style="font-size: 54px; font-weight: 900; color: #002F5D; line-height:1;">--%</span>
+                    <div id="status-note" style="font-size: 12px; margin-top: 15px; background: #bbf7d0; color: #15803d; padding: 4px 10px; border-radius: 20px; font-weight:700;"></div>
+                </div>
+
+                <div class="lifecycle-container">
+                    <h2 class="section-title" style="border:none; margin-bottom:10px;"><i class="fa-solid fa-laptop-file"></i> Ciclo de Vida del Proyecto</h2>
+                    <div class="cycle-wrapper">
+                        <div class="cycle-step dev">
+                            <div class="step-num">1</div><h4>Desarrollo</h4><p id="dev-resp">RESPONSABLE : DISI</p><div class="doc-tag" id="dev-cycle-tag">...</div>
                         </div>
-                        <div onClick={scrollToContent} className="absolute bottom-12 animate-bounce-slow text-blue-100 flex flex-col items-center gap-3 cursor-pointer opacity-80 hover:opacity-100 transition-all hover:scale-105">
-                            <span className="text-sm uppercase tracking-widest font-bold bg-white/10 px-4 py-2 rounded-full backdrop-blur-md">Ver Proyectos</span>
-                            <Icons.ChevronDown />
+                        <i class="fa-solid fa-chevron-right arrow-right" style="color:#cbd5e1"></i>
+                        
+                        <div class="cycle-step qa">
+                            <div class="step-num">2</div><h4>PRUEBAS DE CALIDAD QA</h4><p id="qa-resp">--</p><div class="doc-tag" id="qa-cycle-tag">...</div>
+                        </div>
+                        <i class="fa-solid fa-chevron-right arrow-right" style="color:#cbd5e1"></i>
+                        
+                        <div class="cycle-step train">
+                            <div class="step-num">3</div><h4>Capacitación</h4><p id="train-resp">--</p><div class="doc-tag" id="train-cycle-tag">...</div>
+                        </div>
+                        <i class="fa-solid fa-chevron-right arrow-right" style="color:#cbd5e1"></i>
+                        
+                        <div class="cycle-step prod">
+                            <div class="step-num">4</div><h4>Producción</h4><p id="prod-resp">RESPONSABLE : DISI</p><div class="doc-tag" id="prod-cycle-tag">...</div>
                         </div>
                     </div>
-
-                    {/* MAIN CONTENT */}
-                    <main id="dashboard-content" className="bg-slate-50 min-h-screen relative z-20 shadow-[0_-10px_40px_rgba(0,0,0,0.1)]">
-                        <div className="max-w-7xl mx-auto p-6 space-y-10 py-12">
-                            
-                            {/* SECCIÓN 1: SELECTOR DE PROYECTOS (CARDS) */}
-                            <section>
-                                <h2 className="text-xl font-bold text-slate-800 mb-6 flex items-center gap-2">
-                                    <span className="w-1 h-6 bg-mintrab rounded-full"></span> Seleccione un Proyecto
-                                </h2>
-                                <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                                    {projectsData.map(proj => {
-                                        const isSelected = selectedId === proj.id;
-                                        const Icon = proj.icon;
-                                        return (
-                                            <div 
-                                                key={proj.id}
-                                                onClick={() => setSelectedId(proj.id)}
-                                                className={`cursor-pointer rounded-xl p-5 border-2 transition-all duration-300 relative overflow-hidden group
-                                                    ${isSelected ? 'bg-white border-mintrab shadow-lg scale-[1.02]' : 'bg-white border-slate-200 hover:border-mintrab-light/50 hover:shadow-md'}
-                                                `}
-                                            >
-                                                <div className="flex justify-between items-start mb-4">
-                                                    <div className={`p-3 rounded-lg ${isSelected ? 'bg-mintrab text-white' : 'bg-slate-100 text-slate-500 group-hover:bg-blue-50 group-hover:text-mintrab'}`}>
-                                                        <Icon />
-                                                    </div>
-                                                    <span className={`px-2 py-1 rounded text-[10px] font-bold uppercase ${getStatusColor(proj.status)}`}>
-                                                        {proj.status}
-                                                    </span>
-                                                </div>
-                                                <h3 className={`font-bold text-lg mb-1 ${isSelected ? 'text-mintrab' : 'text-slate-700'}`}>{proj.shortName}</h3>
-                                                <p className="text-xs text-slate-500 line-clamp-1 mb-4">{proj.lead}</p>
-                                                
-                                                <div className="w-full bg-slate-100 h-1.5 rounded-full overflow-hidden">
-                                                    <div className="bg-mintrab h-full transition-all duration-500" style={{width: `${proj.overallProgress}%`}}></div>
-                                                </div>
-                                                <div className="flex justify-between mt-2 text-xs font-medium text-slate-500">
-                                                    <span>Progreso</span>
-                                                    <span className="text-slate-800">{proj.overallProgress}%</span>
-                                                </div>
-                                            </div>
-                                        )
-                                    })}
-                                </div>
-                            </section>
-
-                            {/* SECCIÓN 2: DETALLE DEL PROYECTO SELECCIONADO */}
-                            <div key={currentProject.id} className="fade-content space-y-8">
-                                {/* Encabezado Detalle */}
-                                <div className="flex flex-col md:flex-row justify-between items-start md:items-end border-b border-slate-200 pb-4">
-                                    <div>
-                                        <span className="text-sm font-semibold text-mintrab-light uppercase tracking-wider">Reporte Detallado</span>
-                                        <h2 className="text-3xl font-bold text-slate-900 mt-1">{currentProject.name}</h2>
-                                    </div>
-                                    <div className="mt-4 md:mt-0 text-right">
-                                        <div className="text-sm text-slate-500">Responsable</div>
-                                        <div className="font-semibold text-slate-800">{currentProject.lead}</div>
-                                    </div>
-                                </div>
-
-                                <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-                                    {/* COLUMNA IZQUIERDA: OBJETIVOS Y FASES */}
-                                    <div className="lg:col-span-2 space-y-8">
-                                        
-                                        {/* Tarjeta Objetivo */}
-                                        <div className="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden relative">
-                                            <div className="absolute top-0 left-0 w-1.5 h-full bg-mintrab"></div>
-                                            <div className="p-6">
-                                                <h3 className="text-lg font-bold text-mintrab flex items-center gap-2 mb-4">
-                                                    <Icons.FileText /> Objetivo del Proyecto
-                                                </h3>
-                                                <div className="flex flex-col md:flex-row items-center gap-8">
-                                                    <div className="shrink-0">
-                                                        <GaugeChart value={currentProject.overallProgress} />
-                                                    </div>
-                                                    <p className="text-slate-600 text-sm leading-relaxed text-justify flex-1">
-                                                        {currentProject.objective}
-                                                    </p>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        {/* Tarjeta Mejoras */}
-                                        <div className="bg-white rounded-xl shadow-sm border border-slate-200 p-6">
-                                            <h3 className="text-lg font-bold text-mintrab flex items-center gap-2 mb-6">
-                                                <Icons.Zap /> Impacto y Mejoras
-                                            </h3>
-                                            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                                {currentProject.improvements.map((imp, idx) => (
-                                                    <div key={idx} className="flex items-start gap-3 p-3 rounded-lg bg-slate-50 border border-slate-100">
-                                                        <div className="text-mintrab mt-0.5"><Icons.Check /></div>
-                                                        <span className="text-sm text-slate-700 font-medium">{imp}</span>
-                                                    </div>
-                                                ))}
-                                            </div>
-                                        </div>
-
-                                        {/* Desglose de Fases */}
-                                        <div className="bg-white rounded-xl shadow-sm border border-slate-200 p-6">
-                                            <h3 className="text-lg font-bold text-mintrab mb-6">Desglose Técnico por Fases</h3>
-                                            <div className="space-y-5">
-                                                {currentProject.phaseDetails.map((phase, index) => (
-                                                    <div key={index} className="flex flex-col gap-2">
-                                                        <div className="flex justify-between text-sm">
-                                                            <span className="font-bold text-slate-700">{index + 1}. {phase.name}</span>
-                                                            <span className={`text-xs font-bold px-2 py-0.5 rounded ${getStatusColor(phase.status)}`}>{phase.status}</span>
-                                                        </div>
-                                                        <div className="flex items-center gap-3">
-                                                            <div className="flex-1 h-2 bg-slate-100 rounded-full overflow-hidden">
-                                                                <div className={`h-full rounded-full transition-all duration-1000 ${getPhaseColor(phase.progress)}`} style={{width: `${phase.progress}%`}}></div>
-                                                            </div>
-                                                            <span className="text-xs font-bold text-slate-500 w-8 text-right">{phase.progress}%</span>
-                                                        </div>
-                                                        <div className="text-xs text-slate-400">Resp: {phase.responsible}</div>
-                                                    </div>
-                                                ))}
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    {/* COLUMNA DERECHA: MÓDULOS */}
-                                    <div className="space-y-6">
-                                        <div className="bg-white rounded-xl shadow-sm border border-slate-200 p-6 sticky top-24">
-                                            <h3 className="text-sm font-bold text-mintrab uppercase tracking-wide mb-6 flex items-center gap-2">
-                                                <Icons.Box /> Módulos del Sistema
-                                            </h3>
-                                            <div className="relative pl-2">
-                                                <div className="absolute left-[11px] top-2 h-[calc(100%-24px)] w-0.5 bg-slate-200"></div>
-                                                <div className="flex flex-col gap-6">
-                                                    {currentProject.modules.map((mod, i) => {
-                                                        const isFinished = mod.status === 'Finalizado' || mod.status === 'Completado';
-                                                        return (
-                                                            <div key={i} className="relative pl-8">
-                                                                <div className={`absolute left-0 top-1 w-6 h-6 rounded-full border-4 border-white shadow-sm flex items-center justify-center z-10 ${isFinished ? 'bg-emerald-500' : 'bg-mintrab'}`}>
-                                                                    {isFinished ? <div className="text-white"><Icons.CheckSmall /></div> : <div className="text-white transform scale-75"><Icons.Clock /></div>}
-                                                                </div>
-                                                                <div className="flex flex-col">
-                                                                    <span className={`text-sm font-bold ${isFinished ? 'text-emerald-700' : 'text-slate-800'}`}>{mod.name}</span>
-                                                                    <span className={`text-xs font-medium mt-1 px-2 py-0.5 rounded w-fit ${isFinished ? 'bg-emerald-50 text-emerald-700' : 'bg-blue-50 text-blue-700'}`}>{mod.status}</span>
-                                                                </div>
-                                                            </div>
-                                                        );
-                                                    })}
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                        </div>
-                    </main>
                 </div>
-            );
+            </div>
+
+            <div class="bottom-table-container">
+                <h2 class="section-title"><i class="fa-solid fa-list-check"></i> Estado por Módulo (Ponderado)</h2>
+                <table class="dates-table">
+                    <thead>
+                        <tr>
+                            <th>Módulo</th>
+                            <th style="width: 120px; text-align: center;">Avance</th>
+                            <th>Estado Desarrollo</th>
+                            <th>PRUEBAS DE CALIDAD QA</th>
+                            <th>Responsable</th>
+                        </tr>
+                    </thead>
+                    <tbody id="table-body">
+                    </tbody>
+                </table>
+
+                <div id="detail-container">
+                    <div class="detail-header" style="display:flex; justify-content:space-between; margin-bottom:15px; border-bottom:1px solid #eee; padding-bottom:10px;">
+                        <div class="detail-title" id="detail-title" style="font-size:18px; font-weight:800; color:var(--primary);">Detalle</div>
+                        <div class="detail-close" onclick="hideDetails()" style="cursor:pointer;"><i class="fa-solid fa-times"></i></div>
+                    </div>
+                    <div id="detail-rows"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // === DATOS ===
+        const allProjectsData = {
+            "IGT": {
+                title: "Inspección General de Trabajo - IGT",
+                qaResp: "IGT",
+                statusNote: "PRUEBAS DE CALIDAD QA IGT",
+                modules: {
+                    1: { name: "Módulo 01: Recepción de la denuncia", phases: [ { name: "1. Requerimientos", pct: 100, status: "FINALIZADO", resp: "DISI", weight: 0.30 }, { name: "2. Análisis y Diseño", pct: 100, status: "FINALIZADO", resp: "DISI", weight: 0.30 }, { name: "3. Desarrollo", pct: 100, status: "FINALIZADO", resp: "DISI", weight: 0.30 }, { name: "4. PRUEBAS DE CALIDAD QA", pct: 0, status: "NO INICIADO", resp: "IGT", weight: 0.0333 }, { name: "5. Capacitación", pct: 0, status: "NO INICIADO", resp: "IGT", weight: 0.0333 }, { name: "6. Implementación", pct: 0, status: "NO INICIADO", resp: "DISI", weight: 0.0333 } ] },
+                    2: { name: "Módulo 02: Inspección de la denuncia", phases: [ { name: "1. Requerimientos", pct: 100, status: "FINALIZADO", resp: "DISI", weight: 0.30 }, { name: "2. Análisis y Diseño", pct: 100, status: "FINALIZADO", resp: "DISI", weight: 0.30 }, { name: "3. Desarrollo", pct: 100, status: "FINALIZADO", resp: "DISI", weight: 0.30 }, { name: "4. PRUEBAS DE CALIDAD QA", pct: 0, status: "NO INICIADO", resp: "IGT", weight: 0.0333 }, { name: "5. Capacitación", pct: 0, status: "NO INICIADO", resp: "IGT", weight: 0.0333 }, { name: "6. Implementación", pct: 0, status: "NO INICIADO", resp: "DISI", weight: 0.0333 } ] },
+                    3: { name: "Módulo 03: Verificación de la denuncia", phases: [ { name: "1. Requerimientos", pct: 100, status: "FINALIZADO", resp: "DISI", weight: 0.30 }, { name: "2. Análisis y Diseño", pct: 100, status: "FINALIZADO", resp: "DISI", weight: 0.30 }, { name: "3. Desarrollo", pct: 100, status: "FINALIZADO", resp: "DISI", weight: 0.30 }, { name: "4. PRUEBAS DE CALIDAD QA", pct: 0, status: "NO INICIADO", resp: "IGT", weight: 0.0333 }, { name: "5. Capacitación", pct: 0, status: "NO INICIADO", resp: "IGT", weight: 0.0333 }, { name: "6. Implementación", pct: 0, status: "NO INICIADO", resp: "DISI", weight: 0.0333 } ] },
+                    4: { name: "Módulo 04: Sanciones", phases: [ { name: "1. Requerimientos", pct: 100, status: "FINALIZADO", resp: "DISI", weight: 0.30 }, { name: "2. Análisis y Diseño", pct: 100, status: "FINALIZADO", resp: "DISI", weight: 0.30 }, { name: "3. Desarrollo", pct: 100, status: "FINALIZADO", resp: "DISI", weight: 0.30 }, { name: "4. PRUEBAS DE CALIDAD QA", pct: 0, status: "NO INICIADO", resp: "IGT", weight: 0.0333 }, { name: "5. Capacitación", pct: 0, status: "NO INICIADO", resp: "IGT", weight: 0.0333 }, { name: "6. Implementación", pct: 0, status: "NO INICIADO", resp: "DISI", weight: 0.0333 } ] },
+                    5: { name: "Módulo 05: Operativos", phases: [ { name: "1. Requerimientos", pct: 100, status: "FINALIZADO", resp: "DISI", weight: 0.30 }, { name: "2. Análisis y Diseño", pct: 100, status: "FINALIZADO", resp: "DISI", weight: 0.30 }, { name: "3. Desarrollo", pct: 100, status: "FINALIZADO", resp: "DISI", weight: 0.30 }, { name: "4. PRUEBAS DE CALIDAD QA", pct: 0, status: "NO INICIADO", resp: "IGT", weight: 0.0333 }, { name: "5. Capacitación", pct: 0, status: "NO INICIADO", resp: "IGT", weight: 0.0333 }, { name: "6. Implementación", pct: 0, status: "NO INICIADO", resp: "DISI", weight: 0.0333 } ] }
+                }
+            },
+            "PAM": {
+                title: "Programa de Aporte Económico del Adulto Mayor - PAM",
+                qaResp: "PAM",
+                statusNote: "Aval PRUEBAS DE CALIDAD QA Módulo 1",
+                modules: {
+                    1: { name: "Módulo 01: Inscripción del Adulto Mayor", phases: [ { name: "1. Requerimientos", pct: 100, status: "FINALIZADO", resp: "DISI", weight: 0.30 }, { name: "2. Análisis y Diseño", pct: 100, status: "FINALIZADO", resp: "DISI", weight: 0.30 }, { name: "3. Desarrollo", pct: 100, status: "FINALIZADO", resp: "DISI", weight: 0.30 }, { name: "4. PRUEBAS DE CALIDAD QA", pct: 0, status: "NO INICIADO", resp: "PAM", weight: 0.0333 }, { name: "5. Capacitación", pct: 0, status: "NO INICIADO", resp: "PAM", weight: 0.0333 }, { name: "6. Implementación", pct: 0, status: "NO INICIADO", resp: "DISI", weight: 0.0333 } ] },
+                    2: { name: "Módulo 02: Estudio Socioeconómico", phases: [ { name: "1. Requerimientos", pct: 100, status: "FINALIZADO", resp: "DISI", weight: 0.30 }, { name: "2. Análisis y Diseño", pct: 40, status: "EN PROCESO", resp: "DISI", weight: 0.30 }, { name: "3. Desarrollo", pct: 5, status: "EN PROCESO", resp: "DISI", weight: 0.30 }, { name: "4. PRUEBAS DE CALIDAD QA", pct: 0, status: "NO INICIADO", resp: "PAM", weight: 0.0333 }, { name: "5. Capacitación", pct: 0, status: "NO INICIADO", resp: "PAM", weight: 0.0333 }, { name: "6. Implementación", pct: 0, status: "NO INICIADO", resp: "DISI", weight: 0.0333 } ] },
+                    3: { name: "Módulo 03: Jurídico", phases: [ { name: "1. Requerimientos", pct: 100, status: "FINALIZADO", resp: "DISI", weight: 0.30 }, { name: "2. Análisis y Diseño", pct: 10, status: "EN PROCESO", resp: "DISI", weight: 0.30 }, { name: "3. Desarrollo", pct: 0, status: "NO INICIADO", resp: "DISI", weight: 0.30 }, { name: "4. PRUEBAS DE CALIDAD QA", pct: 0, status: "NO INICIADO", resp: "PAM", weight: 0.0333 }, { name: "5. Capacitación", pct: 0, status: "NO INICIADO", resp: "PAM", weight: 0.0333 }, { name: "6. Implementación", pct: 0, status: "NO INICIADO", resp: "DISI", weight: 0.0333 } ] },
+                    4: { name: "Módulo 04: Nómina", phases: [ { name: "1. Requerimientos", pct: 100, status: "FINALIZADO", resp: "DISI", weight: 0.30 }, { name: "2. Análisis y Diseño", pct: 0, status: "NO INICIADO", resp: "DISI", weight: 0.30 }, { name: "3. Desarrollo", pct: 0, status: "NO INICIADO", resp: "DISI", weight: 0.30 }, { name: "4. PRUEBAS DE CALIDAD QA", pct: 0, status: "NO INICIADO", resp: "PAM", weight: 0.0333 }, { name: "5. Capacitación", pct: 0, status: "NO INICIADO", resp: "PAM", weight: 0.0333 }, { name: "6. Implementación", pct: 0, status: "NO INICIADO", resp: "DISI", weight: 0.0333 } ] },
+                    5: { name: "Módulo 05: Generación de Carnets", phases: [ { name: "1. Requerimientos", pct: 100, status: "FINALIZADO", resp: "DISI", weight: 0.30 }, { name: "2. Análisis y Diseño", pct: 100, status: "FINALIZADO", resp: "DISI", weight: 0.30 }, { name: "3. Desarrollo", pct: 80, status: "EN PROCESO", resp: "DISI", weight: 0.30 }, { name: "4. PRUEBAS DE CALIDAD QA", pct: 0, status: "NO INICIADO", resp: "PAM", weight: 0.0333 }, { name: "5. Capacitación", pct: 0, status: "NO INICIADO", resp: "PAM", weight: 0.0333 }, { name: "6. Implementación", pct: 0, status: "NO INICIADO", resp: "DISI", weight: 0.0333 } ] }
+                }
+            },
+            "DRTE": {
+                title: "Dirección de Recreación del Trabajador del Estado - DRTE",
+                qaResp: "DRTE",
+                statusNote: "Proyecto Finalizado",
+                modules: {
+                    1: { name: "Módulo 01: Gestión Instituciones y Trabajadores", phases: [ { name: "1. Requerimientos", pct: 100, status: "FINALIZADO", resp: "DISI", weight: 0.30 }, { name: "2. Análisis y Diseño", pct: 100, status: "FINALIZADO", resp: "DISI", weight: 0.30 }, { name: "3. Desarrollo", pct: 100, status: "FINALIZADO", resp: "DISI", weight: 0.30 }, { name: "4. PRUEBAS DE CALIDAD QA", pct: 100, status: "FINALIZADO", resp: "DRTE", weight: 0.0333 }, { name: "5. Capacitación", pct: 100, status: "FINALIZADO", resp: "DRTE", weight: 0.0333 }, { name: "6. Implementación", pct: 100, status: "FINALIZADO", resp: "DISI", weight: 0.0333 } ] },
+                    2: { name: "Módulo 02: Gestión de Carnet", phases: [ { name: "1. Requerimientos", pct: 100, status: "FINALIZADO", resp: "DISI", weight: 0.30 }, { name: "2. Análisis y Diseño", pct: 100, status: "FINALIZADO", resp: "DISI", weight: 0.30 }, { name: "3. Desarrollo", pct: 100, status: "FINALIZADO", resp: "DISI", weight: 0.30 }, { name: "4. PRUEBAS DE CALIDAD QA", pct: 100, status: "FINALIZADO", resp: "DRTE", weight: 0.0333 }, { name: "5. Capacitación", pct: 100, status: "FINALIZADO", resp: "DRTE", weight: 0.0333 }, { name: "6. Implementación", pct: 100, status: "FINALIZADO", resp: "DISI", weight: 0.0333 } ] },
+                    3: { name: "Módulo 03: Centros Vacacionales y Reservas", phases: [ { name: "1. Requerimientos", pct: 100, status: "FINALIZADO", resp: "DISI", weight: 0.30 }, { name: "2. Análisis y Diseño", pct: 100, status: "FINALIZADO", resp: "DISI", weight: 0.30 }, { name: "3. Desarrollo", pct: 100, status: "FINALIZADO", resp: "DISI", weight: 0.30 }, { name: "4. PRUEBAS DE CALIDAD QA", pct: 100, status: "FINALIZADO", resp: "DRTE", weight: 0.0333 }, { name: "5. Capacitación", pct: 100, status: "FINALIZADO", resp: "DRTE", weight: 0.0333 }, { name: "6. Implementación", pct: 100, status: "FINALIZADO", resp: "DISI", weight: 0.0333 } ] }
+                }
+            }
         };
 
-        const root = ReactDOM.createRoot(document.getElementById('root'));
-        root.render(<App />);
+        let currentProjectKey = "IGT";
+        let modulesData = null;
+
+        function calculateTotalProgress(phases) {
+            let total = 0;
+            phases.forEach(p => { total += (p.pct * p.weight); });
+            return Math.min(Math.round(total), 100);
+        }
+
+        function calculateProjectAverage(key) {
+            const data = allProjectsData[key].modules;
+            let totalProjectPct = 0;
+            const totalModules = Object.keys(data).length;
+            for (const [k, mod] of Object.entries(data)) {
+                totalProjectPct += calculateTotalProgress(mod.phases);
+            }
+            return Math.round(totalProjectPct / totalModules);
+        }
+
+        function initLanding() {
+            const igtAvg = calculateProjectAverage('IGT');
+            document.getElementById('bar-IGT').style.width = igtAvg + '%';
+            document.getElementById('pct-IGT').innerText = igtAvg + '%';
+
+            const pamAvg = calculateProjectAverage('PAM');
+            document.getElementById('bar-PAM').style.width = pamAvg + '%';
+            document.getElementById('pct-PAM').innerText = pamAvg + '%';
+
+            const drteAvg = calculateProjectAverage('DRTE');
+            document.getElementById('bar-DRTE').style.width = drteAvg + '%';
+            document.getElementById('pct-DRTE').innerText = drteAvg + '%';
+        }
+
+        function selectProject(key) {
+            currentProjectKey = key;
+            modulesData = allProjectsData[key].modules;
+            document.querySelector('.hero-section').style.display = 'none';
+            const dashboard = document.getElementById('dashboard-view');
+            dashboard.style.display = 'block';
+            void dashboard.offsetWidth; 
+            dashboard.style.opacity = '1';
+            dashboard.style.transform = 'translateY(0)';
+            renderDashboard();
+        }
+
+        function backToHome() {
+            const dashboard = document.getElementById('dashboard-view');
+            dashboard.style.opacity = '0';
+            dashboard.style.transform = 'translateY(20px)';
+            setTimeout(() => {
+                dashboard.style.display = 'none';
+                document.querySelector('.hero-section').style.display = 'flex';
+                initLanding(); 
+            }, 300);
+        }
+
+        function renderDashboard() {
+            updateStaticTexts();
+            updateGlobalStats();
+            updateDevelopmentStats();
+            renderTable();
+            hideDetails();
+        }
+
+        function updateDevelopmentStats() {
+            let totalDev = 0;
+            const totalModules = Object.keys(modulesData).length;
+            for (const [key, mod] of Object.entries(modulesData)) {
+                totalDev += mod.phases[2].pct;
+            }
+            const avgDev = Math.round(totalDev / totalModules);
+            const devTag = document.getElementById('dev-cycle-tag');
+            
+            if (avgDev >= 90) {
+                devTag.innerHTML = `<i class="fa-solid fa-check"></i> Finalizado`;
+                devTag.style.color = "#166534"; devTag.style.background = "#dcfce7";
+            } else if (avgDev > 0) {
+                devTag.innerHTML = `<i class="fa-solid fa-spinner fa-spin"></i> En Proceso`;
+                devTag.style.color = "#1e40af"; devTag.style.background = "#dbeafe";
+            } else {
+                devTag.innerHTML = `<i class="fa-solid fa-circle-xmark"></i> NO INICIADO`;
+                devTag.style.color = "#dc2626"; devTag.style.background = "#fee2e2";
+            }
+        }
+
+        function updateGlobalStats() {
+            const globalAvg = calculateProjectAverage(currentProjectKey);
+            const displayEl = document.getElementById('global-pct-display');
+            displayEl.innerText = globalAvg + "%";
+            displayEl.style.color = globalAvg > 80 ? "#16a34a" : (globalAvg > 50 ? "#002855" : "#d97706");
+        }
+
+        function updateStaticTexts() {
+            const data = allProjectsData[currentProjectKey];
+            document.getElementById('project-title').innerText = data.title;
+            document.getElementById('status-note').innerText = data.statusNote;
+            
+            document.getElementById('dev-resp').innerText = "RESPONSABLE : DISI";
+            document.getElementById('qa-resp').innerText = "RESPONSABLE : " + data.qaResp;
+            document.getElementById('train-resp').innerText = "RESPONSABLE : " + data.qaResp;
+            document.getElementById('prod-resp').innerText = "RESPONSABLE : DISI";
+
+            const globalAvg = calculateProjectAverage(currentProjectKey);
+            const setTag = (id, isDone) => {
+                const el = document.getElementById(id);
+                if(isDone) {
+                    el.innerHTML = '<i class="fa-solid fa-check"></i> Finalizado';
+                    el.style.background = '#dcfce7'; el.style.color = '#166534';
+                } else {
+                    el.innerHTML = '<i class="fa-solid fa-circle-xmark"></i> NO INICIADO';
+                    el.style.background = '#fee2e2'; el.style.color = '#dc2626';
+                }
+            };
+
+            if(globalAvg === 100) {
+                setTag('qa-cycle-tag', true); setTag('train-cycle-tag', true); setTag('prod-cycle-tag', true);
+            } else {
+                setTag('qa-cycle-tag', false); setTag('train-cycle-tag', false); setTag('prod-cycle-tag', false);
+            }
+        }
+
+        function renderTable() {
+            const tbody = document.getElementById('table-body');
+            let html = '';
+            for (const [id, mod] of Object.entries(modulesData)) {
+                const totalPct = calculateTotalProgress(mod.phases);
+                const devPhase = mod.phases[2]; 
+                const qaPhase = mod.phases[3];
+                const data = allProjectsData[currentProjectKey];
+                let pctColor = totalPct >= 90 ? '#16a34a' : (totalPct < 50 ? '#b45309' : '#005eb8');
+                let qaColor = qaPhase.status === 'NO INICIADO' ? '#dc2626' : (qaPhase.status === 'EN PROCESO' ? '#f59e0b' : '#16a34a');
+                let resp = devPhase.status === 'FINALIZADO' ? (qaPhase.status === 'FINALIZADO' ? data.qaResp : `${data.qaResp} (PRUEBAS DE CALIDAD QA)`) : 'DISI';
+
+                html += `<tr onclick="showModuleDetails(${id})">
+                    <td class="mod-name" style="font-weight:700; color:#002855;">${mod.name}</td>
+                    <td class="perc-cell" style="font-weight:800; text-align:center; color:${pctColor}; background-color:#f0f9ff; border-radius:10px;">${totalPct}%</td>
+                    <td class="date-cell" style="color:${devPhase.status === 'FINALIZADO' ? '#16a34a' : (devPhase.status === 'NO INICIADO' ? '#dc2626' : '#f59e0b')}; font-weight:600;">${devPhase.status}</td>
+                    <td class="date-cell" style="color:${qaColor}; font-weight:600;">${qaPhase.status}</td>
+                    <td class="date-cell" style="font-weight:500;">${resp}</td>
+                </tr>`;
+            }
+            tbody.innerHTML = html;
+        }
+
+        function showModuleDetails(moduleId) {
+            const container = document.getElementById('detail-container');
+            const rowsEl = document.getElementById('detail-rows');
+            const module = modulesData[moduleId];
+            document.getElementById('detail-title').innerText = module.name;
+            let html = '';
+            module.phases.forEach(phase => {
+                let badgeClass = phase.status === 'FINALIZADO' ? 'st-done' : (phase.status === 'EN PROCESO' ? 'st-process' : 'st-pending');
+                html += `
+                <div class="detail-row">
+                    <div class="detail-info">
+                        <span>${phase.name} <span style="font-size:10px; color:#64748b;">(~${Math.round(phase.weight * 100)}%)</span></span>
+                        <span class="status-badge ${badgeClass}">${phase.status}</span>
+                    </div>
+                    <div class="phase-track"><div class="phase-fill ${phase.status === 'FINALIZADO' ? 'green' : ''}" style="width: ${phase.pct}%"></div></div>
+                    <div style="display:flex; justify-content:space-between; margin-top:2px; font-size:11px; color:#64748b;">
+                        <div>RESPONSABLE : ${phase.resp}</div>
+                        <span style="font-weight:700; color:#002855;">${phase.pct}%</span>
+                    </div>
+                </div>`;
+            });
+            rowsEl.innerHTML = html;
+            container.style.display = 'block';
+            container.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+
+        function hideDetails() { document.getElementById('detail-container').style.display = 'none'; }
+
+        window.onload = function() {
+            initLanding();
+        };
     </script>
 </body>
 </html>
