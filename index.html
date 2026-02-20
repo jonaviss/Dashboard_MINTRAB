@@ -11,7 +11,7 @@
         * { box-sizing: border-box; transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1); }
 
         :root {
-            --primary: #002F5D; /* Azul Institucional */
+            --primary: #002F5D;
             --primary-light: #004a8f;
             --accent: #005eb8; 
             --warning: #f59e0b; 
@@ -19,7 +19,6 @@
             --danger: #dc2626;
             --text: #334155;    
             --bg-gray: #f8fafc;
-            --card-shadow: 0 10px 30px -5px rgba(0, 47, 93, 0.15);
         }
 
         body {
@@ -30,7 +29,7 @@
             overflow-x: hidden;
         }
 
-        /* --- SECCIÓN HERO --- */
+        /* --- SECCIÓN HERO (VISTA INICIAL) --- */
         .hero-section {
             min-height: 100vh;
             background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
@@ -55,7 +54,7 @@
         .hero-content {
             z-index: 10;
             text-align: center;
-            max-width: 1200px;
+            max-width: 1400px;
             width: 100%;
             animation: fadeInDown 0.8s ease-out;
         }
@@ -88,12 +87,11 @@
             color: #e2e8f0;
             font-weight: 300;
             margin-bottom: 50px;
-            max-width: 700px;
+            max-width: 800px;
             margin-left: auto;
             margin-right: auto;
         }
 
-        /* GRID DE PROYECTOS */
         .projects-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
@@ -108,91 +106,27 @@
             padding: 25px;
             cursor: pointer;
             position: relative;
-            border: 2px solid transparent;
             box-shadow: 0 10px 20px rgba(0,0,0,0.1);
             text-align: left;
-            transform: translateY(0);
         }
 
-        .project-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
-        }
+        .project-card:hover { transform: translateY(-10px); box-shadow: 0 20px 40px rgba(0,0,0,0.2); }
 
-        .card-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-start;
-            margin-bottom: 15px;
-        }
-
-        .card-icon {
-            width: 50px;
-            height: 50px;
-            border-radius: 12px;
-            background: #f1f5f9;
-            color: var(--primary);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 20px;
-        }
+        .card-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 12px; }
+        .card-icon { width: 45px; height: 45px; border-radius: 12px; background: #f1f5f9; color: var(--primary); display: flex; align-items: center; justify-content: center; font-size: 18px; }
+        .project-card:hover .card-icon { background: var(--primary); color: white; }
         
-        .project-card:hover .card-icon {
-            background: var(--primary);
-            color: white;
-        }
-
-        .card-status {
-            font-size: 10px;
-            font-weight: 800;
-            text-transform: uppercase;
-            padding: 4px 8px;
-            border-radius: 6px;
-        }
+        .card-status { font-size: 9px; font-weight: 800; text-transform: uppercase; padding: 4px 8px; border-radius: 6px; }
         .status-progress { background: #dbeafe; color: #1e40af; }
         .status-final { background: #dcfce7; color: #166534; }
 
-        .card-title {
-            font-size: 18px;
-            font-weight: 800;
-            color: var(--text);
-            margin: 0 0 5px 0;
-        }
+        .card-title { font-size: 18px; font-weight: 800; color: var(--text); margin: 0; line-height: 1.2; }
+        .card-dept { font-size: 11px; color: var(--accent); font-weight: 700; text-transform: uppercase; display: block; margin-top: 4px; margin-bottom: 10px; }
+        .card-desc { font-size: 11px; color: #64748b; margin-bottom: 15px; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; min-height: 2.4em; }
 
-        .card-desc {
-            font-size: 12px;
-            color: #64748b;
-            margin-bottom: 20px;
-            display: -webkit-box;
-            -webkit-line-clamp: 2;
-            -webkit-box-orient: vertical;
-            overflow: hidden;
-        }
-
-        .progress-container {
-            width: 100%;
-            height: 8px;
-            background: #f1f5f9;
-            border-radius: 10px;
-            overflow: hidden;
-            margin-bottom: 8px;
-        }
-
-        .progress-bar {
-            height: 100%;
-            background: var(--primary);
-            border-radius: 10px;
-            width: 0%; 
-        }
-
-        .card-footer {
-            display: flex;
-            justify-content: space-between;
-            font-size: 12px;
-            font-weight: 600;
-            color: #64748b;
-        }
+        .progress-container { width: 100%; height: 8px; background: #f1f5f9; border-radius: 10px; overflow: hidden; margin-bottom: 8px; }
+        .progress-bar { height: 100%; background: var(--primary); width: 0%; transition: width 0.8s ease-in-out; }
+        .card-footer { display: flex; justify-content: space-between; font-size: 11px; font-weight: 600; color: #64748b; }
 
         /* --- DASHBOARD DETALLADO --- */
         #dashboard-view {
@@ -216,111 +150,47 @@
             border-top: 10px solid var(--primary);
         }
 
-        .header { 
-            display: flex; 
-            justify-content: space-between; 
-            align-items: center; 
-            border-bottom: 2px solid #e2e8f0; 
-            padding-bottom: 20px; 
-        }
-        .header h1 { margin: 0; font-size: 32px; color: var(--primary); font-weight: 800; }
-        .header .meta { text-align: right; font-size: 14px; color: #64748b; }
+        .header { display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid #e2e8f0; padding-bottom: 20px; }
+        .header h1 { margin: 0; font-size: 28px; color: var(--primary); font-weight: 800; }
+        .header .meta { text-align: right; font-size: 13px; color: #64748b; }
 
-        .top-info-container {
-            display: grid;
-            grid-template-columns: 300px 1fr;
-            gap: 30px;
-        }
+        .top-info-container { display: grid; grid-template-columns: 320px 1fr; gap: 30px; }
 
         .status-card-detail { 
-            background: #f0fdf4; 
-            border: 2px solid var(--success); 
-            padding: 25px; 
-            border-radius: 20px; 
-            text-align: center;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
+            background: #f0fdf4; border: 2px solid var(--success); padding: 25px; border-radius: 20px; text-align: center;
+            display: flex; flex-direction: column; justify-content: center;
         }
 
-        .lifecycle-container {
-            background: #f8fafc;
-            padding: 25px;
-            border-radius: 20px;
-            border: 1px solid #e2e8f0;
-        }
+        .lifecycle-container { background: #f8fafc; padding: 25px; border-radius: 20px; border: 1px solid #e2e8f0; }
 
-        .cycle-wrapper { 
-            display: flex; 
-            gap: 15px; 
-            flex-wrap: nowrap; 
-            align-items: center;
-            margin-top: 15px;
-        }
-        
+        .cycle-wrapper { display: flex; gap: 12px; align-items: center; margin-top: 15px; }
         .cycle-step { 
-            flex: 1; 
-            background: white; 
-            padding: 15px; 
-            border-radius: 12px; 
-            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05); 
-            position: relative; 
-            border: 1px solid #e2e8f0; 
-            display: flex; 
-            flex-direction: column; 
-            align-items: center; 
-            min-width: 140px; 
+            flex: 1; background: white; padding: 15px; border-radius: 12px; border: 1px solid #e2e8f0;
+            display: flex; flex-direction: column; align-items: center; min-width: 130px; position: relative;
         }
         .cycle-step.dev { border-top: 4px solid var(--accent); }
         .cycle-step.qa { border-top: 4px solid var(--warning); }
         .cycle-step.train { border-top: 4px solid #0891b2; }
         .cycle-step.prod { border-top: 4px solid var(--success); }
         
-        .step-num { position: absolute; top: -10px; right: 10px; background: var(--text); color: white; width: 24px; height: 24px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: bold; }
-        .cycle-step h4 { margin: 10px 0 5px 0; font-size: 12px; text-align: center; font-weight: 800; text-transform: uppercase; }
-        .cycle-step p { font-size: 10px; color: #475569; margin: 0; text-align: center; font-weight: 700; }
-        .doc-tag { margin-top: 10px; background: #f1f5f9; color: #475569; font-size: 10px; padding: 3px 8px; border-radius: 10px; display: flex; align-items: center; gap: 4px; font-weight: 700; }
+        .step-num { position: absolute; top: -10px; right: 10px; background: var(--text); color: white; width: 22px; height: 22px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: bold; }
+        .cycle-step h4 { margin: 10px 0 5px 0; font-size: 11px; text-align: center; font-weight: 800; text-transform: uppercase; line-height: 1.2; height: 2.4em; display: flex; align-items: center; }
+        .cycle-step p { font-size: 9px; color: #475569; margin: 0; text-align: center; font-weight: 700; }
+        .doc-tag { margin-top: 10px; background: #f1f5f9; color: #475569; font-size: 10px; padding: 3px 8px; border-radius: 10px; font-weight: 700; }
 
-        .bottom-table-container {
-            width: 100%;
-        }
-
-        .section-title { 
-            color: var(--primary); 
-            font-size: 18px; 
-            margin-top: 0; 
-            margin-bottom: 20px; 
-            display: flex; 
-            align-items: center; 
-            font-weight: 700; 
-            border-bottom: 1px solid #e2e8f0; 
-            padding-bottom: 10px; 
-        }
+        .bottom-table-container { width: 100%; }
+        .section-title { color: var(--primary); font-size: 18px; margin-top: 0; margin-bottom: 20px; display: flex; align-items: center; font-weight: 700; border-bottom: 1px solid #e2e8f0; padding-bottom: 10px; }
         .section-title i { margin-right: 10px; color: var(--accent); }
 
         .dates-table { width: 100%; border-collapse: collapse; font-size: 14px; cursor: pointer; }
         .dates-table th { text-align: left; padding: 15px; background-color: var(--primary); color: white; font-weight: 600; text-transform: uppercase; font-size: 10px; }
-        .dates-table th:first-child { border-radius: 12px 0 0 0; }
-        .dates-table th:last-child { border-radius: 0 12px 0 0; }
         .dates-table td { padding: 15px; border-bottom: 1px solid #f1f5f9; color: var(--text); vertical-align: middle; }
-        .dates-table tbody tr:hover { background-color: #f0f9ff !important; transform: scale(1.005); }
+        .dates-table tbody tr:hover { background-color: #f0f9ff !important; transform: scale(1.002); }
 
-        .btn-back {
-            background: #f1f5f9;
-            color: var(--text);
-            border: none;
-            padding: 8px 16px;
-            border-radius: 8px;
-            cursor: pointer;
-            font-weight: 700;
-            font-size: 13px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
+        .btn-back { background: #f1f5f9; color: var(--text); border: none; padding: 8px 16px; border-radius: 8px; cursor: pointer; font-weight: 700; font-size: 13px; display: flex; align-items: center; gap: 8px; }
         .btn-back:hover { background: #e2e8f0; color: var(--primary); }
 
-        #detail-container { background: white; border: 2px solid var(--accent); border-radius: 12px; padding: 25px; margin-top: 20px; display: none; animation: fadeIn 0.5s; }
+        #detail-container { background: white; border: 2px solid var(--accent); border-radius: 12px; padding: 25px; margin-top: 20px; display: none; }
         .detail-row { display: flex; flex-direction: column; margin-bottom: 15px; }
         .detail-info { display: flex; justify-content: space-between; margin-bottom: 5px; font-size: 13px; font-weight: 600; }
         .phase-track { background: #e2e8f0; height: 12px; border-radius: 6px; overflow: hidden; width: 100%; }
@@ -346,69 +216,11 @@
     <div class="hero-section">
         <div class="hero-blob blob-1"></div>
         <div class="hero-blob blob-2"></div>
-
         <div class="hero-content">
-            <div class="hero-icon">
-                <i class="fa-solid fa-chart-line"></i>
-            </div>
+            <div class="hero-icon"><i class="fa-solid fa-chart-line"></i></div>
             <h1 class="hero-title">Tablero de Control de Proyectos</h1>
-            <p class="hero-subtitle">Visualización estratégica del avance, hitos y métricas de los proyectos tecnológicos clave del Ministerio de Trabajo y Previsión Social.</p>
-
-            <div class="projects-grid">
-                
-                <div class="project-card" onclick="selectProject('IGT')">
-                    <div class="card-header">
-                        <div class="card-icon"><i class="fa-solid fa-scale-balanced"></i></div>
-                        <span class="card-status status-progress">En Progreso</span>
-                    </div>
-                    <h3 class="card-title">Inspección General (IGT)</h3>
-                    <p class="card-desc">Modernización de denuncias, actas y operativos de inspección.</p>
-                    <div class="progress-container">
-                        <div class="progress-bar" id="bar-IGT" style="width: 0%"></div>
-                    </div>
-                    <div class="card-footer">
-                        <span>Progreso Global</span>
-                        <span id="pct-IGT">0%</span>
-                    </div>
-                </div>
-
-                <div class="project-card" onclick="selectProject('PAM')">
-                    <div class="card-header">
-                        <div class="card-icon"><i class="fa-solid fa-hands-holding-circle"></i></div>
-                        <span class="card-status status-progress">En Progreso</span>
-                    </div>
-                    <h3 class="card-title">Adulto Mayor (PAM)</h3>
-                    <p class="card-desc">Plataforma de estudio socioeconómico y nómina.</p>
-                    <div class="progress-container">
-                        <div class="progress-bar" id="bar-PAM" style="width: 0%"></div>
-                    </div>
-                    <div class="card-footer">
-                        <span>Progreso Global</span>
-                        <span id="pct-PAM">0%</span>
-                    </div>
-                </div>
-
-                <div class="project-card" onclick="selectProject('DRTE')">
-                    <div class="card-header">
-                        <div class="card-icon"><i class="fa-solid fa-umbrella-beach"></i></div>
-                        <span class="card-status status-final">Finalizado</span>
-                    </div>
-                    <h3 class="card-title">Recreación (DRTE)</h3>
-                    <p class="card-desc">Gestión de centros vacacionales y reservas.</p>
-                    <div class="progress-container">
-                        <div class="progress-bar" id="bar-DRTE" style="width: 0%"></div>
-                    </div>
-                    <div class="card-footer">
-                        <span>Progreso Global</span>
-                        <span id="pct-DRTE">0%</span>
-                    </div>
-                </div>
-
-            </div>
-            
-            <div style="color: rgba(255,255,255,0.7); font-size: 14px;">
-                <i class="fa-solid fa-arrow-pointer"></i> Seleccione un proyecto para ver el detalle completo
-            </div>
+            <p class="hero-subtitle">Visualización estratégica del avance de los proyectos tecnológicos del Ministerio de Trabajo y Previsión Social.</p>
+            <div class="projects-grid" id="main-grid"></div>
         </div>
     </div>
 
@@ -416,42 +228,29 @@
         <div class="one-pager">
             <header class="header">
                 <div style="display:flex; align-items:center; gap:20px;">
-                    <button class="btn-back" onclick="backToHome()">
-                        <i class="fa-solid fa-arrow-left"></i> Volver
-                    </button>
-                    <h1 id="project-title">Título del Proyecto</h1>
+                    <button class="btn-back" onclick="backToHome()"><i class="fa-solid fa-arrow-left"></i> Volver</button>
+                    <h1 id="project-title">Proyecto</h1>
                 </div>
-                <div class="meta" id="project-meta"><strong>MINTRAB 2025</strong><br>Dirección de Sistemas de Información DISI</div>
+                <div class="meta"><strong>MINTRAB 2025</strong><br>Dirección de Sistemas DISI</div>
             </header>
 
             <div class="top-info-container">
                 <div class="status-card-detail">
-                    <p style="margin:0; font-weight:700; color: #16a34a; font-size:12px; text-transform:uppercase; letter-spacing:1px;">Avance General</p>
-                    <span id="global-pct-display" style="font-size: 54px; font-weight: 900; color: #002F5D; line-height:1;">--%</span>
-                    <div id="status-note" style="font-size: 12px; margin-top: 15px; background: #bbf7d0; color: #15803d; padding: 4px 10px; border-radius: 20px; font-weight:700;"></div>
+                    <p style="margin:0; font-weight:700; color: #16a34a; font-size:12px; text-transform:uppercase;">Avance General</p>
+                    <span id="global-pct-display" style="font-size: 54px; font-weight: 900; color: #002F5D;">--%</span>
+                    <div id="status-note" style="font-size: 11px; margin-top: 15px; background: #bbf7d0; color: #15803d; padding: 4px 10px; border-radius: 20px; font-weight:700;"></div>
                 </div>
 
                 <div class="lifecycle-container">
                     <h2 class="section-title" style="border:none; margin-bottom:10px;"><i class="fa-solid fa-laptop-file"></i> Ciclo de Vida del Proyecto</h2>
                     <div class="cycle-wrapper">
-                        <div class="cycle-step dev">
-                            <div class="step-num">1</div><h4>Desarrollo</h4><p id="dev-resp">RESPONSABLE : DISI</p><div class="doc-tag" id="dev-cycle-tag">...</div>
-                        </div>
-                        <i class="fa-solid fa-chevron-right arrow-right" style="color:#cbd5e1"></i>
-                        
-                        <div class="cycle-step qa">
-                            <div class="step-num">2</div><h4>PRUEBAS DE CALIDAD QA</h4><p id="qa-resp">--</p><div class="doc-tag" id="qa-cycle-tag">...</div>
-                        </div>
-                        <i class="fa-solid fa-chevron-right arrow-right" style="color:#cbd5e1"></i>
-                        
-                        <div class="cycle-step train">
-                            <div class="step-num">3</div><h4>Capacitación</h4><p id="train-resp">--</p><div class="doc-tag" id="train-cycle-tag">...</div>
-                        </div>
-                        <i class="fa-solid fa-chevron-right arrow-right" style="color:#cbd5e1"></i>
-                        
-                        <div class="cycle-step prod">
-                            <div class="step-num">4</div><h4>Producción</h4><p id="prod-resp">RESPONSABLE : DISI</p><div class="doc-tag" id="prod-cycle-tag">...</div>
-                        </div>
+                        <div class="cycle-step dev"><div class="step-num">1</div><h4>Desarrollo</h4><p id="dev-resp">RESPONSABLE : DISI</p><div class="doc-tag" id="dev-cycle-tag">...</div></div>
+                        <i class="fa-solid fa-chevron-right" style="color:#cbd5e1"></i>
+                        <div class="cycle-step qa"><div class="step-num">2</div><h4>Pruebas de Calidad QA</h4><p id="qa-resp">--</p><div class="doc-tag" id="qa-cycle-tag">...</div></div>
+                        <i class="fa-solid fa-chevron-right" style="color:#cbd5e1"></i>
+                        <div class="cycle-step train"><div class="step-num">3</div><h4>Capacitación</h4><p id="train-resp">--</p><div class="doc-tag" id="train-cycle-tag">...</div></div>
+                        <i class="fa-solid fa-chevron-right" style="color:#cbd5e1"></i>
+                        <div class="cycle-step prod"><div class="step-num">4</div><h4>Producción</h4><p id="prod-resp">RESPONSABLE : DISI</p><div class="doc-tag" id="prod-cycle-tag">...</div></div>
                     </div>
                 </div>
             </div>
@@ -460,23 +259,12 @@
                 <h2 class="section-title"><i class="fa-solid fa-list-check"></i> Estado por Módulo (Ponderado)</h2>
                 <table class="dates-table">
                     <thead>
-                        <tr>
-                            <th>Módulo</th>
-                            <th style="width: 120px; text-align: center;">Avance</th>
-                            <th>Estado Desarrollo</th>
-                            <th>PRUEBAS DE CALIDAD QA</th>
-                            <th>Responsable</th>
-                        </tr>
+                        <tr><th>Módulo</th><th style="width: 120px; text-align: center;">Avance</th><th>Estado Desarrollo</th><th>Pruebas de Calidad QA</th><th>Responsable</th></tr>
                     </thead>
-                    <tbody id="table-body">
-                    </tbody>
+                    <tbody id="table-body"></tbody>
                 </table>
-
                 <div id="detail-container">
-                    <div class="detail-header" style="display:flex; justify-content:space-between; margin-bottom:15px; border-bottom:1px solid #eee; padding-bottom:10px;">
-                        <div class="detail-title" id="detail-title" style="font-size:18px; font-weight:800; color:var(--primary);">Detalle</div>
-                        <div class="detail-close" onclick="hideDetails()" style="cursor:pointer;"><i class="fa-solid fa-times"></i></div>
-                    </div>
+                    <div class="header" style="border:none; margin-bottom:10px;"><div id="detail-title" style="font-size:18px; font-weight:800; color:var(--primary);">Detalle</div><div onclick="hideDetails()" style="cursor:pointer;"><i class="fa-solid fa-times"></i></div></div>
                     <div id="detail-rows"></div>
                 </div>
             </div>
@@ -484,219 +272,134 @@
     </div>
 
     <script>
-        // === DATOS ===
+        // === BASE DE DATOS ESTRATÉGICA ===
         const allProjectsData = {
             "IGT": {
-                title: "Inspección General de Trabajo - IGT",
-                qaResp: "IGT",
-                statusNote: "PRUEBAS DE CALIDAD QA IGT",
+                title: "Inspección General de Trabajo", dept: "Inspección General de Trabajo", qaResp: "IGT", statusNote: "Pruebas de Calidad QA en Proceso", desc: "Modernización de denuncias, actas y operativos de inspección.", icon: "fa-scale-balanced",
                 modules: {
-                    1: { name: "Módulo 01: Recepción de la denuncia", phases: [ { name: "1. Requerimientos", pct: 100, status: "FINALIZADO", resp: "DISI", weight: 0.30 }, { name: "2. Análisis y Diseño", pct: 100, status: "FINALIZADO", resp: "DISI", weight: 0.30 }, { name: "3. Desarrollo", pct: 100, status: "FINALIZADO", resp: "DISI", weight: 0.30 }, { name: "4. PRUEBAS DE CALIDAD QA", pct: 0, status: "NO INICIADO", resp: "IGT", weight: 0.0333 }, { name: "5. Capacitación", pct: 0, status: "NO INICIADO", resp: "IGT", weight: 0.0333 }, { name: "6. Implementación", pct: 0, status: "NO INICIADO", resp: "DISI", weight: 0.0333 } ] },
-                    2: { name: "Módulo 02: Inspección de la denuncia", phases: [ { name: "1. Requerimientos", pct: 100, status: "FINALIZADO", resp: "DISI", weight: 0.30 }, { name: "2. Análisis y Diseño", pct: 100, status: "FINALIZADO", resp: "DISI", weight: 0.30 }, { name: "3. Desarrollo", pct: 100, status: "FINALIZADO", resp: "DISI", weight: 0.30 }, { name: "4. PRUEBAS DE CALIDAD QA", pct: 0, status: "NO INICIADO", resp: "IGT", weight: 0.0333 }, { name: "5. Capacitación", pct: 0, status: "NO INICIADO", resp: "IGT", weight: 0.0333 }, { name: "6. Implementación", pct: 0, status: "NO INICIADO", resp: "DISI", weight: 0.0333 } ] },
-                    3: { name: "Módulo 03: Verificación de la denuncia", phases: [ { name: "1. Requerimientos", pct: 100, status: "FINALIZADO", resp: "DISI", weight: 0.30 }, { name: "2. Análisis y Diseño", pct: 100, status: "FINALIZADO", resp: "DISI", weight: 0.30 }, { name: "3. Desarrollo", pct: 100, status: "FINALIZADO", resp: "DISI", weight: 0.30 }, { name: "4. PRUEBAS DE CALIDAD QA", pct: 0, status: "NO INICIADO", resp: "IGT", weight: 0.0333 }, { name: "5. Capacitación", pct: 0, status: "NO INICIADO", resp: "IGT", weight: 0.0333 }, { name: "6. Implementación", pct: 0, status: "NO INICIADO", resp: "DISI", weight: 0.0333 } ] },
-                    4: { name: "Módulo 04: Sanciones", phases: [ { name: "1. Requerimientos", pct: 100, status: "FINALIZADO", resp: "DISI", weight: 0.30 }, { name: "2. Análisis y Diseño", pct: 100, status: "FINALIZADO", resp: "DISI", weight: 0.30 }, { name: "3. Desarrollo", pct: 100, status: "FINALIZADO", resp: "DISI", weight: 0.30 }, { name: "4. PRUEBAS DE CALIDAD QA", pct: 0, status: "NO INICIADO", resp: "IGT", weight: 0.0333 }, { name: "5. Capacitación", pct: 0, status: "NO INICIADO", resp: "IGT", weight: 0.0333 }, { name: "6. Implementación", pct: 0, status: "NO INICIADO", resp: "DISI", weight: 0.0333 } ] },
-                    5: { name: "Módulo 05: Operativos", phases: [ { name: "1. Requerimientos", pct: 100, status: "FINALIZADO", resp: "DISI", weight: 0.30 }, { name: "2. Análisis y Diseño", pct: 100, status: "FINALIZADO", resp: "DISI", weight: 0.30 }, { name: "3. Desarrollo", pct: 100, status: "FINALIZADO", resp: "DISI", weight: 0.30 }, { name: "4. PRUEBAS DE CALIDAD QA", pct: 0, status: "NO INICIADO", resp: "IGT", weight: 0.0333 }, { name: "5. Capacitación", pct: 0, status: "NO INICIADO", resp: "IGT", weight: 0.0333 }, { name: "6. Implementación", pct: 0, status: "NO INICIADO", resp: "DISI", weight: 0.0333 } ] }
+                    1: { name: "Módulo 01: Recepción de la denuncia", phases: [ { name: "1. Requerimientos", pct: 100, status: "FINALIZADO", resp: "DISI", weight: 0.30 }, { name: "2. Análisis y Diseño", pct: 100, status: "FINALIZADO", resp: "DISI", weight: 0.30 }, { name: "3. Desarrollo", pct: 100, status: "FINALIZADO", resp: "DISI", weight: 0.30 }, { name: "4. Pruebas de Calidad QA", pct: 20, status: "EN PROCESO", resp: "IGT", weight: 0.0333 }, { name: "5. Capacitación", pct: 0, status: "NO INICIADO", resp: "IGT", weight: 0.0333 }, { name: "6. Implementación", pct: 0, status: "NO INICIADO", resp: "DISI", weight: 0.0333 } ] },
+                    2: { name: "Módulo 02: Inspección de la denuncia", phases: [ { name: "1. Requerimientos", pct: 100, status: "FINALIZADO", resp: "DISI", weight: 0.30 }, { name: "2. Análisis y Diseño", pct: 100, status: "FINALIZADO", resp: "DISI", weight: 0.30 }, { name: "3. Desarrollo", pct: 100, status: "FINALIZADO", resp: "DISI", weight: 0.30 }, { name: "4. Pruebas de Calidad QA", pct: 20, status: "EN PROCESO", resp: "IGT", weight: 0.0333 }, { name: "5. Capacitación", pct: 0, status: "NO INICIADO", resp: "IGT", weight: 0.0333 }, { name: "6. Implementación", pct: 0, status: "NO INICIADO", resp: "DISI", weight: 0.0333 } ] },
+                    3: { name: "Módulo 03: Verificación de la denuncia", phases: [ { name: "1. Requerimientos", pct: 100, status: "FINALIZADO", resp: "DISI", weight: 0.30 }, { name: "2. Análisis y Diseño", pct: 100, status: "FINALIZADO", resp: "DISI", weight: 0.30 }, { name: "3. Desarrollo", pct: 100, status: "FINALIZADO", resp: "DISI", weight: 0.30 }, { name: "4. Pruebas de Calidad QA", pct: 20, status: "EN PROCESO", resp: "IGT", weight: 0.0333 }, { name: "5. Capacitación", pct: 0, status: "NO INICIADO", resp: "IGT", weight: 0.0333 }, { name: "6. Implementación", pct: 0, status: "NO INICIADO", resp: "DISI", weight: 0.0333 } ] },
+                    4: { name: "Módulo 04: Sanciones", phases: [ { name: "1. Requerimientos", pct: 100, status: "FINALIZADO", resp: "DISI", weight: 0.30 }, { name: "2. Análisis y Diseño", pct: 100, status: "FINALIZADO", resp: "DISI", weight: 0.30 }, { name: "3. Desarrollo", pct: 100, status: "FINALIZADO", resp: "DISI", weight: 0.30 }, { name: "4. Pruebas de Calidad QA", pct: 20, status: "EN PROCESO", resp: "IGT", weight: 0.0333 }, { name: "5. Capacitación", pct: 0, status: "NO INICIADO", resp: "IGT", weight: 0.0333 }, { name: "6. Implementación", pct: 0, status: "NO INICIADO", resp: "DISI", weight: 0.0333 } ] },
+                    5: { name: "Módulo 05: Operativos", phases: [ { name: "1. Requerimientos", pct: 100, status: "FINALIZADO", resp: "DISI", weight: 0.30 }, { name: "2. Análisis y Diseño", pct: 100, status: "FINALIZADO", resp: "DISI", weight: 0.30 }, { name: "3. Desarrollo", pct: 100, status: "FINALIZADO", resp: "DISI", weight: 0.30 }, { name: "4. Pruebas de Calidad QA", pct: 20, status: "EN PROCESO", resp: "IGT", weight: 0.0333 }, { name: "5. Capacitación", pct: 0, status: "NO INICIADO", resp: "IGT", weight: 0.0333 }, { name: "6. Implementación", pct: 0, status: "NO INICIADO", resp: "DISI", weight: 0.0333 } ] }
                 }
             },
             "PAM": {
-                title: "Programa de Aporte Económico del Adulto Mayor - PAM",
-                qaResp: "PAM",
-                statusNote: "Aval PRUEBAS DE CALIDAD QA Módulo 1",
+                title: "Adulto Mayor", dept: "Previsión Social", qaResp: "PAM", statusNote: "Aval Pruebas de Calidad QA Módulo 1", desc: "Plataforma de estudio socioeconómico y nómina.", icon: "fa-hands-holding-circle",
                 modules: {
-                    1: { name: "Módulo 01: Inscripción del Adulto Mayor", phases: [ { name: "1. Requerimientos", pct: 100, status: "FINALIZADO", resp: "DISI", weight: 0.30 }, { name: "2. Análisis y Diseño", pct: 100, status: "FINALIZADO", resp: "DISI", weight: 0.30 }, { name: "3. Desarrollo", pct: 100, status: "FINALIZADO", resp: "DISI", weight: 0.30 }, { name: "4. PRUEBAS DE CALIDAD QA", pct: 0, status: "NO INICIADO", resp: "PAM", weight: 0.0333 }, { name: "5. Capacitación", pct: 0, status: "NO INICIADO", resp: "PAM", weight: 0.0333 }, { name: "6. Implementación", pct: 0, status: "NO INICIADO", resp: "DISI", weight: 0.0333 } ] },
-                    2: { name: "Módulo 02: Estudio Socioeconómico", phases: [ { name: "1. Requerimientos", pct: 100, status: "FINALIZADO", resp: "DISI", weight: 0.30 }, { name: "2. Análisis y Diseño", pct: 40, status: "EN PROCESO", resp: "DISI", weight: 0.30 }, { name: "3. Desarrollo", pct: 5, status: "EN PROCESO", resp: "DISI", weight: 0.30 }, { name: "4. PRUEBAS DE CALIDAD QA", pct: 0, status: "NO INICIADO", resp: "PAM", weight: 0.0333 }, { name: "5. Capacitación", pct: 0, status: "NO INICIADO", resp: "PAM", weight: 0.0333 }, { name: "6. Implementación", pct: 0, status: "NO INICIADO", resp: "DISI", weight: 0.0333 } ] },
-                    3: { name: "Módulo 03: Jurídico", phases: [ { name: "1. Requerimientos", pct: 100, status: "FINALIZADO", resp: "DISI", weight: 0.30 }, { name: "2. Análisis y Diseño", pct: 10, status: "EN PROCESO", resp: "DISI", weight: 0.30 }, { name: "3. Desarrollo", pct: 0, status: "NO INICIADO", resp: "DISI", weight: 0.30 }, { name: "4. PRUEBAS DE CALIDAD QA", pct: 0, status: "NO INICIADO", resp: "PAM", weight: 0.0333 }, { name: "5. Capacitación", pct: 0, status: "NO INICIADO", resp: "PAM", weight: 0.0333 }, { name: "6. Implementación", pct: 0, status: "NO INICIADO", resp: "DISI", weight: 0.0333 } ] },
-                    4: { name: "Módulo 04: Nómina", phases: [ { name: "1. Requerimientos", pct: 100, status: "FINALIZADO", resp: "DISI", weight: 0.30 }, { name: "2. Análisis y Diseño", pct: 0, status: "NO INICIADO", resp: "DISI", weight: 0.30 }, { name: "3. Desarrollo", pct: 0, status: "NO INICIADO", resp: "DISI", weight: 0.30 }, { name: "4. PRUEBAS DE CALIDAD QA", pct: 0, status: "NO INICIADO", resp: "PAM", weight: 0.0333 }, { name: "5. Capacitación", pct: 0, status: "NO INICIADO", resp: "PAM", weight: 0.0333 }, { name: "6. Implementación", pct: 0, status: "NO INICIADO", resp: "DISI", weight: 0.0333 } ] },
-                    5: { name: "Módulo 05: Generación de Carnets", phases: [ { name: "1. Requerimientos", pct: 100, status: "FINALIZADO", resp: "DISI", weight: 0.30 }, { name: "2. Análisis y Diseño", pct: 100, status: "FINALIZADO", resp: "DISI", weight: 0.30 }, { name: "3. Desarrollo", pct: 80, status: "EN PROCESO", resp: "DISI", weight: 0.30 }, { name: "4. PRUEBAS DE CALIDAD QA", pct: 0, status: "NO INICIADO", resp: "PAM", weight: 0.0333 }, { name: "5. Capacitación", pct: 0, status: "NO INICIADO", resp: "PAM", weight: 0.0333 }, { name: "6. Implementación", pct: 0, status: "NO INICIADO", resp: "DISI", weight: 0.0333 } ] }
+                    1: { name: "Módulo 01: Inscripción", phases: [ { name: "1. Requerimientos", pct: 100, status: "FINALIZADO", resp: "DISI", weight: 0.3 }, { name: "2. Análisis", pct: 100, status: "FINALIZADO", resp: "DISI", weight: 0.3 }, { name: "3. Desarrollo", pct: 100, status: "FINALIZADO", resp: "DISI", weight: 0.3 }, { name: "4. Pruebas de Calidad QA", pct: 0, status: "NO INICIADO", resp: "PAM", weight: 0.0333 }, { name: "5. Capacitación", pct: 0, status: "NO INICIADO", resp: "PAM", weight: 0.0333 }, { name: "6. Implementación", pct: 0, status: "NO INICIADO", resp: "DISI", weight: 0.0333 } ] },
+                    2: { name: "Módulo 02: Estudio Socioeconómico", phases: [ { name: "1. Requerimientos", pct: 100, status: "FINALIZADO", resp: "DISI", weight: 0.3 }, { name: "2. Análisis", pct: 40, status: "EN PROCESO", resp: "DISI", weight: 0.3 }, { name: "3. Desarrollo", pct: 5, status: "EN PROCESO", resp: "DISI", weight: 0.3 }, { name: "4. Pruebas de Calidad QA", pct: 0, status: "NO INICIADO", resp: "PAM", weight: 0.0333 }, { name: "5. Capacitación", pct: 0, status: "NO INICIADO", resp: "PAM", weight: 0.0333 }, { name: "6. Implementación", pct: 0, status: "NO INICIADO", resp: "DISI", weight: 0.0333 } ] },
+                    3: { name: "Módulo 03: Jurídico", phases: [ { name: "1. Requerimientos", pct: 100, status: "FINALIZADO", resp: "DISI", weight: 0.3 }, { name: "2. Análisis", pct: 10, status: "EN PROCESO", resp: "DISI", weight: 0.3 }, { name: "3. Desarrollo", pct: 0, status: "NO INICIADO", resp: "DISI", weight: 0.3 }, { name: "4. Pruebas de Calidad QA", pct: 0, status: "NO INICIADO", resp: "PAM", weight: 0.0333 }, { name: "5. Capacitación", pct: 0, status: "NO INICIADO", resp: "PAM", weight: 0.0333 }, { name: "6. Implementación", pct: 0, status: "NO INICIADO", resp: "DISI", weight: 0.0333 } ] },
+                    4: { name: "Módulo 04: Nómina", phases: [ { name: "1. Requerimientos", pct: 100, status: "FINALIZADO", resp: "DISI", weight: 0.3 }, { name: "2. Análisis", pct: 0, status: "NO INICIADO", resp: "DISI", weight: 0.3 }, { name: "3. Desarrollo", pct: 0, status: "NO INICIADO", resp: "DISI", weight: 0.3 }, { name: "4. Pruebas de Calidad QA", pct: 0, status: "NO INICIADO", resp: "PAM", weight: 0.0333 }, { name: "5. Capacitación", pct: 0, status: "NO INICIADO", resp: "PAM", weight: 0.0333 }, { name: "6. Implementación", pct: 0, status: "NO INICIADO", resp: "DISI", weight: 0.0333 } ] },
+                    5: { name: "Módulo 05: Generación de Carnets", phases: [ { name: "1. Requerimientos", pct: 100, status: "FINALIZADO", resp: "DISI", weight: 0.3 }, { name: "2. Análisis", pct: 100, status: "FINALIZADO", resp: "DISI", weight: 0.3 }, { name: "3. Desarrollo", pct: 80, status: "EN PROCESO", resp: "DISI", weight: 0.3 }, { name: "4. Pruebas de Calidad QA", pct: 0, status: "NO INICIADO", resp: "PAM", weight: 0.0333 }, { name: "5. Capacitación", pct: 0, status: "NO INICIADO", resp: "PAM", weight: 0.0333 }, { name: "6. Implementación", pct: 0, status: "NO INICIADO", resp: "DISI", weight: 0.0333 } ] }
                 }
             },
             "DRTE": {
-                title: "Dirección de Recreación del Trabajador del Estado - DRTE",
-                qaResp: "DRTE",
-                statusNote: "Proyecto Finalizado",
+                title: "Recreación", dept: "Dirección de Recreación del Trabajador del Estado", qaResp: "DRTE", statusNote: "Proyecto Finalizado", desc: "Gestión de centros vacacionales y reservas.", icon: "fa-umbrella-beach",
                 modules: {
-                    1: { name: "Módulo 01: Gestión Instituciones y Trabajadores", phases: [ { name: "1. Requerimientos", pct: 100, status: "FINALIZADO", resp: "DISI", weight: 0.30 }, { name: "2. Análisis y Diseño", pct: 100, status: "FINALIZADO", resp: "DISI", weight: 0.30 }, { name: "3. Desarrollo", pct: 100, status: "FINALIZADO", resp: "DISI", weight: 0.30 }, { name: "4. PRUEBAS DE CALIDAD QA", pct: 100, status: "FINALIZADO", resp: "DRTE", weight: 0.0333 }, { name: "5. Capacitación", pct: 100, status: "FINALIZADO", resp: "DRTE", weight: 0.0333 }, { name: "6. Implementación", pct: 100, status: "FINALIZADO", resp: "DISI", weight: 0.0333 } ] },
-                    2: { name: "Módulo 02: Gestión de Carnet", phases: [ { name: "1. Requerimientos", pct: 100, status: "FINALIZADO", resp: "DISI", weight: 0.30 }, { name: "2. Análisis y Diseño", pct: 100, status: "FINALIZADO", resp: "DISI", weight: 0.30 }, { name: "3. Desarrollo", pct: 100, status: "FINALIZADO", resp: "DISI", weight: 0.30 }, { name: "4. PRUEBAS DE CALIDAD QA", pct: 100, status: "FINALIZADO", resp: "DRTE", weight: 0.0333 }, { name: "5. Capacitación", pct: 100, status: "FINALIZADO", resp: "DRTE", weight: 0.0333 }, { name: "6. Implementación", pct: 100, status: "FINALIZADO", resp: "DISI", weight: 0.0333 } ] },
-                    3: { name: "Módulo 03: Centros Vacacionales y Reservas", phases: [ { name: "1. Requerimientos", pct: 100, status: "FINALIZADO", resp: "DISI", weight: 0.30 }, { name: "2. Análisis y Diseño", pct: 100, status: "FINALIZADO", resp: "DISI", weight: 0.30 }, { name: "3. Desarrollo", pct: 100, status: "FINALIZADO", resp: "DISI", weight: 0.30 }, { name: "4. PRUEBAS DE CALIDAD QA", pct: 100, status: "FINALIZADO", resp: "DRTE", weight: 0.0333 }, { name: "5. Capacitación", pct: 100, status: "FINALIZADO", resp: "DRTE", weight: 0.0333 }, { name: "6. Implementación", pct: 100, status: "FINALIZADO", resp: "DISI", weight: 0.0333 } ] }
+                    1: { name: "Módulo 01: Gestión Instituciones y Trabajadores", phases: [ { name: "1. Requerimientos", pct: 100, status: "FINALIZADO", resp: "DISI", weight: 0.3 }, { name: "2. Análisis", pct: 100, status: "FINALIZADO", resp: "DISI", weight: 0.3 }, { name: "3. Desarrollo", pct: 100, status: "FINALIZADO", resp: "DISI", weight: 0.3 }, { name: "4. Pruebas de Calidad QA", pct: 100, status: "FINALIZADO", resp: "DRTE", weight: 0.0333 }, { name: "5. Capacitación", pct: 100, status: "FINALIZADO", resp: "DRTE", weight: 0.0333 }, { name: "6. Implementación", pct: 100, status: "FINALIZADO", resp: "DISI", weight: 0.0333 } ] },
+                    2: { name: "Módulo 02: Gestión de Carnet", phases: [ { name: "1. Requerimientos", pct: 100, status: "FINALIZADO", resp: "DISI", weight: 0.3 }, { name: "2. Análisis", pct: 100, status: "FINALIZADO", resp: "DISI", weight: 0.3 }, { name: "3. Desarrollo", pct: 100, status: "FINALIZADO", resp: "DISI", weight: 0.3 }, { name: "4. Pruebas de Calidad QA", pct: 100, status: "FINALIZADO", resp: "DRTE", weight: 0.0333 }, { name: "5. Capacitación", pct: 100, status: "FINALIZADO", resp: "DRTE", weight: 0.0333 }, { name: "6. Implementación", pct: 100, status: "FINALIZADO", resp: "DISI", weight: 0.0333 } ] },
+                    3: { name: "Módulo 03: Centros Vacacionales y Reservas", phases: [ { name: "1. Requerimientos", pct: 100, status: "FINALIZADO", resp: "DISI", weight: 0.3 }, { name: "2. Análisis", pct: 100, status: "FINALIZADO", resp: "DISI", weight: 0.3 }, { name: "3. Desarrollo", pct: 100, status: "FINALIZADO", resp: "DISI", weight: 0.3 }, { name: "4. Pruebas de Calidad QA", pct: 100, status: "FINALIZADO", resp: "DRTE", weight: 0.0333 }, { name: "5. Capacitación", pct: 100, status: "FINALIZADO", resp: "DRTE", weight: 0.0333 }, { name: "6. Implementación", pct: 100, status: "FINALIZADO", resp: "DISI", weight: 0.0333 } ] }
+                }
+            },
+            "VAF": {
+                title: "Control y Trazabilidad de Expedientes", dept: "Vicedespacho Adm. Fin.", qaResp: "VAF", statusNote: "Análisis Inicial Finalizado", desc: "Control de expedientes administrativos y financieros.", icon: "fa-file-invoice",
+                modules: {
+                    1: { name: "Módulo 01: Control de Expedientes", phases: [ { name: "1. Requerimientos", pct: 80, status: "EN PROCESO", resp: "DISI", weight: 0.30 }, { name: "2. Análisis", pct: 0, status: "NO INICIADO", resp: "DISI", weight: 0.30 }, { name: "3. Desarrollo", pct: 0, status: "NO INICIADO", resp: "DISI", weight: 0.30 }, { name: "4. Pruebas de Calidad QA", pct: 0, status: "NO INICIADO", resp: "VAF", weight: 0.0333 }, { name: "5. Capacitación", pct: 0, status: "NO INICIADO", resp: "VAF", weight: 0.0333 }, { name: "6. Implementación", pct: 0, status: "NO INICIADO", resp: "DISI", weight: 0.0333 } ] }
+                }
+            },
+            "CDD": {
+                title: "Centro de Distribución", dept: "Dirección de Recreación del Trabajador del Estado", qaResp: "DRTE", statusNote: "Análisis Inicial Finalizado", desc: "Gestión de suministros y logística de recreación.", icon: "fa-warehouse",
+                modules: {
+                    1: { name: "Módulo 01: Centro de Distribución", phases: [ { name: "1. Requerimientos", pct: 80, status: "EN PROCESO", resp: "DISI", weight: 0.30 }, { name: "2. Análisis", pct: 0, status: "NO INICIADO", resp: "DISI", weight: 0.30 }, { name: "3. Desarrollo", pct: 0, status: "NO INICIADO", resp: "DISI", weight: 0.30 }, { name: "4. Pruebas de Calidad QA", pct: 0, status: "NO INICIADO", resp: "DRTE", weight: 0.0333 }, { name: "5. Capacitación", pct: 0, status: "NO INICIADO", resp: "DRTE", weight: 0.0333 }, { name: "6. Implementación", pct: 0, status: "NO INICIADO", resp: "DISI", weight: 0.0333 } ] }
+                }
+            },
+            "PEX": {
+                title: "Sistema PEX", dept: "Ente Rector", qaResp: "PEX", statusNote: "Pruebas de Calidad QA en Proceso", desc: "Permiso de trabajo para extranjeros.", icon: "fa-passport",
+                modules: {
+                    1: { name: "Módulo 01: Registro", phases: [ { name: "1. Requerimientos", pct: 100, status: "FINALIZADO", resp: "DISI", weight: 0.30 }, { name: "2. Análisis", pct: 100, status: "FINALIZADO", resp: "DISI", weight: 0.30 }, { name: "3. Desarrollo", pct: 100, status: "FINALIZADO", resp: "DISI", weight: 0.30 }, { name: "4. Pruebas de Calidad QA", pct: 20, status: "EN PROCESO", resp: "PEX", weight: 0.0333 }, { name: "5. Capacitación", pct: 0, status: "NO INICIADO", resp: "PEX", weight: 0.0333 }, { name: "6. Implementación", pct: 0, status: "NO INICIADO", resp: "DISI", weight: 0.0333 } ] },
+                    2: { name: "Módulo 02: Revisión", phases: [ { name: "1. Requerimientos", pct: 100, status: "FINALIZADO", resp: "DISI", weight: 0.30 }, { name: "2. Análisis", pct: 100, status: "FINALIZADO", resp: "DISI", weight: 0.30 }, { name: "3. Desarrollo", pct: 100, status: "FINALIZADO", resp: "DISI", weight: 0.30 }, { name: "4. Pruebas de Calidad QA", pct: 20, status: "EN PROCESO", resp: "PEX", weight: 0.0333 }, { name: "5. Capacitación", pct: 0, status: "NO INICIADO", resp: "PEX", weight: 0.0333 }, { name: "6. Implementación", pct: 0, status: "NO INICIADO", resp: "DISI", weight: 0.0333 } ] },
+                    3: { name: "Módulo 03: Aprobación", phases: [ { name: "1. Requerimientos", pct: 100, status: "FINALIZADO", resp: "DISI", weight: 0.30 }, { name: "2. Análisis", pct: 100, status: "FINALIZADO", resp: "DISI", weight: 0.30 }, { name: "3. Desarrollo", pct: 100, status: "FINALIZADO", resp: "DISI", weight: 0.30 }, { name: "4. Pruebas de Calidad QA", pct: 20, status: "EN PROCESO", resp: "PEX", weight: 0.0333 }, { name: "5. Capacitación", pct: 0, status: "NO INICIADO", resp: "PEX", weight: 0.0333 }, { name: "6. Implementación", pct: 0, status: "NO INICIADO", resp: "DISI", weight: 0.0333 } ] }
                 }
             }
         };
 
-        let currentProjectKey = "IGT";
-        let modulesData = null;
-
-        function calculateTotalProgress(phases) {
-            let total = 0;
-            phases.forEach(p => { total += (p.pct * p.weight); });
-            return Math.min(Math.round(total), 100);
-        }
-
-        function calculateProjectAverage(key) {
-            const data = allProjectsData[key].modules;
-            let totalProjectPct = 0;
-            const totalModules = Object.keys(data).length;
-            for (const [k, mod] of Object.entries(data)) {
-                totalProjectPct += calculateTotalProgress(mod.phases);
-            }
-            return Math.round(totalProjectPct / totalModules);
-        }
+        let currentKey = "IGT";
+        function calculateMod(m) { let t = 0; m.phases.forEach(p => t += (p.pct * p.weight)); return Math.min(Math.round(t), 100); }
+        function calculateAvg(k) { const mods = allProjectsData[k].modules; let s = 0; const ks = Object.keys(mods); ks.forEach(id => s += calculateMod(mods[id])); return Math.round(s / ks.length); }
 
         function initLanding() {
-            const igtAvg = calculateProjectAverage('IGT');
-            document.getElementById('bar-IGT').style.width = igtAvg + '%';
-            document.getElementById('pct-IGT').innerText = igtAvg + '%';
-
-            const pamAvg = calculateProjectAverage('PAM');
-            document.getElementById('bar-PAM').style.width = pamAvg + '%';
-            document.getElementById('pct-PAM').innerText = pamAvg + '%';
-
-            const drteAvg = calculateProjectAverage('DRTE');
-            document.getElementById('bar-DRTE').style.width = drteAvg + '%';
-            document.getElementById('pct-DRTE').innerText = drteAvg + '%';
+            const grid = document.getElementById('main-grid'); grid.innerHTML = "";
+            Object.keys(allProjectsData).forEach(key => {
+                const p = allProjectsData[key]; const avg = calculateAvg(key);
+                grid.innerHTML += `<div class="project-card" onclick="selectProject('${key}')">
+                    <div class="card-header"><div class="card-icon"><i class="fa-solid ${p.icon}"></i></div>
+                    <span class="card-status ${avg===100?'status-final':'status-progress'}">${avg===100?'Finalizado':'En Progreso'}</span></div>
+                    <h3 class="card-title">${p.title}</h3><span class="card-dept">Ente Rector: ${p.dept}</span>
+                    <p class="card-desc">${p.desc}</p>
+                    <div class="progress-container"><div class="progress-bar" style="width: ${avg}%"></div></div>
+                    <div class="card-footer"><span>Progreso Global</span><span>${avg}%</span></div></div>`;
+            });
         }
 
         function selectProject(key) {
-            currentProjectKey = key;
-            modulesData = allProjectsData[key].modules;
+            currentKey = key; const data = allProjectsData[key]; const avg = calculateAvg(key);
             document.querySelector('.hero-section').style.display = 'none';
-            const dashboard = document.getElementById('dashboard-view');
-            dashboard.style.display = 'block';
-            void dashboard.offsetWidth; 
-            dashboard.style.opacity = '1';
-            dashboard.style.transform = 'translateY(0)';
-            renderDashboard();
-        }
-
-        function backToHome() {
-            const dashboard = document.getElementById('dashboard-view');
-            dashboard.style.opacity = '0';
-            dashboard.style.transform = 'translateY(20px)';
-            setTimeout(() => {
-                dashboard.style.display = 'none';
-                document.querySelector('.hero-section').style.display = 'flex';
-                initLanding(); 
-            }, 300);
-        }
-
-        function renderDashboard() {
-            updateStaticTexts();
-            updateGlobalStats();
-            updateDevelopmentStats();
-            renderTable();
+            const dash = document.getElementById('dashboard-view'); dash.style.display = 'block';
+            void dash.offsetWidth; dash.style.opacity = '1'; dash.style.transform = 'translateY(0)';
+            document.getElementById('project-title').innerText = data.title;
+            document.getElementById('status-note').innerText = data.statusNote;
+            const displayEl = document.getElementById('global-pct-display');
+            displayEl.innerText = avg + "%"; displayEl.style.color = avg > 80 ? "var(--success)" : (avg > 40 ? "var(--primary)" : "var(--warning)");
+            document.getElementById('qa-resp').innerText = "RESPONSABLE : " + data.qaResp;
+            document.getElementById('train-resp').innerText = "RESPONSABLE : " + data.qaResp;
+            updateLifecycleTags(key);
+            const tbody = document.getElementById('table-body'); tbody.innerHTML = "";
+            Object.entries(data.modules).forEach(([id, mod]) => {
+                const modPct = calculateMod(mod); const devP = mod.phases[2]; const qaP = mod.phases[3];
+                let resp = devP.status === 'FINALIZADO' ? (qaP.status === 'FINALIZADO' ? data.qaResp : `${data.qaResp} (PRUEBAS DE CALIDAD QA)`) : 'DISI';
+                tbody.innerHTML += `<tr onclick="showDetails(${id})">
+                    <td style="font-weight:700; color:var(--primary);">${mod.name}</td>
+                    <td style="text-align:center; font-weight:800; color:${modPct>=90?'var(--success)':'var(--primary)'}; background:#f0f9ff; border-radius:10px;">${modPct}%</td>
+                    <td style="color:${devP.status==='FINALIZADO'?'var(--success)':(devP.status==='NO INICIADO'?'var(--danger)':'var(--warning)')}; font-weight:600;">${devP.status}</td>
+                    <td style="color:${qaP.status==='FINALIZADO'?'var(--success)':(qaP.status==='NO INICIADO'?'var(--danger)':'var(--warning)')}; font-weight:600;">${qaP.status}</td>
+                    <td style="font-weight:500;">${resp}</td></tr>`;
+            });
             hideDetails();
         }
 
-        function updateDevelopmentStats() {
-            let totalDev = 0;
-            const totalModules = Object.keys(modulesData).length;
-            for (const [key, mod] of Object.entries(modulesData)) {
-                totalDev += mod.phases[2].pct;
-            }
-            const avgDev = Math.round(totalDev / totalModules);
-            const devTag = document.getElementById('dev-cycle-tag');
-            
-            if (avgDev >= 90) {
-                devTag.innerHTML = `<i class="fa-solid fa-check"></i> Finalizado`;
-                devTag.style.color = "#166534"; devTag.style.background = "#dcfce7";
-            } else if (avgDev > 0) {
-                devTag.innerHTML = `<i class="fa-solid fa-spinner fa-spin"></i> En Proceso`;
-                devTag.style.color = "#1e40af"; devTag.style.background = "#dbeafe";
-            } else {
-                devTag.innerHTML = `<i class="fa-solid fa-circle-xmark"></i> NO INICIADO`;
-                devTag.style.color = "#dc2626"; devTag.style.background = "#fee2e2";
-            }
-        }
-
-        function updateGlobalStats() {
-            const globalAvg = calculateProjectAverage(currentProjectKey);
-            const displayEl = document.getElementById('global-pct-display');
-            displayEl.innerText = globalAvg + "%";
-            displayEl.style.color = globalAvg > 80 ? "#16a34a" : (globalAvg > 50 ? "#002855" : "#d97706");
-        }
-
-        function updateStaticTexts() {
-            const data = allProjectsData[currentProjectKey];
-            document.getElementById('project-title').innerText = data.title;
-            document.getElementById('status-note').innerText = data.statusNote;
-            
-            document.getElementById('dev-resp').innerText = "RESPONSABLE : DISI";
-            document.getElementById('qa-resp').innerText = "RESPONSABLE : " + data.qaResp;
-            document.getElementById('train-resp').innerText = "RESPONSABLE : " + data.qaResp;
-            document.getElementById('prod-resp').innerText = "RESPONSABLE : DISI";
-
-            const globalAvg = calculateProjectAverage(currentProjectKey);
-            const setTag = (id, isDone) => {
-                const el = document.getElementById(id);
-                if(isDone) {
-                    el.innerHTML = '<i class="fa-solid fa-check"></i> Finalizado';
-                    el.style.background = '#dcfce7'; el.style.color = '#166534';
-                } else {
-                    el.innerHTML = '<i class="fa-solid fa-circle-xmark"></i> NO INICIADO';
-                    el.style.background = '#fee2e2'; el.style.color = '#dc2626';
-                }
+        function updateLifecycleTags(key) {
+            const modules = Object.values(allProjectsData[key].modules);
+            const getS = (idx) => {
+                const ss = modules.map(m => m.phases[idx].status);
+                if (ss.every(s => s === 'FINALIZADO')) return 'done';
+                if (ss.some(s => s === 'EN PROCESO' || s === 'FINALIZADO')) return 'process';
+                return 'none';
             };
-
-            if(globalAvg === 100) {
-                setTag('qa-cycle-tag', true); setTag('train-cycle-tag', true); setTag('prod-cycle-tag', true);
-            } else {
-                setTag('qa-cycle-tag', false); setTag('train-cycle-tag', false); setTag('prod-cycle-tag', false);
-            }
+            const setT = (id, type) => {
+                const el = document.getElementById(id);
+                if(type === 'done') { el.innerHTML = '<i class="fa-solid fa-check"></i> Finalizado'; el.style.background = '#dcfce7'; el.style.color = '#166534'; }
+                else if(type === 'process') { el.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> En Proceso'; el.style.background = '#dbeafe'; el.style.color = '#1e40af'; }
+                else { el.innerHTML = '<i class="fa-solid fa-circle-xmark"></i> NO INICIADO'; el.style.background = '#fee2e2'; el.style.color = '#dc2626'; }
+            };
+            setT('dev-cycle-tag', getS(2)); setT('qa-cycle-tag', getS(3)); setT('train-cycle-tag', getS(4)); setT('prod-cycle-tag', getS(5));
         }
 
-        function renderTable() {
-            const tbody = document.getElementById('table-body');
-            let html = '';
-            for (const [id, mod] of Object.entries(modulesData)) {
-                const totalPct = calculateTotalProgress(mod.phases);
-                const devPhase = mod.phases[2]; 
-                const qaPhase = mod.phases[3];
-                const data = allProjectsData[currentProjectKey];
-                let pctColor = totalPct >= 90 ? '#16a34a' : (totalPct < 50 ? '#b45309' : '#005eb8');
-                let qaColor = qaPhase.status === 'NO INICIADO' ? '#dc2626' : (qaPhase.status === 'EN PROCESO' ? '#f59e0b' : '#16a34a');
-                let resp = devPhase.status === 'FINALIZADO' ? (qaPhase.status === 'FINALIZADO' ? data.qaResp : `${data.qaResp} (PRUEBAS DE CALIDAD QA)`) : 'DISI';
-
-                html += `<tr onclick="showModuleDetails(${id})">
-                    <td class="mod-name" style="font-weight:700; color:#002855;">${mod.name}</td>
-                    <td class="perc-cell" style="font-weight:800; text-align:center; color:${pctColor}; background-color:#f0f9ff; border-radius:10px;">${totalPct}%</td>
-                    <td class="date-cell" style="color:${devPhase.status === 'FINALIZADO' ? '#16a34a' : (devPhase.status === 'NO INICIADO' ? '#dc2626' : '#f59e0b')}; font-weight:600;">${devPhase.status}</td>
-                    <td class="date-cell" style="color:${qaColor}; font-weight:600;">${qaPhase.status}</td>
-                    <td class="date-cell" style="font-weight:500;">${resp}</td>
-                </tr>`;
-            }
-            tbody.innerHTML = html;
-        }
-
-        function showModuleDetails(moduleId) {
-            const container = document.getElementById('detail-container');
-            const rowsEl = document.getElementById('detail-rows');
-            const module = modulesData[moduleId];
-            document.getElementById('detail-title').innerText = module.name;
-            let html = '';
-            module.phases.forEach(phase => {
-                let badgeClass = phase.status === 'FINALIZADO' ? 'st-done' : (phase.status === 'EN PROCESO' ? 'st-process' : 'st-pending');
-                html += `
-                <div class="detail-row">
-                    <div class="detail-info">
-                        <span>${phase.name} <span style="font-size:10px; color:#64748b;">(~${Math.round(phase.weight * 100)}%)</span></span>
-                        <span class="status-badge ${badgeClass}">${phase.status}</span>
-                    </div>
-                    <div class="phase-track"><div class="phase-fill ${phase.status === 'FINALIZADO' ? 'green' : ''}" style="width: ${phase.pct}%"></div></div>
-                    <div style="display:flex; justify-content:space-between; margin-top:2px; font-size:11px; color:#64748b;">
-                        <div>RESPONSABLE : ${phase.resp}</div>
-                        <span style="font-weight:700; color:#002855;">${phase.pct}%</span>
-                    </div>
-                </div>`;
+        function showDetails(mid) {
+            const m = allProjectsData[currentKey].modules[mid]; const cont = document.getElementById('detail-container');
+            document.getElementById('detail-title').innerText = m.name;
+            const rows = document.getElementById('detail-rows'); rows.innerHTML = "";
+            m.phases.forEach(p => {
+                rows.innerHTML += `<div class="detail-row"><div class="detail-info"><span>${p.name}</span><span class="status-badge ${p.status==='FINALIZADO'?'st-done':(p.status==='EN PROCESO'?'st-process':'st-pending')}">${p.status}</span></div>
+                    <div class="phase-track"><div class="phase-fill ${p.status==='FINALIZADO'?'green':''}" style="width: ${p.pct}%"></div></div>
+                    <div style="display:flex; justify-content:space-between; margin-top:2px; font-size:11px; color:#64748b;"><div>RESPONSABLE : ${p.resp}</div><span style="font-weight:700; color:var(--primary);">${p.pct}%</span></div></div>`;
             });
-            rowsEl.innerHTML = html;
-            container.style.display = 'block';
-            container.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            cont.style.display = 'block'; cont.scrollIntoView({ behavior: 'smooth', block: 'center' });
         }
 
         function hideDetails() { document.getElementById('detail-container').style.display = 'none'; }
-
-        window.onload = function() {
-            initLanding();
-        };
+        function backToHome() { const d = document.getElementById('dashboard-view'); d.style.opacity = '0'; setTimeout(() => { d.style.display = 'none'; document.querySelector('.hero-section').style.display = 'flex'; initLanding(); }, 300); }
+        window.onload = initLanding;
     </script>
 </body>
 </html>
