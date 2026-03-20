@@ -111,6 +111,8 @@
             box-shadow: 0 10px 20px rgba(0, 47, 93, 0.08);
             text-align: left;
             border: 1px solid rgba(0,0,0,0.02);
+            display: flex;
+            flex-direction: column;
         }
 
         .project-card:hover { 
@@ -126,13 +128,46 @@
         .status-progress { background: #e0f2fe; color: #0369a1; }
         .status-final { background: #dcfce7; color: #15803d; }
 
-        .card-title { font-size: 19px; font-weight: 800; color: var(--text); margin: 0; line-height: 1.2; }
-        .card-dept { font-size: 11px; color: var(--accent); font-weight: 700; text-transform: uppercase; display: block; margin-top: 5px; margin-bottom: 12px; letter-spacing: 0.3px; }
-        .card-desc { font-size: 12px; color: var(--text-light); margin-bottom: 15px; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; min-height: 2.4em; line-height: 1.4; }
+        /* Mejora de Alineación en Títulos y Descripciones */
+        .card-title { 
+            font-size: 19px; 
+            font-weight: 800; 
+            color: var(--text); 
+            margin: 0; 
+            line-height: 1.2; 
+            min-height: 2.4em; /* Espacio fijo para 2 líneas */
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+        .card-dept { 
+            font-size: 11px; 
+            color: var(--accent); 
+            font-weight: 700; 
+            text-transform: uppercase; 
+            display: block; 
+            margin-top: 5px; 
+            margin-bottom: 12px; 
+            letter-spacing: 0.3px; 
+            min-height: 2.8em; /* Espacio fijo para entes rectores largos */
+        }
+        .card-desc { 
+            font-size: 12px; 
+            color: var(--text-light); 
+            margin-bottom: 15px; 
+            display: -webkit-box; 
+            -webkit-line-clamp: 2; 
+            -webkit-box-orient: vertical; 
+            overflow: hidden; 
+            min-height: 2.8em; 
+            line-height: 1.4; 
+        }
 
-        .progress-container { width: 100%; height: 8px; background: #f1f5f9; border-radius: 10px; overflow: hidden; margin-bottom: 10px; }
+        .progress-container { width: 100%; height: 8px; background: #f1f5f9; border-radius: 10px; overflow: hidden; margin-bottom: 10px; margin-top: auto; }
         .progress-bar { height: 100%; background: var(--primary); width: 0%; transition: width 1s cubic-bezier(0.34, 1.56, 0.64, 1); }
         .card-footer { display: flex; justify-content: space-between; font-size: 11px; font-weight: 700; color: var(--text-light); }
+        .card-footer span:last-child { white-space: nowrap; color: var(--primary); }
 
         /* --- DASHBOARD DETALLADO --- */
         #dashboard-view {
@@ -186,7 +221,7 @@
         .cycle-step p { font-size: 9px; color: var(--text-light); margin: 0; text-align: center; font-weight: 700; text-transform: uppercase; }
         .doc-tag { margin-top: 12px; background: #f1f5f9; color: var(--text-light); font-size: 10px; padding: 4px 10px; border-radius: 10px; font-weight: 800; }
 
-        /* --- NUEVA VISTA DE MÓDULOS EN GRID (SISTEMA DE TARJETAS) --- */
+        /* --- VISTA DE MÓDULOS EN GRID --- */
         .modules-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
@@ -205,7 +240,6 @@
             cursor: pointer;
             position: relative;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.02);
-            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
 
         .module-item-card:hover {
@@ -226,6 +260,11 @@
             color: var(--primary);
             line-height: 1.3;
             max-width: 75%;
+            min-height: 2.6em;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
         }
 
         .mod-card-pct {
@@ -258,7 +297,6 @@
         .badge-dev { background: #f1f5f9; color: var(--text); border: 1px solid #e2e8f0; }
         .badge-qa { background: #f1f5f9; color: var(--text); border: 1px solid #e2e8f0; }
         
-        /* Estados de los Badges */
         .st-bg-finalizado { background: #dcfce7 !important; color: #15803d !important; border-color: #bbf7d0 !important; }
         .st-bg-proceso { background: #fff7ed !important; color: #c2410c !important; border-color: #ffedd5 !important; }
         .st-bg-pendiente { background: #fef2f2 !important; color: #b91c1c !important; border-color: #fee2e2 !important; }
@@ -289,14 +327,33 @@
         .phase-fill { height: 100%; background: var(--primary); width: 0%; transition: width 1.2s cubic-bezier(0.65, 0, 0.35, 1); }
         .phase-fill.green { background: var(--success); }
 
+        .status-badge { font-size: 10px; padding: 2px 8px; border-radius: 5px; font-weight: 800; }
+        .st-done { background: #dcfce7; color: #15803d; }
+        .st-process { background: #fff7ed; color: #c2410c; }
+        .st-pending { background: #f1f5f9; color: var(--text-light); }
+
+        .section-separator {
+            grid-column: 1 / -1;
+            padding: 30px 0 15px 0;
+            border-bottom: 2px solid rgba(255,255,255,0.1);
+            margin-bottom: 10px;
+            text-align: left;
+            font-weight: 800;
+            color: rgba(255,255,255,0.9);
+            text-transform: uppercase;
+            font-size: 14px;
+            letter-spacing: 2px;
+        }
+
         @keyframes fadeInDown { from { opacity: 0; transform: translateY(-20px); } to { opacity: 1; transform: translateY(0); } }
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 
         @media (max-width: 1024px) {
             .top-info-container { grid-template-columns: 1fr; }
             .cycle-wrapper { flex-wrap: wrap; justify-content: center; }
-            .cycle-step { width: 100%; }
+            .cycle-step { width: 100%; margin-bottom: 10px; }
             .modules-grid { grid-template-columns: 1fr; }
+            .hero-title { font-size: 32px; }
         }
     </style>
 </head>
@@ -331,7 +388,7 @@
                 </div>
 
                 <div class="lifecycle-container">
-                    <h2 class="section-title" style="border:none; margin-bottom:10px;"><i class="fa-solid fa-laptop-file"></i> Ciclo de Vida del Proyecto</h2>
+                    <h2 class="section-title" style="font-size: 16px; margin: 0 0 15px 0; color: var(--primary); font-weight: 800;"><i class="fa-solid fa-laptop-file"></i> Ciclo de Vida del Proyecto</h2>
                     <div class="cycle-wrapper">
                         <div class="cycle-step dev"><div class="step-num">1</div><h4>Desarrollo</h4><p id="dev-resp">RESPONSABLE : DISI</p><div class="doc-tag" id="dev-cycle-tag">...</div></div>
                         <i class="fa-solid fa-chevron-right" style="color:#cbd5e1"></i>
@@ -339,15 +396,15 @@
                         <i class="fa-solid fa-chevron-right" style="color:#cbd5e1"></i>
                         <div class="cycle-step train"><div class="step-num">3</div><h4>Capacitación</h4><p id="train-resp">--</p><div class="doc-tag" id="train-cycle-tag">...</div></div>
                         <i class="fa-solid fa-chevron-right" style="color:#cbd5e1"></i>
-                        <div class="cycle-step prod"><div class="step-num">4</div><h4>Producción</h4><p id="prod-resp">RESPONSABLE : DISI</p><div class="doc-tag" id="prod-cycle-tag">...</div></div>
+                        <div class="cycle-step train" style="border-top: 5px solid #0891b2;"><div class="step-num">4</div><h4>Producción</h4><p id="prod-resp">RESPONSABLE : DISI</p><div class="doc-tag" id="prod-cycle-tag">...</div></div>
                     </div>
                 </div>
             </div>
 
             <div class="bottom-table-container">
-                <h2 class="section-title"><i class="fa-solid fa-cubes"></i> Módulos del Sistema</h2>
+                <h2 class="section-title" style="font-size: 20px; margin-bottom: 20px; color: var(--primary); font-weight: 800;"><i class="fa-solid fa-cubes"></i> Módulos del Sistema</h2>
                 <div class="modules-grid" id="modules-container">
-                    <!-- Se llena con JS en formato de tarjetas -->
+                    <!-- Se llena con JS -->
                 </div>
 
                 <div id="detail-container">
@@ -363,28 +420,10 @@
 
     <script>
         const allProjectsData = {
-            "IGT": {
-                title: "Sistema para gestión de denuncias", dept: "Inspección General de Trabajo", qaResp: "Inspección General de Trabajo", statusNote: "Pruebas de Calidad QA en Proceso", desc: "Modernización de denuncias, actas y operativos de inspección.", icon: "fa-scale-balanced",
-                modules: {
-                    1: { name: "Módulo 01: Recepción de la denuncia", phases: [ { name: "1. Requerimientos", pct: 100, status: "FINALIZADO", resp: "DISI", weight: 0.30 }, { name: "2. Análisis y Diseño", pct: 100, status: "FINALIZADO", resp: "DISI", weight: 0.30 }, { name: "3. Desarrollo", pct: 100, status: "FINALIZADO", resp: "DISI", weight: 0.30 }, { name: "4. Pruebas de Calidad QA", pct: 20, status: "EN PROCESO", resp: "Inspección General de Trabajo", weight: 0.0333 }, { name: "5. Capacitación", pct: 0, status: "NO INICIADO", resp: "Inspección General de Trabajo", weight: 0.0333 }, { name: "6. Implementación", pct: 0, status: "NO INICIADO", resp: "DISI", weight: 0.0333 } ] },
-                    2: { name: "Módulo 02: Inspección de la denuncia", phases: [ { name: "1. Requerimientos", pct: 100, status: "FINALIZADO", resp: "DISI", weight: 0.30 }, { name: "2. Análisis y Diseño", pct: 100, status: "FINALIZADO", resp: "DISI", weight: 0.30 }, { name: "3. Desarrollo", pct: 100, status: "FINALIZADO", resp: "DISI", weight: 0.30 }, { name: "4. Pruebas de Calidad QA", pct: 20, status: "EN PROCESO", resp: "Inspección General de Trabajo", weight: 0.0333 }, { name: "5. Capacitación", pct: 0, status: "NO INICIADO", resp: "Inspección General de Trabajo", weight: 0.0333 }, { name: "6. Implementación", pct: 0, status: "NO INICIADO", resp: "DISI", weight: 0.0333 } ] },
-                    3: { name: "Módulo 03: Verificación de la denuncia", phases: [ { name: "1. Requerimientos", pct: 100, status: "FINALIZADO", resp: "DISI", weight: 0.30 }, { name: "2. Análisis y Diseño", pct: 100, status: "FINALIZADO", resp: "DISI", weight: 0.30 }, { name: "3. Desarrollo", pct: 100, status: "FINALIZADO", resp: "DISI", weight: 0.30 }, { name: "4. Pruebas de Calidad QA", pct: 20, status: "EN PROCESO", resp: "Inspección General de Trabajo", weight: 0.0333 }, { name: "5. Capacitación", pct: 0, status: "NO INICIADO", resp: "Inspección General de Trabajo", weight: 0.0333 }, { name: "6. Implementación", pct: 0, status: "NO INICIADO", resp: "DISI", weight: 0.0333 } ] },
-                    4: { name: "Módulo 04: Sanciones", phases: [ { name: "1. Requerimientos", pct: 100, status: "FINALIZADO", resp: "DISI", weight: 0.30 }, { name: "2. Análisis y Diseño", pct: 100, status: "FINALIZADO", resp: "DISI", weight: 0.30 }, { name: "3. Desarrollo", pct: 100, status: "FINALIZADO", resp: "DISI", weight: 0.30 }, { name: "4. Pruebas de Calidad QA", pct: 20, status: "EN PROCESO", resp: "Inspección General de Trabajo", weight: 0.0333 }, { name: "5. Capacitación", pct: 0, status: "NO INICIADO", resp: "Inspección General de Trabajo", weight: 0.0333 }, { name: "6. Implementación", pct: 0, status: "NO INICIADO", resp: "DISI", weight: 0.0333 } ] },
-                    5: { name: "Módulo 05: Operativos", phases: [ { name: "1. Requerimientos", pct: 100, status: "FINALIZADO", resp: "DISI", weight: 0.30 }, { name: "2. Análisis y Diseño", pct: 100, status: "FINALIZADO", resp: "DISI", weight: 0.30 }, { name: "3. Desarrollo", pct: 100, status: "FINALIZADO", resp: "DISI", weight: 0.30 }, { name: "4. Pruebas de Calidad QA", pct: 20, status: "EN PROCESO", resp: "Inspección General de Trabajo", weight: 0.0333 }, { name: "5. Capacitación", pct: 0, status: "NO INICIADO", resp: "Inspección General de Trabajo", weight: 0.0333 }, { name: "6. Implementación", pct: 0, status: "NO INICIADO", resp: "DISI", weight: 0.0333 } ] }
-                }
-            },
-            "PAM": {
-                title: "Sistema PAM", dept: "Programa de aporte economico del adulto mayor", qaResp: "Programa de aporte economico del adulto mayor", statusNote: "Pruebas de Calidad QA Módulo 1 en Proceso", desc: "Plataforma de estudio socioeconómico y nómina.", icon: "fa-hands-holding-circle",
-                modules: {
-                    1: { name: "Módulo 01: Inscripción", phases: [ { name: "1. Requerimientos", pct: 100, status: "FINALIZADO", resp: "DISI", weight: 0.3 }, { name: "2. Análisis", pct: 100, status: "FINALIZADO", resp: "DISI", weight: 0.3 }, { name: "3. Desarrollo", pct: 100, status: "FINALIZADO", resp: "DISI", weight: 0.3 }, { name: "4. Pruebas de Calidad QA", pct: 20, status: "EN PROCESO", resp: "Programa de aporte economico del adulto mayor", weight: 0.0333 }, { name: "5. Capacitación", pct: 0, status: "NO INICIADO", resp: "Programa de aporte economico del adulto mayor", weight: 0.0333 }, { name: "6. Implementación", pct: 0, status: "NO INICIADO", resp: "DISI", weight: 0.0333 } ] },
-                    2: { name: "Módulo 02: Estudio Socioeconómico", phases: [ { name: "1. Requerimientos", pct: 100, status: "FINALIZADO", resp: "DISI", weight: 0.3 }, { name: "2. Análisis", pct: 100, status: "FINALIZADO", resp: "DISI", weight: 0.3 }, { name: "3. Desarrollo", pct: 100, status: "FINALIZADO", resp: "DISI", weight: 0.3 }, { name: "4. Pruebas de Calidad QA", pct: 20, status: "EN PROCESO", resp: "Programa de aporte economico del adulto mayor", weight: 0.0333 }, { name: "5. Capacitación", pct: 0, status: "NO INICIADO", resp: "Programa de aporte economico del adulto mayor", weight: 0.0333 }, { name: "6. Implementación", pct: 0, status: "NO INICIADO", resp: "DISI", weight: 0.0333 } ] },
-                    3: { name: "Módulo 03: Jurídico", phases: [ { name: "1. Requerimientos", pct: 100, status: "FINALIZADO", resp: "DISI", weight: 0.3 }, { name: "2. Análisis", pct: 100, status: "FINALIZADO", resp: "DISI", weight: 0.3 }, { name: "3. Desarrollo", pct: 100, status: "FINALIZADO", resp: "DISI", weight: 0.3 }, { name: "4. Pruebas de Calidad QA", pct: 20, status: "EN PROCESO", resp: "Programa de aporte economico del adulto mayor", weight: 0.0333 }, { name: "5. Capacitación", pct: 0, status: "NO INICIADO", resp: "Programa de aporte economico del adulto mayor", weight: 0.0333 }, { name: "6. Implementación", pct: 0, status: "NO INICIADO", resp: "DISI", weight: 0.0333 } ] },
-                    4: { name: "Módulo 04: Nómina", phases: [ { name: "1. Requerimientos", pct: 100, status: "FINALIZADO", resp: "DISI", weight: 0.3 }, { name: "2. Análisis", pct: 0, status: "NO INICIADO", resp: "DISI", weight: 0.3 }, { name: "3. Desarrollo", pct: 0, status: "NO INICIADO", resp: "DISI", weight: 0.3 }, { name: "4. Pruebas de Calidad QA", pct: 0, status: "NO INICIADO", resp: "Programa de aporte economico del adulto mayor", weight: 0.0333 }, { name: "5. Capacitación", pct: 0, status: "NO INICIADO", resp: "Programa de aporte economico del adulto mayor", weight: 0.0333 }, { name: "6. Implementación", pct: 0, status: "NO INICIADO", resp: "DISI", weight: 0.0333 } ] },
-                    5: { name: "Módulo 05: Generación de Carnets", phases: [ { name: "1. Requerimientos", pct: 100, status: "FINALIZADO", resp: "DISI", weight: 0.3 }, { name: "2. Análisis", pct: 100, status: "FINALIZADO", resp: "DISI", weight: 0.3 }, { name: "3. Desarrollo", pct: 80, status: "EN PROCESO", resp: "DISI", weight: 0.3 }, { name: "4. Pruebas de Calidad QA", pct: 0, status: "NO INICIADO", resp: "Programa de aporte economico del adulto mayor", weight: 0.0333 }, { name: "5. Capacitación", pct: 0, status: "NO INICIADO", resp: "Programa de aporte economico del adulto mayor", weight: 0.0333 }, { name: "6. Implementación", pct: 0, status: "NO INICIADO", resp: "DISI", weight: 0.0333 } ] }
-                }
-            },
+            // --- GRUPO PRIORITARIO ---
             "DRTE": {
-                title: "Sistema de reservas", dept: "Direccion de recreacion del trabajador del estado", qaResp: "Direccion de recreacion del trabajador del estado", statusNote: "Proyecto Finalizado", desc: "Gestión de centros vacacionales y reservas.", icon: "fa-umbrella-beach",
+                title: "Sistema de reservas", dept: "Dir. Recreación del Trabajador del Estado", qaResp: "Dirección de Recreación", statusNote: "Proyecto Finalizado", desc: "Gestión de centros vacacionales y reservas.", icon: "fa-umbrella-beach",
+                priority: true,
                 modules: {
                     1: { name: "Módulo 01: Gestión Instituciones", phases: [ { name: "1. Requerimientos", pct: 100, status: "FINALIZADO", resp: "DISI", weight: 0.3 }, { name: "2. Análisis", pct: 100, status: "FINALIZADO", resp: "DISI", weight: 0.3 }, { name: "3. Desarrollo", pct: 100, status: "FINALIZADO", resp: "DISI", weight: 0.3 }, { name: "4. Pruebas de Calidad QA", pct: 100, status: "FINALIZADO", resp: "DRTE", weight: 0.0333 }, { name: "5. Capacitación", pct: 100, status: "FINALIZADO", resp: "DRTE", weight: 0.0333 }, { name: "6. Implementación", pct: 100, status: "FINALIZADO", resp: "DISI", weight: 0.0333 } ] },
                     2: { name: "Módulo 02: Gestión de Carnet", phases: [ { name: "1. Requerimientos", pct: 100, status: "FINALIZADO", resp: "DISI", weight: 0.3 }, { name: "2. Análisis", pct: 100, status: "FINALIZADO", resp: "DISI", weight: 0.3 }, { name: "3. Desarrollo", pct: 100, status: "FINALIZADO", resp: "DISI", weight: 0.3 }, { name: "4. Pruebas de Calidad QA", pct: 100, status: "FINALIZADO", resp: "DRTE", weight: 0.0333 }, { name: "5. Capacitación", pct: 100, status: "FINALIZADO", resp: "DRTE", weight: 0.0333 }, { name: "6. Implementación", pct: 100, status: "FINALIZADO", resp: "DISI", weight: 0.0333 } ] },
@@ -393,24 +432,65 @@
                     5: { name: "Módulo 05: Reportes", phases: [ { name: "1. Requerimientos", pct: 100, status: "FINALIZADO", resp: "DISI", weight: 0.3 }, { name: "2. Análisis", pct: 100, status: "FINALIZADO", resp: "DISI", weight: 0.3 }, { name: "3. Desarrollo", pct: 100, status: "FINALIZADO", resp: "DISI", weight: 0.3 }, { name: "4. Pruebas de Calidad QA", pct: 100, status: "FINALIZADO", resp: "DRTE", weight: 0.0333 }, { name: "5. Capacitación", pct: 100, status: "FINALIZADO", resp: "DRTE", weight: 0.0333 }, { name: "6. Implementación", pct: 100, status: "FINALIZADO", resp: "DISI", weight: 0.0333 } ] }
                 }
             },
-            "VAF": {
-                title: "Control y trazabilidad de expedientes", dept: "Vicedespacho administrativo financiero", qaResp: "Vicedespacho administrativo financiero", statusNote: "Análisis Inicial Finalizado", desc: "Control de expedientes administrativos y financieros.", icon: "fa-file-invoice",
+            "IGT": {
+                title: "Sistema para gestión de denuncias", dept: "Inspección General de Trabajo", qaResp: "Inspección General de Trabajo", statusNote: "Pruebas de Calidad QA en Proceso", desc: "Modernización de denuncias, actas y operativos de inspección.", icon: "fa-scale-balanced",
+                priority: true,
                 modules: {
-                    1: { name: "Módulo 01: Control de Expedientes", phases: [ { name: "1. Requerimientos", pct: 80, status: "EN PROCESO", resp: "DISI", weight: 0.30 }, { name: "2. Análisis", pct: 0, status: "NO INICIADO", resp: "DISI", weight: 0.30 }, { name: "3. Desarrollo", pct: 0, status: "NO INICIADO", resp: "DISI", weight: 0.30 }, { name: "4. Pruebas de Calidad QA", pct: 0, status: "NO INICIADO", resp: "VAF", weight: 0.0333 }, { name: "5. Capacitación", pct: 0, status: "NO INICIADO", resp: "VAF", weight: 0.0333 }, { name: "6. Implementación", pct: 0, status: "NO INICIADO", resp: "DISI", weight: 0.0333 } ] }
-                }
-            },
-            "CDD": {
-                title: "Centros de distribución", dept: "Direccion de recreacion del trabajador del estado", qaResp: "Direccion de recreacion del trabajador del estado", statusNote: "Análisis Inicial Finalizado", desc: "Gestión de suministros y logística.", icon: "fa-warehouse",
-                modules: {
-                    1: { name: "Módulo 01: Centro de Distribución", phases: [ { name: "1. Requerimientos", pct: 80, status: "EN PROCESO", resp: "DISI", weight: 0.30 }, { name: "2. Análisis", pct: 0, status: "NO INICIADO", resp: "DISI", weight: 0.30 }, { name: "3. Desarrollo", pct: 0, status: "NO INICIADO", resp: "DISI", weight: 0.30 }, { name: "4. Pruebas de Calidad QA", pct: 0, status: "NO INICIADO", resp: "DRTE", weight: 0.0333 }, { name: "5. Capacitación", pct: 0, status: "NO INICIADO", resp: "DRTE", weight: 0.0333 }, { name: "6. Implementación", pct: 0, status: "NO INICIADO", resp: "DISI", weight: 0.0333 } ] }
+                    1: { name: "Módulo 01: Recepción de la denuncia", phases: [ { name: "1. Requerimientos", pct: 100, status: "FINALIZADO", resp: "DISI", weight: 0.30 }, { name: "2. Análisis y Diseño", pct: 100, status: "FINALIZADO", resp: "DISI", weight: 0.30 }, { name: "3. Desarrollo", pct: 100, status: "FINALIZADO", resp: "DISI", weight: 0.30 }, { name: "4. Pruebas de Calidad QA", pct: 20, status: "EN PROCESO", resp: "Inspección General de Trabajo", weight: 0.0333 }, { name: "5. Capacitación", pct: 0, status: "NO INICIADO", resp: "Inspección General de Trabajo", weight: 0.0333 }, { name: "6. Implementación", pct: 0, status: "NO INICIADO", resp: "DISI", weight: 0.0333 } ] },
+                    2: { name: "Módulo 02: Inspección de la denuncia", phases: [ { name: "1. Requerimientos", pct: 100, status: "FINALIZADO", resp: "DISI", weight: 0.30 }, { name: "2. Análisis y Diseño", pct: 100, status: "FINALIZADO", resp: "DISI", weight: 0.30 }, { name: "3. Desarrollo", pct: 100, status: "FINALIZADO", resp: "DISI", weight: 0.30 }, { name: "4. Pruebas de Calidad QA", pct: 20, status: "EN PROCESO", resp: "Inspección General de Trabajo", weight: 0.0333 }, { name: "5. Capacitación", pct: 0, status: "NO INICIADO", resp: "Inspección General de Trabajo", weight: 0.0333 }, { name: "6. Implementación", pct: 0, status: "NO INICIADO", resp: "DISI", weight: 0.0333 } ] },
+                    3: { name: "Módulo 03: Verificación de la denuncia", phases: [ { name: "1. Requerimientos", pct: 100, status: "FINALIZADO", resp: "DISI", weight: 0.30 }, { name: "2. Análisis y Diseño", pct: 100, status: "FINALIZADO", resp: "DISI", weight: 0.30 }, { name: "3. Desarrollo", pct: 100, status: "FINALIZADO", resp: "DISI", weight: 0.30 }, { name: "4. Pruebas de Calidad QA", pct: 20, status: "EN PROCESO", resp: "Inspección General de Trabajo", weight: 0.0333 }, { name: "5. Capacitación", pct: 0, status: "NO INICIADO", resp: "Inspección General de Trabajo", weight: 0.0333 }, { name: "6. Implementación", pct: 0, status: "NO INICIADO", resp: "DISI", weight: 0.0333 } ] },
+                    4: { name: "Módulo 04: Sanciones", phases: [ { name: "1. Requerimientos", pct: 100, status: "FINALIZADO", resp: "DISI", weight: 0.30 }, { name: "2. Análisis y Diseño", pct: 100, status: "FINALIZADO", resp: "DISI", weight: 0.30 }, { name: "3. Desarrollo", pct: 100, status: "FINALIZADO", resp: "DISI", weight: 0.30 }, { name: "4. Pruebas de Calidad QA", pct: 20, status: "EN PROCESO", resp: "Inspección General de Trabajo", weight: 0.0333 }, { name: "5. Capacitación", pct: 0, status: "NO INICIADO", resp: "Inspección General de Trabajo", weight: 0.0333 }, { name: "6. Implementación", pct: 0, status: "NO INICIADO", resp: "DISI", weight: 0.0333 } ] },
+                    5: { name: "Módulo 05: Operativos", phases: [ { name: "1. Requerimientos", pct: 100, status: "FINALIZADO", resp: "DISI", weight: 0.30 }, { name: "2. Análisis y Diseño", pct: 100, status: "FINALIZADO", resp: "DISI", weight: 0.30 }, { name: "3. Desarrollo", pct: 100, status: "FINALIZADO", resp: "DISI", weight: 0.30 }, { name: "4. Pruebas de Calidad QA", pct: 20, status: "EN PROCESO", resp: "Inspección General de Trabajo", weight: 0.0333 }, { name: "5. Capacitación", pct: 0, status: "NO INICIADO", resp: "Inspección General de Trabajo", weight: 0.0333 }, { name: "6. Implementación", pct: 0, status: "NO INICIADO", resp: "DISI", weight: 0.0333 } ] }
                 }
             },
             "PEX": {
-                title: "Sistema PEX", dept: "Permiso de trabajo para extranjeros", qaResp: "PEX", statusNote: "Pruebas de Calidad QA en Proceso", desc: "Permiso de trabajo para extranjeros.", icon: "fa-passport",
+                title: "Sistema PEX", dept: "Permiso de Trabajo para Extranjeros", qaResp: "PEX", statusNote: "Pruebas de Calidad QA en Proceso", desc: "Gestión digital de permisos laborales.", icon: "fa-passport",
+                priority: true,
                 modules: {
                     1: { name: "Módulo 01: Registro", phases: [ { name: "1. Requerimientos", pct: 100, status: "FINALIZADO", resp: "DISI", weight: 0.30 }, { name: "2. Análisis", pct: 100, status: "FINALIZADO", resp: "DISI", weight: 0.30 }, { name: "3. Desarrollo", pct: 100, status: "FINALIZADO", resp: "DISI", weight: 0.30 }, { name: "4. Pruebas de Calidad QA", pct: 20, status: "EN PROCESO", resp: "PEX", weight: 0.0333 }, { name: "5. Capacitación", pct: 0, status: "NO INICIADO", resp: "PEX", weight: 0.0333 }, { name: "6. Implementación", pct: 0, status: "NO INICIADO", resp: "DISI", weight: 0.0333 } ] },
                     2: { name: "Módulo 02: Revisión", phases: [ { name: "1. Requerimientos", pct: 100, status: "FINALIZADO", resp: "DISI", weight: 0.30 }, { name: "2. Análisis", pct: 100, status: "FINALIZADO", resp: "DISI", weight: 0.30 }, { name: "3. Desarrollo", pct: 100, status: "FINALIZADO", resp: "DISI", weight: 0.30 }, { name: "4. Pruebas de Calidad QA", pct: 20, status: "EN PROCESO", resp: "PEX", weight: 0.0333 }, { name: "5. Capacitación", pct: 0, status: "NO INICIADO", resp: "PEX", weight: 0.0333 }, { name: "6. Implementación", pct: 0, status: "NO INICIADO", resp: "DISI", weight: 0.0333 } ] },
                     3: { name: "Módulo 03: Aprobación", phases: [ { name: "1. Requerimientos", pct: 100, status: "FINALIZADO", resp: "DISI", weight: 0.30 }, { name: "2. Análisis", pct: 100, status: "FINALIZADO", resp: "DISI", weight: 0.30 }, { name: "3. Desarrollo", pct: 100, status: "FINALIZADO", resp: "DISI", weight: 0.30 }, { name: "4. Pruebas de Calidad QA", pct: 20, status: "EN PROCESO", resp: "PEX", weight: 0.0333 }, { name: "5. Capacitación", pct: 0, status: "NO INICIADO", resp: "PEX", weight: 0.0333 }, { name: "6. Implementación", pct: 0, status: "NO INICIADO", resp: "DISI", weight: 0.0333 } ] }
+                }
+            },
+            "PAM": {
+                title: "Sistema PAM", dept: "Prog. Aporte Económico del Adulto Mayor", qaResp: "Prog. de Aporte Económico", statusNote: "Pruebas de Calidad QA Módulo 1 en Proceso", desc: "Plataforma de estudio socioeconómico y nómina.", icon: "fa-hands-holding-circle",
+                priority: true,
+                modules: {
+                    1: { name: "Módulo 01: Inscripción", phases: [ { name: "1. Requerimientos", pct: 100, status: "FINALIZADO", resp: "DISI", weight: 0.3 }, { name: "2. Análisis", pct: 100, status: "FINALIZADO", resp: "DISI", weight: 0.3 }, { name: "3. Desarrollo", pct: 100, status: "FINALIZADO", resp: "DISI", weight: 0.3 }, { name: "4. Pruebas de Calidad QA", pct: 20, status: "EN PROCESO", resp: "PAM", weight: 0.0333 }, { name: "5. Capacitación", pct: 0, status: "NO INICIADO", resp: "PAM", weight: 0.0333 }, { name: "6. Implementación", pct: 0, status: "NO INICIADO", resp: "DISI", weight: 0.0333 } ] },
+                    2: { name: "Módulo 02: Estudio Socioeconómico", phases: [ { name: "1. Requerimientos", pct: 100, status: "FINALIZADO", resp: "DISI", weight: 0.3 }, { name: "2. Análisis", pct: 100, status: "FINALIZADO", resp: "DISI", weight: 0.3 }, { name: "3. Desarrollo", pct: 100, status: "FINALIZADO", resp: "DISI", weight: 0.3 }, { name: "4. Pruebas de Calidad QA", pct: 20, status: "EN PROCESO", resp: "PAM", weight: 0.0333 }, { name: "5. Capacitación", pct: 0, status: "NO INICIADO", resp: "PAM", weight: 0.0333 }, { name: "6. Implementación", pct: 0, status: "NO INICIADO", resp: "DISI", weight: 0.0333 } ] },
+                    3: { name: "Módulo 03: Jurídico", phases: [ { name: "1. Requerimientos", pct: 100, status: "FINALIZADO", resp: "DISI", weight: 0.3 }, { name: "2. Análisis", pct: 100, status: "FINALIZADO", resp: "DISI", weight: 0.3 }, { name: "3. Desarrollo", pct: 100, status: "FINALIZADO", resp: "DISI", weight: 0.3 }, { name: "4. Pruebas de Calidad QA", pct: 20, status: "EN PROCESO", resp: "PAM", weight: 0.0333 }, { name: "5. Capacitación", pct: 0, status: "NO INICIADO", resp: "PAM", weight: 0.0333 }, { name: "6. Implementación", pct: 0, status: "NO INICIADO", resp: "DISI", weight: 0.0333 } ] },
+                    4: { name: "Módulo 04: Nómina", phases: [ { name: "1. Requerimientos", pct: 100, status: "FINALIZADO", resp: "DISI", weight: 0.3 }, { name: "2. Análisis", pct: 0, status: "NO INICIADO", resp: "DISI", weight: 0.3 }, { name: "3. Desarrollo", pct: 0, status: "NO INICIADO", resp: "DISI", weight: 0.3 }, { name: "4. Pruebas de Calidad QA", pct: 0, status: "NO INICIADO", resp: "PAM", weight: 0.0333 }, { name: "5. Capacitación", pct: 0, status: "NO INICIADO", resp: "PAM", weight: 0.0333 }, { name: "6. Implementación", pct: 0, status: "NO INICIADO", resp: "DISI", weight: 0.0333 } ] },
+                    5: { name: "Módulo 05: Generación de Carnets", phases: [ { name: "1. Requerimientos", pct: 100, status: "FINALIZADO", resp: "DISI", weight: 0.3 }, { name: "2. Análisis", pct: 100, status: "FINALIZADO", resp: "DISI", weight: 0.3 }, { name: "3. Desarrollo", pct: 80, status: "EN PROCESO", resp: "DISI", weight: 0.3 }, { name: "4. Pruebas de Calidad QA", pct: 0, status: "NO INICIADO", resp: "PAM", weight: 0.0333 }, { name: "5. Capacitación", pct: 0, status: "NO INICIADO", resp: "PAM", weight: 0.0333 }, { name: "6. Implementación", pct: 0, status: "NO INICIADO", resp: "DISI", weight: 0.0333 } ] }
+                }
+            },
+            
+            // --- OTROS PROYECTOS ---
+            "RRHH": {
+                title: "Contrataciones 029", dept: "Dirección de Recursos Humanos", qaResp: "Recursos Humanos", statusNote: "Pruebas de Calidad QA en Proceso", desc: "Módulo de contrataciones 029.", icon: "fa-address-card",
+                priority: false,
+                modules: {
+                    1: { name: "Módulo 01: Contrataciones 029", phases: [ 
+                        { name: "1. Requerimientos", pct: 100, status: "FINALIZADO", resp: "DISI", weight: 0.30 }, 
+                        { name: "2. Análisis", pct: 100, status: "FINALIZADO", resp: "DISI", weight: 0.30 }, 
+                        { name: "3. Desarrollo", pct: 100, status: "FINALIZADO", resp: "DISI", weight: 0.30 }, 
+                        { name: "4. Pruebas de Calidad QA", pct: 20, status: "EN PROCESO", resp: "Recursos Humanos", weight: 0.0333 }, 
+                        { name: "5. Capacitación", pct: 0, status: "NO INICIADO", resp: "Recursos Humanos", weight: 0.0333 }, 
+                        { name: "6. Implementación", pct: 0, status: "NO INICIADO", resp: "DISI", weight: 0.0333 } 
+                    ] }
+                }
+            },
+            "CDD": {
+                title: "Centros de distribución", dept: "Dir. Recreación del Trabajador del Estado", qaResp: "Dirección de Recreación", statusNote: "Análisis Inicial Finalizado", desc: "Gestión de suministros y logística.", icon: "fa-warehouse",
+                priority: false,
+                modules: {
+                    1: { name: "Módulo 01: Centro de Distribución", phases: [ { name: "1. Requerimientos", pct: 80, status: "EN PROCESO", resp: "DISI", weight: 0.30 }, { name: "2. Análisis", pct: 0, status: "NO INICIADO", resp: "DISI", weight: 0.30 }, { name: "3. Desarrollo", pct: 0, status: "NO INICIADO", resp: "DISI", weight: 0.30 }, { name: "4. Pruebas de Calidad QA", pct: 0, status: "NO INICIADO", resp: "DRTE", weight: 0.0333 }, { name: "5. Capacitación", pct: 0, status: "NO INICIADO", resp: "DRTE", weight: 0.0333 }, { name: "6. Implementación", pct: 0, status: "NO INICIADO", resp: "DISI", weight: 0.0333 } ] }
+                }
+            },
+            "VAF": {
+                title: "Control y trazabilidad de expedientes", dept: "Vicedespacho Administrativo Financiero", qaResp: "VAF", statusNote: "Análisis Inicial Finalizado", desc: "Control de expedientes administrativos y financieros.", icon: "fa-file-invoice",
+                priority: false,
+                modules: {
+                    1: { name: "Módulo 01: Control de Expedientes", phases: [ { name: "1. Requerimientos", pct: 80, status: "EN PROCESO", resp: "DISI", weight: 0.30 }, { name: "2. Análisis", pct: 0, status: "NO INICIADO", resp: "DISI", weight: 0.30 }, { name: "3. Desarrollo", pct: 0, status: "NO INICIADO", resp: "DISI", weight: 0.30 }, { name: "4. Pruebas de Calidad QA", pct: 0, status: "NO INICIADO", resp: "VAF", weight: 0.0333 }, { name: "5. Capacitación", pct: 0, status: "NO INICIADO", resp: "VAF", weight: 0.0333 }, { name: "6. Implementación", pct: 0, status: "NO INICIADO", resp: "DISI", weight: 0.0333 } ] }
                 }
             }
         };
@@ -443,19 +523,48 @@
             return '<i class="fa-solid fa-circle-minus"></i>';
         }
 
+        function renderCard(key) {
+            const p = allProjectsData[key]; 
+            const avg = calculateAvg(key);
+            return `
+            <div class="project-card" onclick="selectProject('${key}')">
+                <div class="card-header"><div class="card-icon"><i class="fa-solid ${p.icon}"></i></div>
+                <span class="card-status ${avg===100?'status-final':'status-progress'}">${avg===100?'Finalizado':'En Progreso'}</span></div>
+                <h3 class="card-title">${p.title}</h3><span class="card-dept">Ente Rector: ${p.dept}</span>
+                <p class="card-desc">${p.desc}</p>
+                <div class="progress-container"><div class="progress-bar" style="width: ${avg}%"></div></div>
+                <div class="card-footer"><span>Progreso Global</span><span>${avg}%</span></div>
+            </div>`;
+        }
+
         function initLanding() {
-            const grid = document.getElementById('main-grid'); grid.innerHTML = "";
-            Object.keys(allProjectsData).forEach(key => {
-                const p = allProjectsData[key]; const avg = calculateAvg(key);
-                grid.innerHTML += `
-                <div class="project-card" onclick="selectProject('${key}')">
-                    <div class="card-header"><div class="card-icon"><i class="fa-solid ${p.icon}"></i></div>
-                    <span class="card-status ${avg===100?'status-final':'status-progress'}">${avg===100?'Finalizado':'En Progreso'}</span></div>
-                    <h3 class="card-title">${p.title}</h3><span class="card-dept">Ente Rector: ${p.dept}</span>
-                    <p class="card-desc">${p.desc}</p>
-                    <div class="progress-container"><div class="progress-bar" style="width: ${avg}%"></div></div>
-                    <div class="card-footer"><span>Progreso Global</span><span>${avg}%</span></div>
-                </div>`;
+            const grid = document.getElementById('main-grid'); 
+            grid.innerHTML = "";
+            
+            // Lógica de orden para Proyectos Prioritarios (por avance descendente)
+            const sortByProgress = (a, b) => {
+                const avgA = calculateAvg(a);
+                const avgB = calculateAvg(b);
+                return avgB - avgA;
+            };
+
+            // Renderizar Prioritarios
+            grid.innerHTML += `<div class="section-separator">Proyectos Prioritarios</div>`;
+            const priorityKeys = Object.keys(allProjectsData)
+                .filter(k => allProjectsData[k].priority)
+                .sort(sortByProgress);
+            
+            priorityKeys.forEach(key => {
+                grid.innerHTML += renderCard(key);
+            });
+
+            // Renderizar Otros (Orden solicitado: Contrataciones, Centros, Control)
+            grid.innerHTML += `<div class="section-separator">Otros Proyectos</div>`;
+            const customOtherOrder = ["RRHH", "CDD", "VAF"];
+            customOtherOrder.forEach(key => {
+                if(allProjectsData[key]) {
+                    grid.innerHTML += renderCard(key);
+                }
             });
         }
 
@@ -561,7 +670,17 @@
         }
 
         function hideDetails() { document.getElementById('detail-container').style.display = 'none'; }
-        function backToHome() { const d = document.getElementById('dashboard-view'); d.style.opacity = '0'; setTimeout(() => { d.style.display = 'none'; document.querySelector('.hero-section').style.display = 'flex'; initLanding(); }, 300); }
+        
+        function backToHome() { 
+            const d = document.getElementById('dashboard-view'); 
+            d.style.opacity = '0'; 
+            setTimeout(() => { 
+                d.style.display = 'none'; 
+                document.querySelector('.hero-section').style.display = 'flex'; 
+                initLanding(); 
+            }, 300); 
+        }
+        
         window.onload = initLanding;
     </script>
 </body>
