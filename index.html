@@ -128,14 +128,13 @@
         .status-progress { background: #e0f2fe; color: #0369a1; }
         .status-final { background: #dcfce7; color: #15803d; }
 
-        /* Mejora de Alineación en Títulos y Descripciones */
         .card-title { 
             font-size: 19px; 
             font-weight: 800; 
             color: var(--text); 
             margin: 0; 
             line-height: 1.2; 
-            min-height: 2.4em; /* Espacio fijo para 2 líneas */
+            min-height: 2.4em;
             display: -webkit-box;
             -webkit-line-clamp: 2;
             -webkit-box-orient: vertical;
@@ -150,7 +149,7 @@
             margin-top: 5px; 
             margin-bottom: 12px; 
             letter-spacing: 0.3px; 
-            min-height: 2.8em; /* Espacio fijo para entes rectores largos */
+            min-height: 2.8em;
         }
         .card-desc { 
             font-size: 12px; 
@@ -466,10 +465,10 @@
             
             // --- OTROS PROYECTOS ---
             "RRHH": {
-                title: "Contrataciones 029", dept: "Dirección de Recursos Humanos", qaResp: "Recursos Humanos", statusNote: "Pruebas de Calidad QA en Proceso", desc: "Módulo de contrataciones 029.", icon: "fa-address-card",
+                title: "Sistema RRHH", dept: "Dirección de Recursos Humanos", qaResp: "Recursos Humanos", statusNote: "Desarrollo de Ficha de Empleado Finalizado", desc: "Gestión integral de talento humano y administración.", icon: "fa-address-card",
                 priority: false,
                 modules: {
-                    1: { name: "Módulo 01: Contrataciones 029", phases: [ 
+                    1: { name: "Módulo 01: Ficha de empleado", phases: [ 
                         { name: "1. Requerimientos", pct: 100, status: "FINALIZADO", resp: "DISI", weight: 0.30 }, 
                         { name: "2. Análisis", pct: 100, status: "FINALIZADO", resp: "DISI", weight: 0.30 }, 
                         { name: "3. Desarrollo", pct: 100, status: "FINALIZADO", resp: "DISI", weight: 0.30 }, 
@@ -541,14 +540,12 @@
             const grid = document.getElementById('main-grid'); 
             grid.innerHTML = "";
             
-            // Lógica de orden para Proyectos Prioritarios (por avance descendente)
             const sortByProgress = (a, b) => {
                 const avgA = calculateAvg(a);
                 const avgB = calculateAvg(b);
                 return avgB - avgA;
             };
 
-            // Renderizar Prioritarios
             grid.innerHTML += `<div class="section-separator">Proyectos Prioritarios</div>`;
             const priorityKeys = Object.keys(allProjectsData)
                 .filter(k => allProjectsData[k].priority)
@@ -558,7 +555,6 @@
                 grid.innerHTML += renderCard(key);
             });
 
-            // Renderizar Otros (Orden solicitado: Contrataciones, Centros, Control)
             grid.innerHTML += `<div class="section-separator">Otros Proyectos</div>`;
             const customOtherOrder = ["RRHH", "CDD", "VAF"];
             customOtherOrder.forEach(key => {
