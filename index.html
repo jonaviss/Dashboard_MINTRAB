@@ -579,6 +579,15 @@
                 .filter(key => allProjectsData[key].priority)
                 .sort(sortByProgress);
             
+            const igtIndex = priorityKeys.indexOf("IGT");
+            const igt2Index = priorityKeys.indexOf("IGT2");
+            
+            if (igtIndex !== -1 && igt2Index !== -1) {
+                priorityKeys.splice(igt2Index, 1);
+                const newIgtIndex = priorityKeys.indexOf("IGT");
+                priorityKeys.splice(newIgtIndex + 1, 0, "IGT2");
+            }
+            
             priorityKeys.forEach(key => {
                 grid.innerHTML += renderCard(key);
             });
